@@ -1,0 +1,30 @@
+wing: mcc_lens
+rooms:
+- name: app
+  description: Files from app/
+  keywords:
+  - app
+  - app
+- name: testing
+  description: Files from tests/
+  keywords:
+  - testing
+  - tests
+- name: design
+  description: Files from assets/
+  keywords:
+  - design
+  - assets
+- name: backend
+  description: Files from models/
+  keywords:
+  - backend
+  - models
+- name: frontend
+  description: Files from views/
+  keywords:
+  - frontend
+  - views
+- name: general
+  description: Files that don't fit other rooms
+  keywords: []
