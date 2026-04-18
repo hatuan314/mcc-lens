@@ -72,6 +72,26 @@ def main() -> int:
         help="Resume from checkpoint, skipping already-processed images",
     )
 
+    vsic_parser = subparsers.add_parser(
+        "convert-vsic",
+        help="Convert VSIC Excel to JSON",
+    )
+    vsic_parser.add_argument(
+        "--input",
+        "-i",
+        dest="input_path",
+        type=Path,
+        default=Path("assets/vsic-vn/vsic.xlsx"),
+        help="Input Excel file path (default: assets/vsic-vn/vsic.xlsx)",
+    )
+    vsic_parser.add_argument(
+        "--output",
+        "-o",
+        type=Path,
+        default=Path("output/vsic.json"),
+        help="Output JSON file path (default: output/vsic.json)",
+    )
+
     args = parser.parse_args()
 
     try:
@@ -107,6 +127,30 @@ def main() -> int:
                 input_dir=args.input_dir,
                 output_path=args.output,
                 resume=args.resume,
+            )
+
+        if args.command == "convert-vsic":
+            logger.info("Starting VSIC Excel conversion...")
+            logger.info(f"Input: {args.input_path}")
+            logger.info(f"Output: {args.output}")
+
+            from app.repositories.vsic_excel_repository import VsicExcelRepository
+            from app.repositories.vsic_json_repository import VsicJsonRepository
+            from app.services.vsic_parser_service import VsicParserService
+            from app.controllers.vsic_controller import VsicController
+
+            excel_repo = VsicExcelRepository()
+            parser = VsicParserService()
+            json_repo = VsicJsonRepository()
+
+            controller = VsicController(
+                excel_repository=excel_repo,
+                parser_service=parser,
+                json_repository=json_repo,
+            )
+            return controller.execute(
+                input_path=args.input_path,
+                output_path=args.output,
             )
 
         logger.info("Khởi động MCC Lens...")

@@ -10,6 +10,7 @@ from PIL import Image
 
 from app.models.mcc_entry import MCCEntry
 from app.models.ocr_line import OCRLine
+from app.models.vsic_entry import VsicEntry
 
 
 class OCRService(Protocol):
@@ -198,5 +199,60 @@ class CheckpointRepository(Protocol):
     def clear(self) -> None:
         """
         Delete the checkpoint file after a successful run.
+        """
+        ...
+
+
+class VsicRepository(Protocol):
+    """
+    Protocol for reading raw rows from an Excel source.
+    """
+
+    @abstractmethod
+    def read_rows(self, input_path: Path) -> List[Dict[str, Any]]:
+        """
+        Read rows from VSIC Excel file.
+
+        Args:
+            input_path: Path to the Excel file.
+
+        Returns:
+            List of row dictionaries with column headers as keys.
+        """
+        ...
+
+
+class VsicWriter(Protocol):
+    """
+    Protocol for writing VSIC entries to a JSON output.
+    """
+
+    @abstractmethod
+    def write_entries(self, entries: List[VsicEntry], output_path: Path) -> None:
+        """
+        Write VSIC entries to JSON file.
+
+        Args:
+            entries: List of VsicEntry objects to save.
+            output_path: Path to output JSON file.
+        """
+        ...
+
+
+class VsicParser(Protocol):
+    """
+    Protocol for parsing raw Excel rows into VsicEntry objects.
+    """
+
+    @abstractmethod
+    def parse_rows(self, rows: List[Dict[str, Any]]) -> List[VsicEntry]:
+        """
+        Parse raw Excel rows into VsicEntry objects.
+
+        Args:
+            rows: List of row dictionaries from Excel.
+
+        Returns:
+            List of VsicEntry objects with code (string) and digits.
         """
         ...
