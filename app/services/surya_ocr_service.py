@@ -61,9 +61,57 @@ class SuryaOCRService:
             pass
         return "cpu"
 
+    def extract_lines_batch(self, images: List[Image.Image]) -> List[List[OCRLine]]:
+        """
+        Extract text lines with pixel bounding boxes from a batch of images.
+
+        Args:
+            images: List of PIL Images to process.
+
+        Returns:
+            List of OCRLine lists, one per image, each sorted by (round(y1/15), x1).
+        """
+        self._ensure_loaded()
+
+        predictions = self._recognition_predictor(
+            images, det_predictor=self._detection_predictor
+        )
+
+        results: List[List[OCRLine]] = []
+        for rec in predictions:
+            lines: List[OCRLine] = []
+            for line in rec.text_lines:
+                if not line.text or not line.text.strip():
+                    continue
+                bbox = list(line.bbox)  # [x1, y1, x2, y2]
+                lines.append(
+                    OCRLine(
+                        text=line.text.strip(),
+                        bbox=[
+                            float(bbox[0]),
+                            float(bbox[1]),
+                            float(bbox[2]),
+                            float(bbox[3]),
+                        ],
+                        confidence=(
+                            float(line.confidence)
+                            if line.confidence is not None
+                            else 1.0
+                        ),
+                    )
+                )
+
+            # Sort by y (top to bottom), then x (left to right)
+            lines.sort(key=lambda ln: (round(ln.bbox[1] / 15), ln.bbox[0]))
+            results.append(lines)
+
+        return results
+
     def extract_lines(self, image: Image.Image) -> List[OCRLine]:
         """
-        Extract text lines with pixel bounding boxes from an image.
+        Extract text lines with pixel bounding boxes from a single image.
+
+        Convenience method — not part of OCRService Protocol. Use extract_lines_batch for batch processing.
 
         Args:
             image: PIL Image to process.
@@ -71,26 +119,4 @@ class SuryaOCRService:
         Returns:
             List of OCRLine sorted by (round(y1/15), x1).
         """
-        self._ensure_loaded()
-
-        predictions = self._recognition_predictor(
-            [image], det_predictor=self._detection_predictor
-        )
-        rec = predictions[0]
-
-        lines: List[OCRLine] = []
-        for line in rec.text_lines:
-            if not line.text or not line.text.strip():
-                continue
-            bbox = list(line.bbox)  # [x1, y1, x2, y2]
-            lines.append(
-                OCRLine(
-                    text=line.text.strip(),
-                    bbox=[float(bbox[0]), float(bbox[1]), float(bbox[2]), float(bbox[3])],
-                    confidence=float(line.confidence) if line.confidence is not None else 1.0,
-                )
-            )
-
-        # Sort by y (top to bottom), then x (left to right)
-        lines.sort(key=lambda l: (round(l.bbox[1] / 15), l.bbox[0]))
-        return lines
+        return self.extract_lines_batch([image])[0]

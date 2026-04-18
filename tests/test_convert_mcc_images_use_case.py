@@ -21,11 +21,11 @@ from app.services.convert_mcc_images_use_case import ConvertMCCImagesUseCase
 # ---------------------------------------------------------------------------
 class FakeOCRService:
     def __init__(self) -> None:
-        self.calls: list[tuple[int, int]] = []
+        self.batch_calls: list[int] = []  # Track batch sizes
 
-    def extract_lines(self, image: Image.Image) -> List[OCRLine]:
-        self.calls.append((image.width, image.height))
-        return []  # actual lines are ignored by FakeTableParser
+    def extract_lines_batch(self, images: List[Image.Image]) -> List[List[OCRLine]]:
+        self.batch_calls.append(len(images))
+        return [[] for _ in images]  # actual lines are ignored by FakeTableParser
 
 
 class FakeTableParser:
@@ -228,8 +228,9 @@ class TestCheckpointResume:
             resume=True,
         )
 
-        # Only b.jpg should have been processed by OCR
-        assert len(ocr.calls) == 1
+        # Only b.jpg (unprocessed) goes into OCR; a.jpg is skipped before OCR call
+        assert len(ocr.batch_calls) == 1
+        assert ocr.batch_calls[0] == 1  # batch size 1 (only b.jpg)
         # Only b.jpg's entry saved
         assert [e.mcc for e in json_repo.saved_entries] == ["5814"]
 
@@ -319,7 +320,7 @@ class TestCheckpointResume:
         )
 
         # Image must be skipped because its NFC form is in the checkpoint
-        assert len(ocr.calls) == 0
+        assert len(ocr.batch_calls) == 0
 
     def test_checkpoint_not_touched_when_resume_false(
         self, tmp_path: Path
@@ -355,7 +356,7 @@ class TestErrorHandling:
         img.touch()
 
         class FailingOCRService:
-            def extract_lines(self, image) -> list:
+            def extract_lines_batch(self, images) -> list:
                 raise RuntimeError("OCR exploded")
 
         json_repo = CapturingJsonRepository()
@@ -376,3 +377,213 @@ class TestErrorHandling:
         assert len(result["errors"]) == 1
         assert result["errors"][0]["file"] == "bad.jpg"
         assert "OCR exploded" in result["errors"][0]["error"]
+
+
+class TestBatchProcessing:
+    def test_batch_skip_when_all_checkpointed(self, tmp_path: Path) -> None:
+        """When all images in a batch are checkpointed, skip batch OCR entirely."""
+        img1 = tmp_path / "a.jpg"
+        img2 = tmp_path / "b.jpg"
+        img3 = tmp_path / "c.jpg"
+        img1.touch()
+        img2.touch()
+        img3.touch()
+
+        entries_map = {
+            "a.jpg": [make_entry("5812", "a.jpg")],
+            "b.jpg": [make_entry("5814", "b.jpg")],
+            "c.jpg": [make_entry("5816", "c.jpg")],
+        }
+
+        ocr = FakeOCRService()
+        ckpt_repo = InMemoryCheckpointRepository(initial={"a.jpg", "b.jpg", "c.jpg"})
+
+        use_case = ConvertMCCImagesUseCase(
+            ocr_service=ocr,
+            table_parser=FakeTableParser(entries_map),
+            image_repository=FakeImageRepository([img1, img2, img3]),
+            json_repository=CapturingJsonRepository(),
+            checkpoint_repository=ckpt_repo,
+        )
+
+        # Batch of 3 images all checkpointed → no OCR call
+        use_case.execute(
+            input_dir=tmp_path,
+            output_path=tmp_path / "out.json",
+            resume=True,
+        )
+
+        assert len(ocr.batch_calls) == 0
+
+    def test_ocr_batch_error_marks_no_images_done(self, tmp_path: Path) -> None:
+        """When OCR fails for entire batch, no images are marked done."""
+        img1 = tmp_path / "a.jpg"
+        img2 = tmp_path / "b.jpg"
+        img1.touch()
+        img2.touch()
+
+        class FailBatchOCRService:
+            def extract_lines_batch(self, images) -> list:
+                raise RuntimeError("Surya batch failed")
+
+        ckpt_repo = InMemoryCheckpointRepository()
+        use_case = ConvertMCCImagesUseCase(
+            ocr_service=FailBatchOCRService(),
+            table_parser=FakeTableParser({}),
+            image_repository=FakeImageRepository([img1, img2]),
+            json_repository=CapturingJsonRepository(),
+            checkpoint_repository=ckpt_repo,
+        )
+
+        result = use_case.execute(
+            input_dir=tmp_path,
+            output_path=tmp_path / "out.json",
+            resume=True,
+        )
+
+        # Both errors logged
+        assert len(result["errors"]) == 2
+        # No images marked done
+        assert ckpt_repo.load() == set()
+
+    def test_parse_error_in_batch_marks_others_done(self, tmp_path: Path) -> None:
+        """When 1 image fails parsing in batch, others are still processed and appear in output."""
+        img1 = tmp_path / "a.jpg"
+        img2 = tmp_path / "b.jpg"
+        img1.touch()
+        img2.touch()
+
+        class FailingTableParser:
+            def parse(self, lines, image_width, source_image=""):
+                # Fail for a.jpg, succeed for b.jpg
+                if source_image == "a.jpg":
+                    raise RuntimeError("Parse error")
+                return [make_entry("5814", source_image)]
+
+        json_repo = CapturingJsonRepository()
+        ckpt_repo = InMemoryCheckpointRepository()
+        use_case = ConvertMCCImagesUseCase(
+            ocr_service=FakeOCRService(),
+            table_parser=FailingTableParser(),
+            image_repository=FakeImageRepository([img1, img2]),
+            json_repository=json_repo,
+            checkpoint_repository=ckpt_repo,
+        )
+
+        result = use_case.execute(
+            input_dir=tmp_path,
+            output_path=tmp_path / "out.json",
+            resume=True,
+        )
+
+        # Only a.jpg error; b.jpg succeeds
+        assert len(result["errors"]) == 1
+        assert result["errors"][0]["file"] == "a.jpg"
+        # b.jpg's entry is in output JSON
+        assert [e.mcc for e in json_repo.saved_entries] == ["5814"]
+        # Checkpoint cleared after full execution
+        assert ckpt_repo.cleared
+
+    def test_image_load_failure_skips_ocr_for_that_image(self, tmp_path: Path) -> None:
+        """When image fails to load, it is skipped (error logged) and others in batch proceed."""
+        img_good = tmp_path / "good.jpg"
+        img_bad = tmp_path / "bad.jpg"
+        img_good.touch()
+        img_bad.touch()
+
+        class PartialLoadRepository:
+            def list_images(self, directory):
+                return [img_bad, img_good]
+
+            def read(self, path):
+                if path.name == "bad.jpg":
+                    raise OSError("Disk error")
+                return Image.new("RGB", (100, 100))
+
+        ocr = FakeOCRService()
+        json_repo = CapturingJsonRepository()
+        use_case = ConvertMCCImagesUseCase(
+            ocr_service=ocr,
+            table_parser=FakeTableParser({"good.jpg": [make_entry("5812", "good.jpg")]}),
+            image_repository=PartialLoadRepository(),
+            json_repository=json_repo,
+            checkpoint_repository=InMemoryCheckpointRepository(),
+        )
+
+        result = use_case.execute(
+            input_dir=tmp_path,
+            output_path=tmp_path / "out.json",
+            resume=False,
+        )
+
+        # bad.jpg error recorded, good.jpg still processed
+        assert any(e["file"] == "bad.jpg" for e in result["errors"])
+        assert [e.mcc for e in json_repo.saved_entries] == ["5812"]
+        # OCR called once with 1 image (only good.jpg)
+        assert len(ocr.batch_calls) == 1
+        assert ocr.batch_calls[0] == 1
+
+    def test_all_images_fail_to_load_no_ocr_called(self, tmp_path: Path) -> None:
+        """When all images in batch fail to load, OCR is never called."""
+        img1 = tmp_path / "a.jpg"
+        img2 = tmp_path / "b.jpg"
+        img1.touch()
+        img2.touch()
+
+        class FailingLoadRepository:
+            def list_images(self, directory):
+                return [img1, img2]
+
+            def read(self, path):
+                raise OSError("All disk errors")
+
+        ocr = FakeOCRService()
+        use_case = ConvertMCCImagesUseCase(
+            ocr_service=ocr,
+            table_parser=FakeTableParser({}),
+            image_repository=FailingLoadRepository(),
+            json_repository=CapturingJsonRepository(),
+            checkpoint_repository=InMemoryCheckpointRepository(),
+        )
+
+        result = use_case.execute(
+            input_dir=tmp_path,
+            output_path=tmp_path / "out.json",
+            resume=False,
+        )
+
+        # No OCR calls since no images loaded
+        assert len(ocr.batch_calls) == 0
+        # Both images errored
+        assert len(result["errors"]) == 2
+
+    def test_last_batch_partial(self, tmp_path: Path) -> None:
+        """Last batch with fewer than BATCH_SIZE images is processed correctly."""
+        # Create 9 images (batch_size=8 → 1 full batch + 1 partial batch)
+        images = []
+        for i in range(9):
+            img_path = tmp_path / f"img{i:02d}.jpg"
+            img_path.touch()
+            images.append(img_path)
+
+        entries_map = {f"img{i:02d}.jpg": [make_entry(str(5000 + i), f"img{i:02d}.jpg")] for i in range(9)}
+
+        ocr = FakeOCRService()
+        use_case = ConvertMCCImagesUseCase(
+            ocr_service=ocr,
+            table_parser=FakeTableParser(entries_map),
+            image_repository=FakeImageRepository(images),
+            json_repository=CapturingJsonRepository(),
+            checkpoint_repository=InMemoryCheckpointRepository(),
+        )
+
+        use_case.execute(
+            input_dir=tmp_path,
+            output_path=tmp_path / "out.json",
+            resume=False,
+        )
+
+        # 2 batches: first=8, second=1
+        assert len(ocr.batch_calls) == 2
+        assert ocr.batch_calls[0] == 8
+        assert ocr.batch_calls[1] == 1

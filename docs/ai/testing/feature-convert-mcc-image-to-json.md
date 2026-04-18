@@ -14,24 +14,24 @@ description: Chiến lược kiểm thử cho pipeline Surya OCR → JSON, tập
 - 100% coverage cho `convert_mcc_images_use_case`, `mcc_json_repository`, `mcc_image_repository`, `checkpoint_repository`, `mcc_convert_controller`.
 - Mọi acceptance criteria trong `docs/ai/requirements/feature-convert-mcc-image-to-json.md` phải có ít nhất một test đối chiếu.
 
-## Current Status (2026-04-18)
+## Current Status (2026-04-18 — Updated Phase 6)
 **Trạng thái thực tế:**
 
-| Module | Coverage | Test File |
-|---|---|---|
-| `column_classifier.py` | ✅ 100% | `test_column_classifier.py` |
-| `entry_grouper.py` | ✅ 100% | `test_entry_grouper.py` |
-| `mcc_entry_parser.py` | ✅ 100% | `test_mcc_entry_parser.py` |
-| `mcc_table_parser_service.py` | ✅ 100% | `test_mcc_table_parser_service.py` |
-| `convert_mcc_images_use_case.py` | ✅ 100% | `test_convert_mcc_images_use_case.py` |
-| `mcc_json_repository.py` | ✅ 100% | `test_mcc_json_repository.py` |
-| `mcc_image_repository.py` | ✅ 100% | `test_mcc_image_repository.py` |
-| `checkpoint_repository.py` | ✅ 100% | `test_checkpoint_repository.py` |
-| `mcc_convert_controller.py` | ✅ 100% | `test_mcc_convert_controller.py` |
-| `mcc_entry.py` + `ocr_line.py` | ✅ 100% | `test_models.py` |
-| `progress_bar_view.py` | ✅ 100% | `test_progress_bar_view.py` |
-| `surya_ocr_service.py` | ⚠️ 0% | (manual smoke test) |
-| **TOTAL** | **89%** | |
+| Module | Coverage | Test File | Notes |
+|---|---|---|---|
+| `column_classifier.py` | ✅ 100% | `test_column_classifier.py` | |
+| `entry_grouper.py` | ✅ 100% | `test_entry_grouper.py` | |
+| `mcc_entry_parser.py` | ✅ 100% | `test_mcc_entry_parser.py` | |
+| `mcc_table_parser_service.py` | ✅ 100% | `test_mcc_table_parser_service.py` | |
+| `convert_mcc_images_use_case.py` | ✅ 94% | `test_convert_mcc_images_use_case.py` | 4 batch tests added (6.4) |
+| `mcc_json_repository.py` | ✅ 100% | `test_mcc_json_repository.py` | |
+| `mcc_image_repository.py` | ✅ 100% | `test_mcc_image_repository.py` | |
+| `checkpoint_repository.py` | ✅ 100% | `test_checkpoint_repository.py` | |
+| `mcc_convert_controller.py` | ✅ 100% | `test_mcc_convert_controller.py` | |
+| `mcc_entry.py` + `ocr_line.py` | ✅ 100% | `test_models.py` | |
+| `progress_bar_view.py` | ✅ 100% | `test_progress_bar_view.py` | |
+| `surya_ocr_service.py` | ⚠️ 0% | (manual smoke test) | Requires HF model (~1-2GB) |
+| **TOTAL** | **88%** | 99 tests | Phase 6 batch implementation done |
 
 ## Unit Tests
 **Các thành phần cần test:**
@@ -81,6 +81,10 @@ description: Chiến lược kiểm thử cho pipeline Surya OCR → JSON, tập
 - [x] `test_resume_matches_nfd_filesystem_names_with_nfc_checkpoint` — regression NFC/NFD.
 - [x] `test_checkpoint_not_touched_when_resume_false` — resume=False không gọi checkpoint.
 - [x] `test_image_processing_error_is_captured_in_result` — exception per-image được ghi vào errors list.
+- [x] `test_batch_skip_when_all_checkpointed` — skip batch OCR nếu tất cả ảnh đã checkpoint.
+- [x] `test_ocr_batch_error_marks_no_images_done` — OCR-level error (cả batch fail): không ảnh nào mark done.
+- [x] `test_parse_error_in_batch_marks_others_done` — parse-level error (1 ảnh fail): ảnh khác vẫn được xử lý.
+- [x] `test_last_batch_partial` — batch cuối < BATCH_SIZE được xử lý đúng.
 
 ### MCCJsonRepository (`tests/test_mcc_json_repository.py`)
 - [x] `test_output_schema` — wrapper object đúng (source, total_mcc_count, mcc_list).

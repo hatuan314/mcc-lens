@@ -28,8 +28,12 @@ class ConvertMCCImagesUseCase:
     """
     Use case for orchestrating the conversion of MCC images to JSON.
 
-    Pipeline: OCR (Surya) → TableParser → Dedup → Sort → JSON Output
+    Pipeline: Batch OCR (Surya) → TableParser → Dedup → Sort → JSON Output
+
+    Batch processing: BATCH_SIZE=8 hardcoded, mini-batch strategy to optimize throughput.
     """
+
+    BATCH_SIZE = 8
 
     def __init__(
         self,
@@ -54,7 +58,9 @@ class ConvertMCCImagesUseCase:
         resume: bool = False,
     ) -> Dict[str, Any]:
         """
-        Execute the conversion pipeline.
+        Execute the conversion pipeline with batch processing.
+
+        Pipeline: Group images → Batch OCR → Per-image Parse → Checkpoint → Dedup → Sort → Save
 
         Args:
             input_dir: Directory containing input images.
@@ -82,50 +88,103 @@ class ConvertMCCImagesUseCase:
         errors: List[Dict[str, str]] = []
         processed = 0
 
+        # Group images into batches
+        batches = self._group_into_batches(images)
+        logger.info(
+            f"Processing {len(images)} images in {len(batches)} batches of {self.BATCH_SIZE}"
+        )
+
         with ProgressBarView(total=len(images), desc="Converting", unit="img") as bar:
-            for image_path in images:
-                nfc_name = _nfc(image_path.name)
-                if nfc_name in processed_files:
-                    bar.update()
+            for batch_idx, batch_paths in enumerate(batches):
+                batch_num = batch_idx + 1
+                logger.debug(
+                    f"Batch {batch_num}/{len(batches)}: {len(batch_paths)} images"
+                )
+
+                # Check if entire batch is already processed
+                nfc_batch_names = [_nfc(p.name) for p in batch_paths]
+                if all(name in processed_files for name in nfc_batch_names):
+                    logger.debug(f"Batch {batch_num} already processed, skipping OCR")
+                    for _ in batch_paths:
+                        bar.update()
                     continue
 
+                # Separate batch into: already-done (bar update + skip), needs-OCR
+                needs_ocr: List[tuple] = []  # (path, pil_image) that need processing
+                for path in batch_paths:
+                    nfc_name = _nfc(path.name)
+                    if nfc_name in processed_files:
+                        bar.update()  # already done — count it, skip OCR
+                        continue
+                    try:
+                        image = self.image_repository.read(path)
+                        needs_ocr.append((path, image))
+                    except Exception as e:
+                        logger.warning(f"Failed to load image {path.name}: {e}")
+                        errors.append(
+                            {
+                                "file": path.name,
+                                "error": f"Failed to load: {e}",
+                            }
+                        )
+                        bar.update()  # failed-load — count it, skip OCR
+
+                if not needs_ocr:
+                    continue
+
+                # OCR batch (may fail completely — OCR-level error)
                 try:
-                    logger.info(f"Processing: {image_path.name}")
-
-                    image = self.image_repository.read(image_path)
-                    image_width = image.width
-
-                    # Step 1: Extract OCR lines
-                    lines = self.ocr_service.extract_lines(image)
-                    logger.debug(f"Extracted {len(lines)} lines from {image_path.name}")
-
-                    # Step 2: Parse table
-                    entries = self.table_parser.parse(
-                        lines, image_width, source_image=nfc_name
+                    batch_ocr_results = self.ocr_service.extract_lines_batch(
+                        [img for _, img in needs_ocr]
                     )
-                    all_entries.extend(entries)
-                    processed += 1
-
-                    # Mark checkpoint after successful processing
-                    if resume:
-                        self.checkpoint_repository.mark_done(nfc_name)
-                        processed_files.add(nfc_name)
-
-                    logger.info(f"Parsed {len(entries)} entries from {image_path.name}")
-
                 except Exception as e:
-                    logger.warning(f"Failed to process {image_path.name}: {e}")
-                    errors.append({
-                        "file": image_path.name,
-                        "error": str(e),
-                    })
+                    logger.error(f"Batch {batch_num} OCR failed: {e}")
+                    for path, _ in needs_ocr:
+                        errors.append(
+                            {
+                                "file": path.name,
+                                "error": f"Batch OCR error: {e}",
+                            }
+                        )
+                        bar.update()
+                    continue
 
-                bar.update()
+                # Process results: per-image parse — 1:1 zip, no index desync
+                for (path, pil_image), lines in zip(needs_ocr, batch_ocr_results):
+                    nfc_name = _nfc(path.name)
+                    try:
+                        logger.info(f"Processing: {path.name}")
+                        logger.debug(f"Extracted {len(lines)} lines from {path.name}")
 
-        # Step 3: Deduplicate entries by MCC code (keep longer description)
+                        # Parse table (may fail — parse-level error)
+                        entries = self.table_parser.parse(
+                            lines, pil_image.width, source_image=nfc_name
+                        )
+                        all_entries.extend(entries)
+                        processed += 1
+
+                        # Mark checkpoint after successful processing
+                        if resume:
+                            self.checkpoint_repository.mark_done(nfc_name)
+                            processed_files.add(nfc_name)
+
+                        logger.info(f"Parsed {len(entries)} entries from {path.name}")
+
+                    except Exception as e:
+                        logger.warning(f"Failed to parse {path.name}: {e}")
+                        errors.append(
+                            {
+                                "file": path.name,
+                                "error": str(e),
+                            }
+                        )
+
+                    bar.update()
+
+        # Deduplicate entries by MCC code (keep longer description)
         unique_entries = self._deduplicate_entries(all_entries)
 
-        # Step 4: Sort by MCC code
+        # Sort by MCC code
         unique_entries.sort(key=lambda e: e.mcc.zfill(4) if e.mcc.isdigit() else e.mcc)
 
         logger.info(
@@ -134,7 +193,7 @@ class ConvertMCCImagesUseCase:
             f"unparsed={sum(1 for e in unique_entries if e.unparsed)})"
         )
 
-        # Step 5: Save to JSON
+        # Save to JSON
         self.json_repository.save(unique_entries, output_path)
         logger.info(f"Saved {len(unique_entries)} entries to {output_path}")
 
@@ -149,6 +208,21 @@ class ConvertMCCImagesUseCase:
             "errors": errors,
             "output_path": str(output_path),
         }
+
+    def _group_into_batches(self, paths: List[Path]) -> List[List[Path]]:
+        """
+        Group image paths into batches of BATCH_SIZE.
+
+        Args:
+            paths: List of image paths.
+
+        Returns:
+            List of batches, each containing up to BATCH_SIZE paths.
+        """
+        batches: List[List[Path]] = []
+        for i in range(0, len(paths), self.BATCH_SIZE):
+            batches.append(paths[i : i + self.BATCH_SIZE])
+        return batches
 
     def _deduplicate_entries(self, entries: List[MCCEntry]) -> List[MCCEntry]:
         """

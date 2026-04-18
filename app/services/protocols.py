@@ -2,31 +2,31 @@
 Protocol interfaces for dependency injection (Surya OCR pipeline).
 """
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from pathlib import Path
 from typing import Any, Dict, List, Protocol
 
 from PIL import Image
 
-from app.models.mcc_entry import MCCEntry, SimilarMerchant
+from app.models.mcc_entry import MCCEntry
 from app.models.ocr_line import OCRLine
 
 
 class OCRService(Protocol):
     """
-    Protocol for OCR service that extracts text lines from images.
+    Protocol for OCR service that extracts text lines from images (batch processing).
     """
 
     @abstractmethod
-    def extract_lines(self, image: Image.Image) -> List[OCRLine]:
+    def extract_lines_batch(self, images: List[Image.Image]) -> List[List[OCRLine]]:
         """
-        Extract text lines with pixel bounding boxes from an image.
+        Extract text lines with pixel bounding boxes from a batch of images.
 
         Args:
-            image: PIL Image to process.
+            images: List of PIL Images to process.
 
         Returns:
-            List of OCRLine sorted by (round(y1/15), x1).
+            List of OCRLine lists, one per image, each sorted by (round(y1/15), x1).
         """
         ...
 

@@ -19,6 +19,7 @@ description: Phân rã công việc, thứ tự thực hiện và rủi ro cho t
 - [x] **M3 — Batch + CLI hoàn chỉnh:** progress bar, error-resilient, `--resume` hoạt động, chạy toàn bộ ảnh VISA.
 - [x] **M4 — Test & tài liệu:** unit test ≥ 80% coverage phần parser/use case, README cập nhật.
 - [x] **M5 — Alignment fixes sau /check-implementation:** sửa contract checkpoint, đổi tên file checkpoint, đổi field JSON về `_unparsed`, xử lý NFD/NFC.
+- [x] **M6 — Batch Processing (2026-04-18):** Dataset 83 ảnh. `extract_lines_batch` implement trong Protocol + SuryaOCRService. UseCase refactor sang mini-batch `batch_size=8`. Tests cập nhật (4 batch tests). Coverage 88%.
 
 ## Task Breakdown
 **Công việc cụ thể:**
@@ -96,6 +97,36 @@ description: Phân rã công việc, thứ tự thực hiện và rủi ro cho t
 - [x] **5.5** Tests: cập nhật fakes theo protocol mới, thêm regression NFC/NFD (56/56 pass).
 - [x] **5.6** Smoke run `--resume` xác nhận: seed 4 ảnh → pipeline chỉ xử lý ảnh còn lại, clear checkpoint khi xong.
 
+### Phase 6: Batch Processing (Quyết định 2026-04-18)
+
+> **Ngữ cảnh:** Dataset tăng lên 83 ảnh. Chọn mini-batch `batch_size=8` với native Surya batch API để giảm thời gian xử lý từ ~20 phút → ~3.5 phút trên M1/M2 MPS.
+
+- [x] **6.1** Update `app/services/protocols.py` — `OCRService` Protocol:
+  - ✅ Xóa `extract_lines(image: Image) -> List[OCRLine]`
+  - ✅ Thêm `extract_lines_batch(images: List[Image.Image]) -> List[List[OCRLine]]`
+  - ✅ `extract_lines()` giữ trong SuryaOCRService nhưng không khai báo trong Protocol
+- [x] **6.2** Update `app/services/surya_ocr_service.py`:
+  - ✅ Thêm `extract_lines_batch(images: List[Image.Image]) -> List[List[OCRLine]]`
+  - ✅ Gọi `self._recognition_predictor(images, det_predictor=self._detection_predictor)` — native batch
+  - ✅ Parse `predictions` thành `List[List[OCRLine]]`
+  - ✅ Giữ `extract_lines()` như convenience method (gọi batch internally)
+- [x] **6.3** Refactor `app/services/convert_mcc_images_use_case.py` — `execute()`:
+  - ✅ Hằng số `BATCH_SIZE = 8` class attribute
+  - ✅ Chia `images` thành batches (helper method `_group_into_batches`)
+  - ✅ Với mỗi batch: skip nếu tất cả đã checkpoint; load PIL images; gọi `extract_lines_batch`
+  - ✅ Xử lý 2 loại lỗi: OCR-level (cả batch fail) vs parse-level (1 ảnh fail)
+  - ✅ Checkpoint per-image + progress bar per-image
+- [x] **6.4** Update `tests/test_convert_mcc_images_use_case.py`:
+  - ✅ `FakeOCRService`: thay `extract_lines` → `extract_lines_batch`, track batch_calls
+  - ✅ `FailingOCRService`: tương tự
+  - ✅ `test_batch_skip_when_all_checkpointed` — batch skip khi tất cả checkpoint
+  - ✅ `test_ocr_batch_error_marks_no_images_done` — OCR-level error: không mark done
+  - ✅ `test_parse_error_in_batch_marks_others_done` — parse-level: entry vào JSON, checkpoint clear
+  - ✅ `test_last_batch_partial` — batch cuối 1 ảnh xử lý đúng
+- [x] **6.5** Update `docs/ai/testing/feature-convert-mcc-image-to-json.md`:
+  - ✅ Thêm 4 batch test cases vào bảng ConvertMCCImagesUseCase
+  - ✅ Coverage: 88% (down from 89%, SuryaOCRService not covered)
+
 ## Dependencies
 **Thứ tự và ràng buộc:**
 
@@ -111,13 +142,15 @@ description: Phân rã công việc, thứ tự thực hiện và rủi ro cho t
 
 ## Timeline & Estimates
 
-| Phase | Effort ước lượng |
-|---|---|
-| Phase 1 — Migration foundation | 0.5 ngày |
-| Phase 2 — Core pipeline Surya | 1 ngày (rủi ro thấp — lab script đã validate) |
-| Phase 3 — Integration & Polish | 0.5 ngày |
-| Phase 4 — Test & Docs | 0.5 ngày |
-| **Tổng** | **~2.5 ngày công** (ngắn hơn plan cũ vì lab script đã chứng minh approach) |
+| Phase | Effort ước lượng | Trạng thái | Hoàn thành |
+|---|---|---|---|
+| Phase 1 — Migration foundation | 0.5 ngày | ✅ Hoàn thành | 2026-04-17 |
+| Phase 2 — Core pipeline Surya | 1 ngày | ✅ Hoàn thành | 2026-04-17 |
+| Phase 3 — Integration & Polish | 0.5 ngày | ✅ Hoàn thành | 2026-04-17 |
+| Phase 4 — Test & Docs | 0.5 ngày | ✅ Hoàn thành | 2026-04-17 |
+| Phase 5 — Alignment fixes | 0.5 ngày | ✅ Hoàn thành | 2026-04-17 |
+| Phase 6 — Batch Processing | 0.5 ngày | ✅ Hoàn thành | 2026-04-18 |
+| **Tổng** | **~3.5 ngày công** | ✅ **6/6 DONE** | |
 
 ## Risks & Mitigation
 

@@ -14,19 +14,20 @@ graph TD
   CLI[CLI Entry<br/>main.py convert-mcc] --> Controller[MCCConvertController]
   Controller --> UseCase[ConvertMCCImagesUseCase]
   UseCase --> Repo[MCCImageRepository<br/>đọc assets/mcc-visa/*.jpg]
-  UseCase --> OCRSvc[SuryaOCRService<br/>OCR → list[OCRLine]]
-  UseCase --> ParserSvc[MCCTableParserService<br/>OCRLine → MCCEntry list]
+  UseCase -->|batch_size=8| BatchLoop[Batch Loop<br/>ceil(N/8) batches]
+  BatchLoop -->|List[Image]| OCRSvc[SuryaOCRService<br/>extract_lines_batch → List[List[OCRLine]]]
+  BatchLoop --> ParserSvc[MCCTableParserService<br/>OCRLine → MCCEntry list<br/>per-image]
+  BatchLoop --> Checkpoint[CheckpointRepository<br/>mark_done per-image]
+  BatchLoop --> Progress[ProgressBarView<br/>update per-image]
   UseCase --> Writer[MCCJsonRepository<br/>ghi JSON output]
-  UseCase --> Progress[ProgressBarView<br/>tqdm]
-  UseCase --> Checkpoint[CheckpointRepository<br/>.mcc-convert-progress.json]
   OCRSvc -.->|load weights| Surya[(Surya OCR<br/>RecognitionPredictor<br/>DetectionPredictor<br/>FoundationPredictor)]
 ```
 
 ### Thành phần và trách nhiệm
 - **CLI Entry (`main.py`)**: Parse argparse, khởi động logging (loguru), gọi Controller.
 - **Controller (`app/controllers/mcc_convert_controller.py`)**: Tiếp nhận tham số (`input_dir`, `output_path`, `resume`), điều phối Use Case, map exception thành exit code.
-- **Use Case (`app/services/convert_mcc_images_use_case.py`)**: Orchestration thuần — lặp qua từng ảnh, gọi OCR service → table parser → writer, cập nhật progress. Không biết chi tiết Surya.
-- **Surya OCR Service (`app/services/surya_ocr_service.py`)**: Wrap `RecognitionPredictor`, `DetectionPredictor`, `FoundationPredictor` từ `surya-ocr`. Load model một lần, tái dùng toàn batch. Gọi `recognition_predictor([image], det_predictor=detection_predictor)` → parse kết quả thành `list[OCRLine]` với pixel bbox `[x1, y1, x2, y2]`. Tự động chọn device (MPS trên Apple M1/M2, CPU fallback).
+- **Use Case (`app/services/convert_mcc_images_use_case.py`)**: Orchestration thuần — chia danh sách ảnh thành batches `BATCH_SIZE=8`, skip batch nếu toàn bộ đã có checkpoint, gọi `ocr_service.extract_lines_batch(images)` → parse từng ảnh trong batch → checkpoint per-image → update progress bar. Dedup, sort, và gọi writer sau khi xử lý toàn bộ. Không biết chi tiết Surya.
+- **Surya OCR Service (`app/services/surya_ocr_service.py`)**: Wrap `RecognitionPredictor`, `DetectionPredictor`, `FoundationPredictor` từ `surya-ocr`. Load model một lần, tái dùng toàn session. Implements `extract_lines_batch(images: List[Image]) -> List[List[OCRLine]]` — gọi `recognition_predictor(images_list, det_predictor=detection_predictor)` native batch API, parse kết quả thành `List[List[OCRLine]]` với pixel bbox `[x1, y1, x2, y2]`. Tự động chọn device (MPS trên Apple M1/M2, CPU fallback). Giữ lại `extract_lines(image)` như convenience method nhưng không expose qua Protocol.
 - **MCC Table Parser Service (`app/services/mcc_table_parser_service.py`)**: Orchestrator parsing — nhận `list[OCRLine]` + `image_width`, lần lượt gọi 3 sub-component rồi trả `list[MCCEntry]`:
   1. **`ColumnClassifier`** (`app/services/column_classifier.py`): nhận `OCRLine` + `image_width` → trả tên cột (`mcc`/`desc`/`included`/`similar`/`unknown`) dựa vào x1 % cố định. Không có state — pure function, dễ unit test độc lập.
   2. **`EntryGrouper`** (`app/services/entry_grouper.py`): nhận `list[(OCRLine, col_name)]` → trả `list[RawEntry]` (dict gồm `mcc` + 3 list dòng theo cột). Trigger entry mới khi gặp 4-digit token ở cột `mcc`.
@@ -113,16 +114,23 @@ Một file tổng `mcc-visa.json` chứa object wrapper với `mcc_list`:
 
 ### Luồng dữ liệu
 1. `MCCImageRepository` liệt kê `*.jpg` trong `input_dir` → `list[Path]`, sort theo tên.
-2. Nếu `--resume`: `CheckpointRepository` tải set ảnh đã xong → skip trong vòng lặp.
-3. Use Case lặp từng path → `MCCImageRepository.read(path)` → `PIL.Image`.
-4. `SuryaOCRService.extract_lines(image)` → `list[OCRLine]` (text + pixel bbox + confidence), đã sort theo `(round(y1/15), x1)`.
-5. `MCCTableParserService.parse(lines, image_width)` → `list[MCCEntry]`:
-   - Phân loại cột theo x1 %.
-   - Gom entry khi gặp 4-digit token ở cột `mcc`.
-   - Parse title/description/included_in_mcc/similar_merchants.
-6. `CheckpointRepository.mark_done(filename)` sau mỗi ảnh thành công.
-7. Use Case gom tất cả entry → **dedup** (giữ entry có `description` dài hơn khi trùng MCC) → **sort** by `mcc` tăng dần.
-8. `MCCJsonRepository.save(entries, output_path)` ghi JSON với danh sách đã sạch; `CheckpointRepository.clear()`.
+2. Nếu `--resume`: `CheckpointRepository` tải set ảnh đã xong.
+3. Use Case chia danh sách paths thành batches `BATCH_SIZE=8` (`ceil(N/8)` batches; batch cuối có thể < 8 ảnh).
+4. **Với mỗi batch:**
+   a. Nếu tất cả ảnh trong batch đã có checkpoint → skip batch, cập nhật progress bar, tiếp batch kế.
+   b. Load batch ảnh: `MCCImageRepository.read(path)` → `List[PIL.Image]`.
+   c. `SuryaOCRService.extract_lines_batch(images)` → `List[List[OCRLine]]` (1 lần gọi native batch API). Nếu lỗi ở bước này → log error từng ảnh, không mark done, không crash pipeline.
+   d. Với mỗi ảnh trong kết quả batch:
+      - Nếu ảnh đã có checkpoint → cập nhật progress bar, skip.
+      - `MCCTableParserService.parse(lines, image_width, source_image)` → `list[MCCEntry]`. Nếu parse lỗi → log warning, skip ảnh này (không mark done).
+      - `CheckpointRepository.mark_done(filename)` (nếu `--resume`).
+      - Cập nhật progress bar 1 tick.
+5. Use Case gom tất cả entry → **dedup** (giữ entry có `description` dài hơn khi trùng MCC) → **sort** by `mcc` tăng dần.
+6. `MCCJsonRepository.save(entries, output_path)` ghi JSON với danh sách đã sạch; `CheckpointRepository.clear()`.
+
+> **Phân biệt 2 loại lỗi trong batch:**
+> - **OCR-level** (Surya raise exception cho cả batch): log error từng ảnh, không ảnh nào được mark done.
+> - **Parse-level** (OCR OK nhưng parse 1 ảnh thất bại): log warning cho ảnh lỗi, mark done 7 ảnh còn lại bình thường.
 
 ## API Design
 **Không có API HTTP** — giao tiếp duy nhất là CLI.
@@ -141,7 +149,11 @@ Checkpoint file tự động đặt tại `<output-dir>/.mcc-convert-progress.js
 ### Internal interfaces (abstractions — Dependency Rule)
 ```python
 class OCRService(Protocol):
-    def extract_lines(self, image: "PIL.Image.Image") -> list[OCRLine]: ...
+    def extract_lines_batch(
+        self, images: list["PIL.Image.Image"]
+    ) -> list[list[OCRLine]]: ...
+    # Note: extract_lines() exists in SuryaOCRService as convenience but is NOT
+    # part of the Protocol — UseCase only calls extract_lines_batch.
 
 class ColumnClassifier(Protocol):
     def classify(self, line: OCRLine, image_width: int) -> str: ...  # "mcc"|"desc"|"included"|"similar"|"unknown"
@@ -210,7 +222,8 @@ Use Case phụ thuộc vào Protocol (D trong SOLID); implementation cụ thể 
 6. **`similar_merchants: list[SimilarMerchant]` thay vì `list[str]`**: Structured data cho phép downstream tra cứu cross-reference theo MCC code mà không cần parse lại string.
 7. **Dedup strategy: giữ `description` dài hơn**: Khi cùng MCC xuất hiện ở nhiều ảnh (trang bị split), entry với description đầy đủ hơn thường là trang chính. Không merge bằng `\n` để tránh duplicate content.
 8. **Không có `visualize_results` trong V1**: Lab script (`labs/mcc_extractor_surya.py`) đủ để debug thủ công. Có thể thêm sau nếu cần.
-9. **Alternatives considered:**
+9. **Batch processing với `extract_lines_batch` (2026-04-18)**: Dataset tăng lên 83 ảnh. Chọn mini-batch `batch_size=8` hardcode — tận dụng native Surya batch API `recognition_predictor(images_list, ...)`. `OCRService` Protocol thay `extract_lines(image)` bằng `extract_lines_batch(images)` vì Use Case chỉ cần batch call. `extract_lines()` giữ trong concrete class nhưng không cần trong Protocol (YAGNI). Batch skip nếu toàn bộ đã có checkpoint — tránh gọi OCR lãng phí. Phân biệt OCR-level error (toàn batch fail) vs parse-level error (1 ảnh fail) để đảm bảo checkpoint chính xác.
+10. **Alternatives considered:**
    - Giữ Florence-2: bị loại vì cần CUDA/GPU hoặc chậm trên CPU; không native MPS.
    - Tesseract OCR: bbox pixel-perfect nhưng độ chính xác thấp hơn với ảnh scan nghiêng/nhiễu.
    - Dynamic clustering (DBSCAN) cho column detection: bị loại cho V1 — cần numpy, phức tạp hơn, chưa cần thiết với layout VISA nhất quán.
@@ -221,10 +234,12 @@ Use Case phụ thuộc vào Protocol (D trong SOLID); implementation cụ thể 
 
 - **Performance:**
   - Load 3 Surya predictor một lần trước vòng lặp batch; tái dùng toàn session.
-  - Target: ≤ 60 giây/ảnh trên CPU (mục tiêu tham khảo, không ràng buộc cứng).
-  - Trên Apple M1/M2 với MPS: nhanh hơn đáng kể so với CPU.
+  - Batch processing `batch_size=8`: ước tính ~3.5 phút trên Apple M1/M2 MPS (vs ~20 phút serial).
+  - Target tổng ≤ 10 phút trên M1/M2 MPS, ≤ 30 phút trên CPU thuần túy.
+  - `batch_size=8` hardcode (không expose CLI flag ở V1); mỗi batch ~64MB RAM — an toàn với 8GB RAM.
 - **Scalability:**
-  - Hiện xử lý tuần tự (1 ảnh/lần); có thể mở rộng batch inference sau nếu dataset tăng — không implement V1.
+  - Batch inference (`batch_size=8`) implemented trong V1 — tận dụng native Surya batch API.
+  - Nếu dataset tăng tiếp (> 200 ảnh), có thể tăng `batch_size` hoặc thêm multiprocessing ở V2.
 - **Security:**
   - Chỉ đọc ảnh local và ghi JSON local; không có network call ngoài lần đầu tải weights.
   - Pin phiên bản `surya-ocr`, `Pillow` trong `requirements.txt`.
