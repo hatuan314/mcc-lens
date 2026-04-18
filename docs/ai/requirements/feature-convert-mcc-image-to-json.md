@@ -18,8 +18,8 @@ description: Yêu cầu chuyển đổi ảnh danh mục MCC của VISA thành d
 
 - **Mục tiêu chính (Primary):**
   1. Tự động trích xuất nội dung MCC từ ảnh tại `assets/mcc-visa/` thành JSON có cấu trúc.
-  2. Sử dụng mô hình **Florence-2 large** (`microsoft/Florence-2-large`) làm engine OCR / vision-language.
-  3. Mỗi bản ghi JSON gồm các field: `mcc_code`, `title`, `description`, `similar_merchants` (danh sách).
+  2. Sử dụng mô hình **Florence-2 large** (`microsoft/Florence-2-large`) làm engine OCR / vision-language với task `<OCR_WITH_REGION>`, `max_new_tokens=3072`, `num_beams=3`.
+  3. Mỗi bản ghi JSON gồm 5 field: `mcc`, `title_description`, `included`, `similar_merchants`, `source_image`.
   4. Cung cấp giao diện CLI hiển thị thanh tiến trình (progress bar) trong quá trình xử lý batch ảnh.
 - **Mục tiêu phụ (Secondary):**
   - Ghi log chi tiết quá trình xử lý (loguru) để truy vết lỗi OCR.
@@ -59,8 +59,8 @@ description: Yêu cầu chuyển đổi ảnh danh mục MCC của VISA thành d
 
 - **Acceptance criteria:**
   - [ ] Chạy lệnh CLI convert-mcc thành công trên tất cả 5 ảnh hiện có trong `assets/mcc-visa/` và sinh ra file JSON hợp lệ.
-  - [ ] JSON output đúng schema: mỗi entry có đủ 5 field (`mcc_code`, `title`, `description`, `similar_merchants`, `source_image`).
-  - [ ] Entry không parse được `mcc_code` được giữ lại với `mcc_code = ""` và có field `_unparsed: true` — không bị loại bỏ.
+  - [ ] JSON output đúng schema: mỗi entry có đủ 5 field (`mcc`, `title_description`, `included`, `similar_merchants`, `source_image`).
+  - [ ] Entry không parse được `mcc` được giữ lại với `mcc = ""` và có field `_unparsed: true` — không bị loại bỏ.
   - [ ] Progress bar hiển thị và cập nhật chính xác theo số ảnh đã xử lý.
   - [ ] Khi 1 ảnh lỗi, pipeline tiếp tục các ảnh khác và ghi log lỗi rõ ràng.
   - [ ] Flag `--resume` hoạt động đúng: bỏ qua ảnh đã có trong checkpoint, xóa checkpoint khi hoàn thành.
@@ -89,4 +89,9 @@ description: Yêu cầu chuyển đổi ảnh danh mục MCC của VISA thành d
 - [x] Entry thiếu `mcc_code`: giữ lại với `mcc_code = ""` và đánh dấu `_unparsed: true` để downstream phân biệt.
 - [x] Provenance `source_image`: ghi lại tên file ảnh nguồn cho mỗi entry.
 - [x] Resume: dùng checkpoint file (`.mcc-convert-progress.json`), bật bằng flag `--resume`, tự xóa khi hoàn thành.
-- [ ] **Còn mở — kỹ thuật:** Prompt task Florence-2 (`<OCR>` vs `<OCR_WITH_REGION>` vs `<MORE_DETAILED_CAPTION>`) — chốt trong phase implementation sau spike thử nghiệm, không block design.
+- [x] **Florence-2 task đã chốt:** dùng `<OCR_WITH_REGION>`, `max_new_tokens=3072`, `num_beams=3`.
+- [x] **Table reconstruction thresholds đã chốt:**
+  - Row-grouping Y threshold: **relative** (% chiều cao ảnh), tham số `y_threshold_pct` ≈ 1.0–1.5%, dễ fine-tune.
+  - Column assignment: **dynamic clustering** hoặc mốc X cố định theo % (layout VISA nhất quán: MCC ~10% trái, Description ~50%).
+  - Multi-line merging: hàng mới khi cột `mcc` có giá trị; dòng tiếp theo khi cột `mcc` trống.
+- [x] **Yêu cầu debug:** Implement hàm `visualize_results` dùng PIL/OpenCV để vẽ bounding boxes + label hàng/cột lên ảnh — phục vụ kiểm tra trực quan thuật toán nhóm hàng.

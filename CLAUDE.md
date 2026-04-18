@@ -76,6 +76,21 @@ From `.claude/rules/python-standards.md`:
 
 ## Notes for Claude
 
+### Florence-2 Setup
+
+For the `convert-mcc-image-to-json` feature, the project uses Florence-2 large model from Microsoft:
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Optional: Set HuggingFace cache directory (recommended for first download)
+export HF_HOME=~/.cache/huggingface
+
+# First run will automatically download weights (~1.5GB)
+# Model: microsoft/Florence-2-large
+```
+
 - Subdirectories under `app/` currently contain only `__init__.py` — the scaffolding is intentional; populate them following the layer rules above rather than inventing a new structure.
 - `tests/` mirrors `app/` layout. `pytest.ini` already forces `--cov=app`; a test run will fail noisily if coverage collection breaks, which usually means a module import error, not a missing test.
 - `docs/ai/orders/*.md` are human-written briefs — read them verbatim when starting a feature; don't paraphrase them into requirements without the `/new-requirement` flow.
