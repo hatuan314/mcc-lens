@@ -3,36 +3,51 @@ Tests cho Models module.
 """
 
 import pytest
-from app.models.base import BaseModel
+from app.models.mcc_entry import MCCEntry, SimilarMerchant
+from app.models.ocr_line import OCRLine
 
 
-class TestModel(BaseModel):
-    """Test model implementation."""
-
-    def __init__(self, name: str, value: int):
-        self.name = name
-        self.value = value
-
-    def to_dict(self) -> dict:
-        """Convert to dictionary."""
-        return {"name": self.name, "value": self.value}
-
-    @classmethod
-    def from_dict(cls, data: dict) -> "TestModel":
-        """Create from dictionary."""
-        return cls(name=data["name"], value=data["value"])
+def test_similar_merchant_creation():
+    """Test SimilarMerchant dataclass."""
+    merchant = SimilarMerchant(mcc="5814", title="Fast Food Restaurants")
+    assert merchant.mcc == "5814"
+    assert merchant.title == "Fast Food Restaurants"
 
 
-def test_base_model_to_dict():
-    """Test to_dict method."""
-    model = TestModel(name="test", value=42)
-    result = model.to_dict()
-    assert result == {"name": "test", "value": 42}
+def test_ocr_line_creation():
+    """Test OCRLine dataclass."""
+    line = OCRLine(text="5812", bbox=[10.0, 20.0, 50.0, 40.0], confidence=0.95)
+    assert line.text == "5812"
+    assert line.bbox == [10.0, 20.0, 50.0, 40.0]
+    assert line.confidence == 0.95
 
 
-def test_base_model_from_dict():
-    """Test from_dict method."""
-    data = {"name": "test", "value": 42}
-    model = TestModel.from_dict(data)
-    assert model.name == "test"
-    assert model.value == 42
+def test_mcc_entry_valid():
+    """Test MCCEntry with valid MCC code."""
+    entry = MCCEntry(
+        mcc="5812",
+        title="Eating Places",
+        description="Restaurants and cafes",
+        included_in_mcc=["Restaurants"],
+        similar_merchants=[SimilarMerchant(mcc="5814", title="Fast Food")],
+        source_image="test.jpg",
+    )
+    assert entry.mcc == "5812"
+    assert entry.title == "Eating Places"
+    assert entry.unparsed is False
+
+
+def test_mcc_entry_unparsed():
+    """Test MCCEntry with unparsed=True bypasses validation."""
+    entry = MCCEntry(
+        mcc="invalid",
+        source_image="test.jpg",
+        unparsed=True,
+    )
+    assert entry.unparsed is True
+
+
+def test_mcc_entry_invalid_mcc_raises():
+    """Test MCCEntry with invalid MCC code raises ValueError."""
+    with pytest.raises(ValueError, match="4-digit"):
+        MCCEntry(mcc="abc", source_image="test.jpg")

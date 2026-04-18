@@ -1,86 +1,114 @@
 """
-Protocol interfaces for dependency injection.
+Protocol interfaces for dependency injection (Surya OCR pipeline).
 """
 
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Any, Dict, List, Protocol, Tuple
+from typing import Any, Dict, List, Protocol
 
 from PIL import Image
 
-from app.models.mcc_entry import BBoxTextItem, MCCEntry
+from app.models.mcc_entry import MCCEntry, SimilarMerchant
+from app.models.ocr_line import OCRLine
 
 
-class VisionService(Protocol):
+class OCRService(Protocol):
     """
-    Protocol for vision/OCR service that extracts text regions from images.
+    Protocol for OCR service that extracts text lines from images.
     """
 
     @abstractmethod
-    def extract_regions(self, image_path: Path) -> List[BBoxTextItem]:
+    def extract_lines(self, image: Image.Image) -> List[OCRLine]:
         """
-        Extract text regions with bounding boxes from an image.
+        Extract text lines with pixel bounding boxes from an image.
 
         Args:
-            image_path: Path to the image file.
+            image: PIL Image to process.
 
         Returns:
-            List of BBoxTextItem with text and normalized bbox coordinates.
+            List of OCRLine sorted by (round(y1/15), x1).
         """
         ...
 
 
-class TableReconstructor(Protocol):
+class ColumnClassifier(Protocol):
     """
-    Protocol for reconstructing table structure from text regions.
+    Protocol for classifying OCR lines into table columns.
     """
 
     @abstractmethod
-    def reconstruct(
-        self, regions: List[BBoxTextItem], image_size: Tuple[int, int]
-    ) -> List[Dict[str, str]]:
+    def classify(self, line: OCRLine, image_width: int) -> str:
         """
-        Reconstruct table rows from OCR regions.
+        Classify an OCR line into a column based on its x-position.
 
         Args:
-            regions: List of text regions with bounding boxes.
-            image_size: Tuple of (width, height) of the original image.
+            line: OCR line with bounding box.
+            image_width: Width of the source image in pixels.
 
         Returns:
-            List of row dictionaries with keys: mcc, title_description, included, similar_merchants.
-        """
-        ...
-
-    @abstractmethod
-    def visualize_results(
-        self, image_path: Path, rows: List[Dict[str, str]]
-    ) -> Image.Image:
-        """
-        Visualize reconstructed table on image.
-
-        Args:
-            image_path: Path to the original image.
-            rows: Reconstructed table rows.
-
-        Returns:
-            PIL Image with bounding boxes and labels drawn.
+            Column name: "mcc", "desc", "included", "similar", or "unknown".
         """
         ...
 
 
-class MCCParser(Protocol):
+class EntryGrouper(Protocol):
     """
-    Protocol for parsing reconstructed table rows into MCCEntry objects.
+    Protocol for grouping classified lines into raw entries.
     """
 
     @abstractmethod
-    def parse(self, rows: List[Dict[str, str]], source: str) -> List[MCCEntry]:
+    def group(self, classified: List[tuple]) -> List[Dict[str, Any]]:
         """
-        Parse table rows into MCCEntry objects.
+        Group classified lines into raw entries.
 
         Args:
-            rows: List of row dictionaries from table reconstruction.
-            source: Source filename for tracking.
+            classified: List of (OCRLine, column_name) tuples.
+
+        Returns:
+            List of raw entry dicts with keys: mcc, _desc_lines, _included_lines, _similar_lines.
+        """
+        ...
+
+
+class EntryParser(Protocol):
+    """
+    Protocol for parsing a raw entry dict into an MCCEntry.
+    """
+
+    @abstractmethod
+    def parse(self, raw: Dict[str, Any], source_image: str) -> MCCEntry:
+        """
+        Parse a raw entry dictionary into an MCCEntry.
+
+        Args:
+            raw: Raw entry dict from EntryGrouper.
+            source_image: Source image filename for tracking.
+
+        Returns:
+            MCCEntry object.
+        """
+        ...
+
+
+class TableParser(Protocol):
+    """
+    Protocol for orchestrating the full table parsing pipeline.
+    """
+
+    @abstractmethod
+    def parse(
+        self,
+        lines: List[OCRLine],
+        image_width: int,
+        source_image: str = "",
+    ) -> List[MCCEntry]:
+        """
+        Parse OCR lines into a list of MCCEntry objects.
+
+        Args:
+            lines: List of OCRLine from OCRService.
+            image_width: Width of the source image in pixels.
+            source_image: Source image filename for provenance.
 
         Returns:
             List of MCCEntry objects.
@@ -90,7 +118,7 @@ class MCCParser(Protocol):
 
 class ImageRepository(Protocol):
     """
-    Protocol for listing image files from a directory.
+    Protocol for listing and reading image files from a directory.
     """
 
     @abstractmethod
@@ -103,6 +131,19 @@ class ImageRepository(Protocol):
 
         Returns:
             List of image file paths, sorted stably.
+        """
+        ...
+
+    @abstractmethod
+    def read(self, path: Path) -> Image.Image:
+        """
+        Read an image file and return as PIL Image.
+
+        Args:
+            path: Path to the image file.
+
+        Returns:
+            PIL Image object.
         """
         ...
 
@@ -127,41 +168,35 @@ class JsonRepository(Protocol):
 class CheckpointRepository(Protocol):
     """
     Protocol for managing checkpoint/resume state.
+
+    The checkpoint file path is encapsulated inside the concrete implementation
+    (injected at construction), so the use case does not need to know where
+    the checkpoint lives.
     """
 
     @abstractmethod
-    def load(self, checkpoint_path: Path) -> Dict[str, Any]:
+    def load(self) -> "set[str]":
         """
-        Load checkpoint state.
-
-        Args:
-            checkpoint_path: Path to checkpoint file.
+        Load the set of already-processed image filenames.
 
         Returns:
-            Dictionary with checkpoint state.
+            Set of filenames. Empty set when no checkpoint exists.
         """
         ...
 
     @abstractmethod
-    def save(self, checkpoint_path: Path, state: Dict[str, Any]) -> None:
+    def mark_done(self, filename: str) -> None:
         """
-        Save checkpoint state.
+        Append a filename to the checkpoint and persist immediately.
 
         Args:
-            checkpoint_path: Path to checkpoint file.
-            state: Dictionary with checkpoint state to save.
+            filename: Image filename that was just processed successfully.
         """
         ...
 
     @abstractmethod
-    def exists(self, checkpoint_path: Path) -> bool:
+    def clear(self) -> None:
         """
-        Check if checkpoint file exists.
-
-        Args:
-            checkpoint_path: Path to checkpoint file.
-
-        Returns:
-            True if checkpoint exists, False otherwise.
+        Delete the checkpoint file after a successful run.
         """
         ...

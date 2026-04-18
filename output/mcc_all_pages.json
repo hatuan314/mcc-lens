@@ -1,0 +1,1009 @@
+{
+  "source": "Visa Merchant Data Standards Manual",
+  "total_mcc_count": 91,
+  "mcc_list": [
+    {
+      "mcc": "0742",
+      "title": "Veterinary Services",
+      "description": "Merchants classified with this MCC are licensed practitioners of veterinary medicine, dentistry, or surgery. This MCC includes medical practitioners of pets (e.g., dogs, cats), livestock (e.g., cattle, horses, sheep, hogs, goats, poultry), and large or exotic animals.",
+      "included_in_mcc": [
+        "Animal Doctors,",
+        "Pet Hospitals",
+        "Pet Clinics",
+        "Services – Veterinary"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "5995",
+          "title": "Pet Shops, Pet Foods and Supplies Store"
+        }
+      ]
+    },
+    {
+      "mcc": "0763",
+      "title": "Agricultural Co-operatives",
+      "description": "Merchants classified with this MCC provide farm management services or engage in farming operations. Also included in this MCC are associations and cooperatives that provide assistance and services to farmers in farm management. These services include, but are not limited to financial assistance, management or complete maintenance of crops, soil preparation, planting and cultivating, aerial dusting and spraying, disease and insect control, weed control, and harvesting crops.",
+      "included_in_mcc": [
+        "Farm Management",
+        "Services",
+        "Orchards",
+        "Vineyards"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "0780",
+          "title": "Landscaping and Horticultural Services"
+        },
+        {
+          "mcc": "4225",
+          "title": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage"
+        }
+      ]
+    },
+    {
+      "mcc": "0780",
+      "title": "Landscaping and Horticultural Services",
+      "description": "Merchants classified with this MCC provide landscape planning and design services. This MCC also includes Merchants that offer a variety of lawn and garden services (e.g., planting, fertilizing, mowing, mulching, seeding, spraying, sod laying).",
+      "included_in_mcc": [
+        "Gardening Services",
+        "Horticulture Services",
+        "Landscaping Services"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "5193",
+          "title": "Florist Supplies, Nursery Stock and Flowers"
+        },
+        {
+          "mcc": "5261",
+          "title": "Nurseries and Lawn and Garden Supply Stores"
+        }
+      ]
+    },
+    {
+      "mcc": "1520",
+      "title": "General Contractors – Residential and Commercial",
+      "description": "Merchants classified with this MCC are general contractors primarily engaged in construction of residential and/or commercial buildings. This MCC includes contractors that perform new construction as well as remodeling, repair, additions, or alterations.",
+      "included_in_mcc": [
+        "Building Contractors –",
+        "Residential, Commercial",
+        "<b>Construction Companies</b>",
+        "<b>General Contractors</b>"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1711",
+          "title": "Heating, Plumbing, and Air <b>Conditioning Contractors</b>"
+        },
+        {
+          "mcc": "1731",
+          "title": "Electrical Contractors"
+        },
+        {
+          "mcc": "1740",
+          "title": "Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors"
+        },
+        {
+          "mcc": "1750",
+          "title": "Carpentry Contractors"
+        },
+        {
+          "mcc": "1761",
+          "title": "Roofing, Siding, and Sheet Metal Work Contractors"
+        },
+        {
+          "mcc": "1771",
+          "title": "Concrete Work Contractors"
+        },
+        {
+          "mcc": "1799",
+          "title": "Special Trade Contractors (Not Elsewhere Classified)"
+        }
+      ]
+    },
+    {
+      "mcc": "1711",
+      "title": "Heating, Plumbing, and Air Conditioning Contractors",
+      "description": "Merchants classified with this MCC are contractors that provide heating, plumbing and air conditioning services. This MCC includes contractors that perform air system balancing and testing, drainage system installation, furnace repair, irrigation system installation, refrigeration and freezer work, sewer",
+      "included_in_mcc": [
+        "Air Conditioning",
+        "Contractors",
+        "Heating Contractors",
+        "Plumbing Contractors",
+        "<b>VISA PUBLIC</b>"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1520",
+          "title": "General Contractors – Residential and Commercial"
+        },
+        {
+          "mcc": "5074",
+          "title": "Plumbing and Heating Equipment and Supplies"
+        },
+        {
+          "mcc": "1799",
+          "title": "Special Trade Contractors (Not Elsewhere Classified) 24"
+        }
+      ]
+    },
+    {
+      "mcc": "1731",
+      "title": "<b>Electrical Contractors</b>",
+      "description": "Merchants classified with this MCC are contractors that provide electrical work such as fire alarm installation, sound equipment installation, telecommunications equipment installation, cable/internet installation, and telephone and telephone equipment installation. Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors",
+      "included_in_mcc": [
+        "Contractors – Electrical"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1520",
+          "title": "General Contractors – Residential and Commercial"
+        },
+        {
+          "mcc": "1799",
+          "title": "Special Trade Contractors (Not Elsewhere Classified)"
+        }
+      ]
+    },
+    {
+      "mcc": "1740",
+      "title": "Merchants classified with this MCC are contractors",
+      "description": "that perform masonry work, stone setting and other stone work, tile setting, plain and ornamental plastering, and insulation. This MCC also includes contractors that perform bricklaying, ceramic and marble work, mosaic work, acoustical improvements, and drywall construction.",
+      "included_in_mcc": [
+        "<b>Insulation Contractors</b>",
+        "Masonry Contractors",
+        "<b>Plastering Contractors</b>",
+        "<b>Stonework Contractors</b>",
+        "Tile Setting Contractors"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1520",
+          "title": "General Contractors – <b>Residential and Commercial</b>"
+        },
+        {
+          "mcc": "1799",
+          "title": "Special Trade Contractors (Not Elsewhere Classified)"
+        }
+      ]
+    },
+    {
+      "mcc": "1750",
+      "title": "<b>Carpentry Contractors</b>",
+      "description": "Merchants classified with this MCC are contractors that perform carpentry work. This MCC includes contractors that do cabinet work at the construction site, framing, trim and finish work and window and door installation.",
+      "included_in_mcc": [
+        "Contractors – Carpentry"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1520",
+          "title": "General Contractors – <b>Residential and Commercial</b>"
+        },
+        {
+          "mcc": "1799",
+          "title": "Special Trade Contractors (Not Elsewhere Classified)"
+        }
+      ]
+    },
+    {
+      "mcc": "1761",
+      "title": "Roofing, Siding, and Sheet Metal Work Contractors",
+      "description": "Merchants classified with this MCC are contractors that install roofing and/or siding and do sheet metal work. This MCC includes contractors that perform architectural sheet metal work, ceilings and skylight installation, duct and gutter installation, and roof spraying, painting or coating.",
+      "included_in_mcc": [
+        "Contractors – Roofing",
+        "Contractors – Sheet Metal",
+        "Work",
+        "Contractors – Siding"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1520",
+          "title": "General Contractors – <b>Residential and Commercial</b>"
+        },
+        {
+          "mcc": "1799",
+          "title": "Special Trade Contractors (Not Elsewhere Classified)"
+        }
+      ]
+    },
+    {
+      "mcc": "1771",
+      "title": "<b>Concrete Work Contractors</b>",
+      "description": "Merchants classified with this MCC are contractors that perform concrete, cement or asphalt work. This MCC includes contractors that construct private driveways and walks of all materials. Also included in this category are contractors that pour concrete for foundations and perform grouting work and concrete patio and sidewalk construction.",
+      "included_in_mcc": [
+        "Asphalt Contractors",
+        "<b>Cement Contractors</b>",
+        "Contractors – Concrete",
+        "Work"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1520",
+          "title": "General Contractors – <b>Residential and Commercial</b>"
+        },
+        {
+          "mcc": "1799",
+          "title": "Special Trade Contractors (Not Elsewhere Classified)"
+        }
+      ]
+    },
+    {
+      "mcc": "1799",
+      "title": "Special Trade Contractors (Not Elsewhere Classified)",
+      "description": "Merchants classified with this MCC are special trade contractors that perform construction work not covered with a more specific MCC. This MCC includes contractors that perform jobs such as awning installation, bathtub refinishing, fence construction,",
+      "included_in_mcc": [
+        "Special Trade Contractors",
+        "<b>Decorating Contractors</b>",
+        "<b>Demolition Services</b>",
+        "Contractors",
+        "<b>VISA PUBLIC</b>"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "1520",
+          "title": "General Contractors – <b>Residential and Commercial</b> 25"
+        }
+      ]
+    },
+    {
+      "mcc": "2741",
+      "title": "Miscellaneous Publishing and Printing",
+      "description": "Merchants classified with this MCC engage in business-to-business or wholesale printing, publishing and/or bookbinding activity. This includes Merchants that print or publish maps and atlases, business newsletters, directories, sheet music, paper patterns, technical manuals and papers, telephone directories and yearbooks.",
+      "included_in_mcc": [
+        "Bookbinding Services",
+        "<b>Printing Services</b>",
+        "<b>Publishing Services</b>"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "5192",
+          "title": "Books, Periodicals and Newspapers"
+        },
+        {
+          "mcc": "5942",
+          "title": "Book Stores"
+        },
+        {
+          "mcc": "7338",
+          "title": "Quick Copy, Reproduction, and Blueprinting Services"
+        }
+      ]
+    },
+    {
+      "mcc": "2791",
+      "title": "Typesetting, Plate Making and Related Services",
+      "description": "Merchants classified with this MCC perform business- to-business or wholesale typesetting for the printing trade and those that make plates for printing purposes. These Merchants are involved in advertisement typesetting, phototypesetting, computer-controlled typesetting, and color separations. This MCC also includes Merchants that make positives and negatives from which offset lithographic plates are made. These establishments do not print from the plates they make but prepare them only for use by other Merchants. This MCC also includes Merchants that provide engraving or embossing services for printing purposes, such as engraving on wood, rubber, copper, or steel, or photoengraving.",
+      "included_in_mcc": [
+        "Plate Making Services",
+        "Typesetting Services"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "2741",
+          "title": "Miscellaneous Publishing and Printing"
+        },
+        {
+          "mcc": "7338",
+          "title": "Quick Copy, Reproduction, and Blueprinting Services"
+        }
+      ]
+    },
+    {
+      "mcc": "2842",
+      "title": "Specialty Cleaning, Polishing and Sanitation Preparations",
+      "description": "Merchants classified with this MCC engage in the business-to-business or wholesale manufacture of polishes for wood, metal, and other materials as well as cleaning solutions, industrial and household disinfectants, and other sanitation preparations. Also included in this MCC are Merchants that sell non- personal deodorants, waxes and dressings for fabricated leather and other materials, wax removers, dry cleaning fluid and chemicals, rust and stain removers, wallpaper cleaners, and window cleaning solutions.",
+      "included_in_mcc": [
+        "<b>Cleaning Preparations</b>",
+        "Materials – Cleaning,",
+        "Polishing, Sanitation",
+        "Polishing Preparations",
+        "Sanitation Preparations",
+        "<b>VISA PUBLIC</b>"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "5085",
+          "title": "Industrial Supplies (Not Elsewhere Classified)"
+        },
+        {
+          "mcc": "5169",
+          "title": "Chemicals and Allied Products (Not Elsewhere Classified) 26"
+        }
+      ]
+    },
+    {
+      "mcc": "3000",
+      "title": "<b>UNITED AIRLINES</b>",
+      "description": null,
+      "included_in_mcc": [
+        "UNITED AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3001",
+      "title": "<b>AMERICAN AIRLINES</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AMERICAN AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3002",
+      "title": "PAN AMERICAN",
+      "description": null,
+      "included_in_mcc": [
+        "PAN AM AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3003",
+      "title": "<b>EUROFLY AIRLINES</b>",
+      "description": null,
+      "included_in_mcc": [
+        "EUROFLY AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3004",
+      "title": "<b>DRAGON AIRLINES</b>",
+      "description": null,
+      "included_in_mcc": [
+        "DRAGONAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3005",
+      "title": "<b>BRITISH AIRWAYS</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>BRITISH AWYS</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3006",
+      "title": "JAPAN AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "JAL AIRLINE"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3007",
+      "title": "<b>AIR FRANCE</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AIR FRANCE</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3008",
+      "title": "LUFTHANSA",
+      "description": null,
+      "included_in_mcc": [
+        "LUFTHANSA",
+        "<b>AIR CANADA</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3009",
+      "title": "<b>AIR CANADA</b>",
+      "description": null,
+      "included_in_mcc": [],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3010",
+      "title": "KLM (ROYAL DUTCH AIRLINES)",
+      "description": null,
+      "included_in_mcc": [
+        "KLM AIRLINE"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3011",
+      "title": "AEROFLOT",
+      "description": null,
+      "included_in_mcc": [
+        "AEROFLOT"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3012",
+      "title": "QANTAS",
+      "description": null,
+      "included_in_mcc": [
+        "<b>QANTAS AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3013",
+      "title": "ITA AIRWAYS (FORMERLY ALITALIA)",
+      "description": null,
+      "included_in_mcc": [
+        "ITA AIRWAYS (FORMERLY ALITALIA)"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3014",
+      "title": "SAUDI ARABIAN AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "SAUDIA AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3015",
+      "title": "SWISS INTERNATIONAL AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "SWISSINTAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3016",
+      "title": "SAS",
+      "description": null,
+      "included_in_mcc": [
+        "SAS"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3017",
+      "title": "SOUTH AFRICAN AIRWAYS",
+      "description": null,
+      "included_in_mcc": [
+        "SAA AIRWAYS"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3018",
+      "title": "VARIG (BRAZIL)",
+      "description": null,
+      "included_in_mcc": [
+        "VARIG"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3019",
+      "title": "EASTERN AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "EASTERN AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3020",
+      "title": "<b>AIR-INDIA</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AIR-INDIA</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3021",
+      "title": "<b>AIR ALGERIE</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AIR ALGERIE</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3022",
+      "title": "PHILIPPINE AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "PAL AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3023",
+      "title": "MEXICANA",
+      "description": null,
+      "included_in_mcc": [
+        "MEXICANA"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3024",
+      "title": "<b>PAKISTAN INTERNATIONAL</b>",
+      "description": null,
+      "included_in_mcc": [
+        "PAKISTAN AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3025",
+      "title": "AIR NEW ZEALAND",
+      "description": null,
+      "included_in_mcc": [
+        "AIR NZ"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3026",
+      "title": "<b>EMIRATES AIRLINES</b>",
+      "description": null,
+      "included_in_mcc": [
+        "EMIRATES"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3027",
+      "title": "UTA/INTERAIR",
+      "description": null,
+      "included_in_mcc": [
+        "UTA AIRLINE"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3028",
+      "title": "KM MALTA AIRLINES (FORMERLY AIR MALTA)",
+      "description": null,
+      "included_in_mcc": [
+        "KMMA (FORMERLY AIR MALTA)"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3029",
+      "title": "SN BRUSSELS AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "SNBRSSLSAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3030",
+      "title": "AEROLINEAS ARGENTINAS",
+      "description": null,
+      "included_in_mcc": [
+        "AERO ARGENT"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3031",
+      "title": "OLYMPIC AIRWAYS",
+      "description": null,
+      "included_in_mcc": [
+        "OLYMPIC AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3032",
+      "title": "EL AL",
+      "description": null,
+      "included_in_mcc": [
+        "EL AL"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3033",
+      "title": "ANSETT AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "ANSETT AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3034",
+      "title": "ETIHAD AIRWAYS",
+      "description": null,
+      "included_in_mcc": [
+        "ETIHADAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3035",
+      "title": "TAP (PORTUGAL)",
+      "description": null,
+      "included_in_mcc": [
+        "TAP AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3036",
+      "title": "VASP (BRAZIL)",
+      "description": null,
+      "included_in_mcc": [
+        "VASP AIR",
+        "<b>VISA PUBLIC</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3037",
+      "title": "EGYPTAIR",
+      "description": null,
+      "included_in_mcc": [
+        "EGYPTAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3038",
+      "title": "<b>KUWAIT AIRWAYS</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>KUWAIT AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3039",
+      "title": "AVIANCA",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AVIANCA</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3040",
+      "title": "GULF AIR (BAHRAIN)",
+      "description": null,
+      "included_in_mcc": [
+        "GULF AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3041",
+      "title": "<b>BALKAN-BULGARIAN AIRLINES</b>",
+      "description": null,
+      "included_in_mcc": [
+        "BALKAN AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3042",
+      "title": "FINNAIR",
+      "description": null,
+      "included_in_mcc": [
+        "FINNAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3043",
+      "title": "AER LINGUS",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AER LINGUS</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3044",
+      "title": "AIR LANKA",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AIR LANKA</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3045",
+      "title": "<b>NIGERIA AIRWAYS</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>NIGERIA AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3046",
+      "title": "CRUZEIRO DO SUL (BRAZIL)",
+      "description": null,
+      "included_in_mcc": [
+        "<b>CRUZEIRO AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3047",
+      "title": "<b>TURKISH AIRLINES</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>TURKISH AIRLINES</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3048",
+      "title": "ROYAL AIR MAROC",
+      "description": null,
+      "included_in_mcc": [
+        "AIR MAROC"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3049",
+      "title": "<b>TUNIS AIR</b>",
+      "description": null,
+      "included_in_mcc": [
+        "<b>TUNIS AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3050",
+      "title": "ICELANDAIR",
+      "description": null,
+      "included_in_mcc": [
+        "<b>ICELANDAIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3051",
+      "title": "AUSTRIAN AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AUSTRIAN AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3052",
+      "title": "LAN AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "LAN AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3053",
+      "title": "AVIACO (SPAIN)",
+      "description": null,
+      "included_in_mcc": [
+        "<b>AVIACO AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3054",
+      "title": "LADECO (CHILE)",
+      "description": null,
+      "included_in_mcc": [
+        "LADECO AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3055",
+      "title": "LAB (BOLIVIA)",
+      "description": null,
+      "included_in_mcc": [
+        "LAB AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3056",
+      "title": "JET AIRWAYS",
+      "description": null,
+      "included_in_mcc": [
+        "JET AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3057",
+      "title": "<b>VIRGIN AMERICA</b>",
+      "description": null,
+      "included_in_mcc": [
+        "VIR AMER"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3058",
+      "title": "DELTA",
+      "description": null,
+      "included_in_mcc": [
+        "DELTA AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3059",
+      "title": "DBA AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "DBA AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3060",
+      "title": "NORTHWEST",
+      "description": null,
+      "included_in_mcc": [
+        "NWA AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3061",
+      "title": "CONTINENTAL",
+      "description": null,
+      "included_in_mcc": [
+        "CONTINENTAL"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3062",
+      "title": "HAPAG-LLOYD EXPRESS AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "HLX AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3063",
+      "title": "US AIRWAYS",
+      "description": null,
+      "included_in_mcc": [
+        "USAIRWAYS"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3064",
+      "title": "ADRIA AIRWAYS",
+      "description": null,
+      "included_in_mcc": [
+        "<b>ADRIA AIR</b>"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3065",
+      "title": "AIRINTER",
+      "description": null,
+      "included_in_mcc": [
+        "AIRINTER"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3066",
+      "title": "SOUTHWEST",
+      "description": null,
+      "included_in_mcc": [
+        "SOUTHWESTAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3067",
+      "title": "VANGUARD AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "VANGUARD AIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3068",
+      "title": "AIR ASTANA",
+      "description": null,
+      "included_in_mcc": [
+        "AIR ASTANA"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3069",
+      "title": "SUN COUNTRY AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "SUNCNTRYAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3070",
+      "title": "FLYDUBAI",
+      "description": null,
+      "included_in_mcc": [
+        "FLYDUBAI"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3071",
+      "title": "AIR BRITISH COLUMBIA",
+      "description": null,
+      "included_in_mcc": [
+        "AIR BC"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3072",
+      "title": "CEBU PACIFIC AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "CEBU PAC"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3075",
+      "title": "SINGAPORE AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "SINGAPOREAIR"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3076",
+      "title": "AEROMEXICO",
+      "description": null,
+      "included_in_mcc": [
+        "AEROMEXICO"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3077",
+      "title": "THAI AIRWAYS",
+      "description": null,
+      "included_in_mcc": [
+        "THAI AIRWAYS"
+      ],
+      "similar_merchants": []
+    },
+    {
+      "mcc": "3078",
+      "title": "CHINA AIRLINES",
+      "description": null,
+      "included_in_mcc": [
+        "CHINA AIR",
+        "<b>VISA PUBLIC</b>"
+      ],
+      "similar_merchants": []
+    }
+  ]
+}

@@ -1,107 +1,140 @@
 ---
 phase: planning
 title: Project Planning & Task Breakdown - Convert MCC Image to JSON
-description: Phân rã công việc, thứ tự thực hiện và rủi ro cho tính năng convert ảnh MCC sang JSON bằng Florence-2.
+description: Phân rã công việc, thứ tự thực hiện và rủi ro cho tính năng convert ảnh MCC sang JSON bằng Surya OCR. Thay thế giải pháp Florence-2 trước đó.
 ---
 
 # Project Planning & Task Breakdown
 
+> **Cập nhật 2026-04-18:** Toàn bộ engine OCR chuyển từ Florence-2 sang Surya OCR.
+> Code Florence-2 đã được implement (scaffolding tồn tại trong `app/`) nhưng cần thay thế hoàn toàn.
+> Planning này phản ánh công việc cần làm cho Surya OCR theo thiết kế mới.
+
 ## Milestones
 **Các cột mốc lớn:**
 
-- [ ] **M1 — Foundation sẵn sàng:** dependencies Florence-2 cài được, model load thành công trên CPU.
-- [ ] **M2 — Pipeline end-to-end:** chạy được trên 1 ảnh, sinh JSON đúng schema.
-- [ ] **M3 — Batch + CLI hoàn chỉnh:** progress bar, error-resilient, chạy toàn bộ 5 ảnh VISA.
-- [ ] **M4 — Test & tài liệu:** unit test ≥ 80% coverage phần parser/use case, README cập nhật.
+- [x] **M0 — Scaffolding Clean Architecture tồn tại:** cấu trúc thư mục `app/` theo MVC đã có, repositories, views, controller đã scaffold.
+- [x] **M1 — Foundation Surya sẵn sàng:** `surya-ocr` cài được, 3 predictors load thành công, model/schema mới định nghĩa xong.
+- [x] **M2 — Pipeline end-to-end:** chạy được trên 1 ảnh, sinh JSON đúng schema mới (6 fields).
+- [x] **M3 — Batch + CLI hoàn chỉnh:** progress bar, error-resilient, `--resume` hoạt động, chạy toàn bộ ảnh VISA.
+- [x] **M4 — Test & tài liệu:** unit test ≥ 80% coverage phần parser/use case, README cập nhật.
+- [x] **M5 — Alignment fixes sau /check-implementation:** sửa contract checkpoint, đổi tên file checkpoint, đổi field JSON về `_unparsed`, xử lý NFD/NFC.
 
 ## Task Breakdown
 **Công việc cụ thể:**
 
-### Phase 1: Foundation
-- [ ] **1.1** Cập nhật `requirements.txt`: thêm `torch`, `transformers`, `pillow`, `tqdm`, `einops`, `timm` (Florence-2 yêu cầu `timm` & `einops`). Pin version.
-- [ ] **1.2** Viết script/ghi chú cài đặt & tải weight Florence-2 large (`microsoft/Florence-2-large`) lần đầu.
-- [ ] **1.3** Tạo domain model `app/models/mcc_entry.py` với pydantic `MCCEntry` (fields: `mcc`, `title_description`, `included`, `similar_merchants`, `source_image`, `_unparsed`) và dataclass `BBoxTextItem` (fields: `text`, `bbox: tuple[float,float,float,float]`).
-- [ ] **1.4** Định nghĩa Protocol interfaces trong `app/services/protocols.py`: `VisionService` (`extract_regions`), `TableReconstructor` (`reconstruct`, `visualize_results`), `MCCParser` (`parse`), `ImageRepository`, `JsonRepository`, `CheckpointRepository`.
+### Phase 1: Foundation (Migrate từ Florence-2 → Surya)
 
-### Phase 2: Core Features
-- [ ] **2.1** Implement `Florence2VisionService.extract_regions(image_path)`:
-  - Load model/processor 1 lần (lazy singleton trong instance).
-  - Chọn device auto (cuda > mps > cpu), hỗ trợ flag override.
-  - Dùng task `<OCR_WITH_REGION>`, `max_new_tokens=3072`, `num_beams=3`.
-  - Trả về `list[BBoxTextItem]` — parse chuỗi Florence-2 ra cặp `(text, bbox [y1,x1,y2,x2])`.
-- [ ] **2.2** Implement `TableReconstructionService.reconstruct(regions, image_size)`:
-  - **Row grouping**: nhóm bbox theo trục Y với ngưỡng `y_threshold_pct` (default 0.01), truyền qua constructor.
-  - **Column assignment**: xác định 4 cột bằng dynamic clustering hoặc mốc X theo % (MCC ~10%, Title/Desc ~50%, Included ~75%, Similar ~90%).
-  - **Multi-line merging**: gộp dòng tiếp theo (cột `mcc` trống) vào block của MCC hiện tại.
-  - Trả về `list[dict[str, str]]` với keys: `mcc`, `title_description`, `included`, `similar_merchants`.
-- [ ] **2.2b** Implement `TableReconstructionService.visualize_results(image_path, rows)`:
-  - Vẽ bounding boxes + label hàng/cột lên ảnh bằng `PIL.ImageDraw`.
-  - Trả về `PIL.Image` để lưu/hiển thị khi debug.
-- [ ] **2.3** Implement `MCCParserService.parse(rows, source)`:
-  - Validate `mcc` là 4 chữ số; entry không hợp lệ: `mcc=""`, `_unparsed=True`.
-  - Tách `similar_merchants` theo dấu phẩy / newline thành `list[str]`.
-  - Build `MCCEntry` cho mỗi row.
-- [ ] **2.3** Implement `MCCImageRepository.list_images(dir)` — glob `*.jpg`/`*.jpeg`/`*.png`, sort ổn định.
-- [ ] **2.4** Implement `MCCJsonRepository.save(entries, output_path)` — tạo thư mục cha nếu chưa có, ghi UTF-8 indent=2, `ensure_ascii=False`.
-- [ ] **2.5** Implement `ConvertMCCImagesUseCase.execute(input_dir, output_path, device, y_threshold_pct, resume)` — orchestrate pipeline: vision → table reconstruction → parser → checkpoint. Dedup cuối batch theo `mcc`: merge `title_description` + `included` bằng `\n`, union `similar_merchants`; giữ nguyên tất cả entry `_unparsed=True`.
+- [x] **1.1** Cập nhật `requirements.txt`: xóa/thay `torch`, `transformers`, `einops`, `timm` → thêm `surya-ocr`. Giữ `pillow`, `tqdm`, `loguru`, `pydantic`. Pin version.
+- [x] **1.2** Cập nhật `CLAUDE.md`: thay mục "Florence-2 Setup" bằng hướng dẫn cài `surya-ocr` và tải weights Surya từ HuggingFace lần đầu.
+- [x] **1.3** Rewrite `app/models/mcc_entry.py`:
+  - Xóa `BBoxTextItem` (normalized) → thêm `OCRLine` vào `app/models/ocr_line.py` (pixel bbox `[x1,y1,x2,y2]`, confidence).
+  - Thêm `SimilarMerchant` dataclass (`mcc: str`, `title: str`).
+  - Cập nhật `MCCEntry`: đổi `title_description` → `title: str | None` + `description: str | None`; đổi `included: str` → `included_in_mcc: list[str]`; đổi `similar_merchants: list[str]` → `list[SimilarMerchant]`; đổi `unparsed: bool` → `_unparsed: bool`.
+- [x] **1.4** Rewrite `app/services/protocols.py`: xóa `VisionService`, `TableReconstructor`, `MCCParser` cũ → thêm `OCRService`, `ColumnClassifier`, `EntryGrouper`, `EntryParser`, `TableParser`, `ImageRepository`, `JsonRepository`, `CheckpointRepository` theo thiết kế mới.
+
+### Phase 2: Core Features (Surya Pipeline)
+
+- [x] **2.1** Tạo `app/services/surya_ocr_service.py` — implements `OCRService`:
+  - Lazy load `FoundationPredictor`, `RecognitionPredictor`, `DetectionPredictor` trong `__init__` (load 1 lần).
+  - `extract_lines(image: PIL.Image) -> list[OCRLine]`: gọi `recognition_predictor([image], det_predictor=detection_predictor)`, parse `rec.text_lines` → `OCRLine` (pixel bbox), sort theo `(round(y1/15), x1)`.
+  - Tự động chọn device (MPS → CPU); log device đang dùng.
+- [x] **2.2** Tạo `app/services/column_classifier.py` — implements `ColumnClassifier`:
+  - `classify(line: OCRLine, image_width: int) -> str`: trả `"mcc"/"desc"/"included"/"similar"/"unknown"` dựa vào `line.bbox[0]` (x1) / `image_width` với ngưỡng cố định (0–12%, 12–46%, 46–64%, 64–100%).
+  - Pure function, không có state.
+- [x] **2.3** Tạo `app/services/entry_grouper.py` — implements `EntryGrouper`:
+  - `group(classified: list[tuple[OCRLine, str]]) -> list[dict]`: trả list `RawEntry` (dict gồm `mcc: str`, `_desc_lines: list[str]`, `_included_lines: list[str]`, `_similar_lines: list[str]`).
+  - Trigger entry mới khi gặp text khớp `^\d{4}$` ở cột `"mcc"`.
+- [x] **2.4** Tạo `app/services/mcc_entry_parser.py` — implements `EntryParser`:
+  - `parse(raw: dict, source_image: str) -> MCCEntry`.
+  - Dòng đầu `_desc_lines` → `title`; phần còn lại → `description`.
+  - Parse `_similar_lines` thành `list[SimilarMerchant]` với nối tiếp title bị cắt (không match `^\d{4}\s*[–\-]`).
+  - `_included_lines` filter dòng > 2 ký tự → `included_in_mcc: list[str]`.
+  - Gán `_unparsed=True` khi `mcc=""`.
+- [x] **2.5** Tạo `app/services/mcc_table_parser_service.py` — implements `TableParser`:
+  - Orchestrator gọi tuần tự: `ColumnClassifier` → `EntryGrouper` → `MCCEntryParser`.
+  - `parse(lines: list[OCRLine], image_width: int) -> list[MCCEntry]`.
+- [x] **2.6** Rewrite `app/services/convert_mcc_images_use_case.py`:
+  - Inject: `OCRService`, `TableParser`, `ImageRepository`, `JsonRepository`, `CheckpointRepository`, `ProgressBarView`.
+  - `execute(input_dir, output_path, resume)` — không còn `device`/`y_threshold_pct`.
+  - Gom tất cả entry → **dedup** (giữ `description` dài hơn khi trùng MCC) → **sort by `mcc`** → truyền vào `JsonRepository.save()`.
+- [x] **2.7** Kiểm tra/cập nhật `app/repositories/mcc_image_repository.py` — đảm bảo `read(path) -> PIL.Image` tồn tại.
+- [x] **2.8** Kiểm tra/cập nhật `app/repositories/mcc_json_repository.py` — schema output mới: `{"source": ..., "total_mcc_count": N, "mcc_list": [...]}` với `MCCEntry` schema mới (6 fields).
+- [x] **2.9** Xóa file lỗi thời: `app/services/florence2_vision_service.py`, `app/services/table_reconstruction_service.py`.
 
 ### Phase 3: Integration & Polish
-- [ ] **3.1** `ProgressBarView` wrap `tqdm` (iterate / update / close).
-- [ ] **3.2** `MCCConvertController` — nhận params, inject dependency, gọi Use Case, map exception → exit code.
-- [ ] **3.3** Thêm subcommand `convert-mcc` vào `main.py` (argparse), wiring logging. Tham số: `--input-dir`, `--output`, `--device`, `--y-threshold` (default 0.01), `--resume`.
-- [ ] **3.4** Error handling: try/except từng ảnh trong Use Case, log `WARNING`, không abort batch.
-- [ ] **3.5** Chạy thử toàn bộ 5 ảnh trong `assets/mcc-visa/`, rà soát chất lượng parse.
+
+- [x] **3.1** Rewrite `app/controllers/mcc_convert_controller.py`:
+  - Inject `SuryaOCRService` (thay Florence-2), `MCCTableParserService` và sub-components.
+  - Xóa tham số `device`, `y_threshold_pct`.
+  - Giữ exit code logic (0/1/2/3).
+- [x] **3.2** Cập nhật `main.py` subcommand `convert-mcc`:
+  - Xóa flags `--device`, `--y-threshold`.
+  - Giữ `--input-dir`, `--output`, `--resume`.
+  - Đảm bảo wiring logging loguru từ `Config`.
+- [x] **3.3** Kiểm tra `app/views/progress_bar_view.py` — không thay đổi nếu interface tương thích.
+- [x] **3.4** Chạy thử trên 1 ảnh sample, rà soát JSON output đúng schema mới.
+- [x] **3.5** Chạy thử toàn bộ ảnh trong `assets/mcc-visa/`, rà soát chất lượng parse, tỷ lệ thành công ≥ 90%.
 
 ### Phase 4: Test & Docs
-- [ ] **4.1** Unit test `TableReconstructionService` với fixtures bbox mẫu: happy path, multi-line merging, cột lệch trục X, ảnh độ phân giải khác nhau.
-- [ ] **4.2** Unit test `MCCParserService` với row fixtures: valid MCC, invalid MCC (→ `_unparsed`), `similar_merchants` nhiều format.
-- [ ] **4.3** Unit test `ConvertMCCImagesUseCase` với `FakeVisionService` + `FakeTableReconstructor` (không gọi Florence-2).
-- [ ] **4.4** Unit test `MCCJsonRepository` (tạo thư mục, UTF-8, dedup merge strategy).
-- [ ] **4.5** Cập nhật `README.md`: hướng dẫn chạy `convert-mcc`, yêu cầu phần cứng, hint về model download, ví dụ `--y-threshold`.
-- [ ] **4.6** (Optional) Ghi tài liệu Florence-2 `<OCR_WITH_REGION>` output format + ví dụ `visualize_results` vào `docs/ai/implementation/feature-convert-mcc-image-to-json.md`.
+
+- [x] **4.1** Unit test `ColumnClassifier` (`tests/test_column_classifier.py`): happy path cho 4 cột, boundary values (x1 đúng ngưỡng), unknown column.
+- [x] **4.2** Unit test `EntryGrouper` (`tests/test_entry_grouper.py`): 1 entry, nhiều entry, dòng trước MCC code đầu tiên bị bỏ qua, entry cuối không bị mất.
+- [x] **4.3** Unit test `MCCEntryParser` (`tests/test_mcc_entry_parser.py`): valid MCC, invalid MCC (`_unparsed=True`), `similar_merchants` với title bị cắt, `included_in_mcc` lọc dòng ngắn.
+- [x] **4.4** Unit test `MCCTableParserService` (`tests/test_mcc_table_parser_service.py`): integration của 3 sub-components với fixture OCRLine mẫu.
+- [x] **4.5** Unit test `ConvertMCCImagesUseCase` với `FakeOCRService` + `FakeTableParser` — kiểm tra dedup, sort, checkpoint flow, resume.
+- [x] **4.6** Unit test `MCCJsonRepository` — schema output mới, UTF-8, tạo thư mục cha.
+- [x] **4.7** Cập nhật `README.md`: hướng dẫn chạy `convert-mcc`, yêu cầu cài `surya-ocr`, hint về model download lần đầu (~1-2GB).
+- [x] **4.8** Cập nhật `docs/ai/implementation/feature-convert-mcc-image-to-json.md` với ghi chú implementation Surya OCR (nếu file tồn tại).
+
+### Phase 5: Alignment fixes sau `/check-implementation`
+
+- [x] **5.1** Sửa `CheckpointRepository` Protocol về đúng design: `load() → set[str]`, `mark_done(filename)`, `clear()`. Bỏ `exists/save(path, state)`.
+- [x] **5.2** `ConvertMCCImagesUseCase` dùng API mới; Controller/`main.py` wire repo với filename chuẩn `.mcc-convert-progress.json`.
+- [x] **5.3** Field output đổi về `_unparsed` qua pydantic `alias` + `by_alias=True` ở `MCCJsonRepository`.
+- [x] **5.4** Normalize NFC cho tên file ở `CheckpointRepository` và use case để khớp macOS NFD filesystem.
+- [x] **5.5** Tests: cập nhật fakes theo protocol mới, thêm regression NFC/NFD (56/56 pass).
+- [x] **5.6** Smoke run `--resume` xác nhận: seed 4 ảnh → pipeline chỉ xử lý ảnh còn lại, clear checkpoint khi xong.
 
 ## Dependencies
 **Thứ tự và ràng buộc:**
 
-- 1.1 → 2.1 (cần thư viện cài trước khi code service).
-- 1.3, 1.4 → 2.1/2.2/2.3/2.4/2.5 (models/interfaces trước implementations).
-- 2.1 → 2.2 → 2.2b → 2.3 (pipeline tuần tự: vision → table → parser).
-- 2.1 + 2.2 + 2.3 + 2.4 + 2.5 → 3.2 → 3.3 (Use Case cần các phụ thuộc sẵn sàng).
-- 2.5 → 3.2 → 3.3 (controller/CLI đi sau use case).
-- 3.1 có thể song song với 2.5.
-- 4.x chạy sau khi code tương ứng xong; 4.1 có thể bắt đầu ngay sau 2.2.
-- **Phụ thuộc ngoài:** HuggingFace Hub (download weights), băng thông mạng lần đầu (~1.5GB), phần cứng có RAM ≥ 8GB.
+- 1.1 → 2.1 (surya-ocr cài trước khi implement service).
+- 1.3, 1.4 → 2.1/2.2/2.3/2.4/2.5/2.6 (models/protocols trước implementations).
+- 2.1 → 2.5/2.6 (OCR service cần có trước use case).
+- 2.2 + 2.3 + 2.4 → 2.5 (sub-components trước orchestrator).
+- 2.5 + 2.6 → 3.1 → 3.2 (controller/CLI sau use case).
+- 2.9 (xóa Florence-2 files) nên làm sau khi 2.1/2.5/2.6 xong để tránh import error.
+- 3.1 (progress bar check) song song được với 2.x.
+- 4.1-4.4 có thể bắt đầu ngay sau sub-component tương ứng xong.
+- **Phụ thuộc ngoài:** HuggingFace Hub (download Surya weights ~1–2GB), băng thông mạng lần đầu, RAM ≥ 8GB.
 
 ## Timeline & Estimates
-**Khi nào xong (ước lượng lập trình viên đơn):**
 
 | Phase | Effort ước lượng |
 |---|---|
-| Phase 1 — Foundation | 0.5 ngày |
-| Phase 2 — Core Features | 1.5 ngày (rủi ro cao ở 2.1, 2.2) |
+| Phase 1 — Migration foundation | 0.5 ngày |
+| Phase 2 — Core pipeline Surya | 1 ngày (rủi ro thấp — lab script đã validate) |
 | Phase 3 — Integration & Polish | 0.5 ngày |
 | Phase 4 — Test & Docs | 0.5 ngày |
-| **Tổng** | **~3 ngày công** (buffer 0.5 ngày cho debug Florence-2 output) |
+| **Tổng** | **~2.5 ngày công** (ngắn hơn plan cũ vì lab script đã chứng minh approach) |
 
 ## Risks & Mitigation
-**Rủi ro & cách giảm thiểu:**
 
-- **R1 — Florence-2 `<OCR_WITH_REGION>` trả về bbox không đủ hoặc format không nhất quán** (rủi ro *cao*).
-  - *Mitigation:* Task đã chốt (`<OCR_WITH_REGION>`, `max_new_tokens=3072`, `num_beams=3`). Log raw output Florence-2 cho mỗi ảnh. Dùng `visualize_results` để kiểm tra trực quan bbox. Viết parser phòng thủ cho cả trường hợp bbox thiếu column. Chấp nhận một số ảnh cần hậu xử lý thủ công.
-- **R2 — Hạ tầng không có GPU, inference rất chậm** (trung bình).
-  - *Mitigation:* Cho phép `--device cpu` + `torch.float32`. Tài liệu hóa thời gian dự kiến và khuyến nghị chạy trên máy có CUDA.
-- **R3 — Kích thước model lớn, bandwidth/disk hạn chế** (thấp).
-  - *Mitigation:* Tài liệu README hướng dẫn set `HF_HOME` để cache. Cân nhắc fallback sang `Florence-2-base` cho dev nếu cần (flag `--model-size base`).
-- **R4 — Ảnh chất lượng kém khiến OCR thiếu MCC** (trung bình).
-  - *Mitigation:* Log entry bị skip, xuất thêm report `errors.json` (liệt kê ảnh không parse được). Cho phép re-run riêng ảnh thất bại.
-- **R5 — Phụ thuộc `transformers`/`torch` version xung đột** (thấp).
-  - *Mitigation:* Pin version đã test; khuyến nghị venv sạch.
+- **R1 — `surya-ocr` API thay đổi giữa các phiên bản** (trung bình):
+  - *Mitigation:* Pin version trong `requirements.txt`. Lab script `labs/mcc_extractor_surya.py` xác nhận API hiện tại hoạt động.
+- **R2 — Tỷ lệ parse < 90% trên một số ảnh scan nghiêng/nhiễu** (trung bình):
+  - *Mitigation:* Log chi tiết entry thất bại. Entry không parse được giữ lại với `_unparsed=True` (không mất data). Hậu xử lý thủ công các entry này nếu cần.
+- **R3 — Import conflict giữa code Florence-2 cũ và Surya mới** (cao trong giai đoạn migration):
+  - *Mitigation:* Thực hiện migration theo thứ tự: models → protocols → services mới → xóa services cũ → update use case → update controller. Không để 2 engine cùng tồn tại sau 2.9.
+- **R4 — Test cũ (`test_models.py`) break khi schema MCCEntry thay đổi** (chắc chắn xảy ra):
+  - *Mitigation:* Cập nhật `test_models.py` ngay sau khi hoàn thành task 1.3.
+- **R5 — Surya chậm trên máy không có GPU** (thấp so với trước):
+  - *Mitigation:* Surya native MPS trên Apple M1/M2 — đủ nhanh. Không cần CUDA. Ghi nhận benchmark trong docs.
 
 ## Resources Needed
-**Cần gì để thành công:**
 
 - **Con người:** 1 lập trình viên Python.
-- **Công cụ:** Python 3.10+, pip/venv, `pytest`, `black`, `flake8`, `mypy` (đã có trong project).
-- **Hạ tầng:** Máy có ≥ 8GB RAM; khuyến nghị GPU ≥ 6GB VRAM cho tốc độ ổn.
-- **Kiến thức:** Kinh nghiệm với HuggingFace `transformers`, PIL; hiểu quy ước Clean Architecture / MVC của dự án (`.claude/rules/python-standards.md`).
-- **Dữ liệu:** Tập ảnh `assets/mcc-visa/*.jpg` đã có sẵn (5 file).
+- **Công cụ:** Python 3.10+, pip/venv, `pytest`, `black`, `flake8`, `mypy`.
+- **Hạ tầng:** Máy có ≥ 8GB RAM; Apple M1/M2 được khuyến nghị (MPS native). Không yêu cầu GPU rời.
+- **Dữ liệu:** Tập ảnh `assets/mcc-visa/*.jpg` đã có sẵn. Lab script `labs/mcc_extractor_surya.py` dùng để tham khảo logic.

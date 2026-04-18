@@ -3,55 +3,60 @@ MCC Entry domain model.
 """
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel as PydanticBaseModel, Field, model_validator
 
 
 @dataclass(frozen=True)
-class BBoxTextItem:
+class SimilarMerchant:
     """
-    Dataclass representing a text region with bounding box.
+    Dataclass representing a similar merchant entry.
 
     Attributes:
-        text: Extracted text content.
-        bbox: Bounding box as tuple (y1, x1, y2, x2) in normalized coordinates [0-1].
+        mcc: 4-digit MCC code of the similar merchant.
+        title: Name/description of the similar merchant.
     """
 
-    text: str
-    bbox: tuple[float, float, float, float]
+    mcc: str
+    title: str
 
 
-class MCCEntry(BaseModel):
+class MCCEntry(PydanticBaseModel):
     """
     Domain model for MCC (Merchant Category Code) entry.
 
     Attributes:
         mcc: 4-digit MCC code, or empty string when unparsed.
-        title_description: Combined title and description of MCC.
-        included: What is included in this MCC category.
-        similar_merchants: List of similar merchants.
+        title: Short title of the MCC category.
+        description: Detailed description of the MCC category.
+        included_in_mcc: List of items included in this MCC category.
+        similar_merchants: List of similar merchants (with their MCC codes).
         source_image: Source image filename (required for provenance).
-        unparsed: True when the page could not be parsed into structured entries.
+        unparsed: True when the entry could not be parsed into structured data.
     """
 
     mcc: str = Field(default="")
-    title_description: str = Field(default="")
-    included: str = Field(default="")
-    similar_merchants: List[str] = Field(default_factory=list)
+    title: Optional[str] = Field(default=None)
+    description: Optional[str] = Field(default=None)
+    included_in_mcc: List[str] = Field(default_factory=list)
+    similar_merchants: List[SimilarMerchant] = Field(default_factory=list)
     source_image: str
-    unparsed: bool = Field(default=False)
+    unparsed: bool = Field(default=False, alias="_unparsed")
 
     model_config = {
         "populate_by_name": True,
         "json_schema_extra": {
             "example": {
                 "mcc": "5812",
-                "title_description": "Eating Places and Restaurants",
-                "included": "Establishments which serve food and beverages...",
-                "similar_merchants": ["Restaurant", "Cafe", "Food Court"],
+                "title": "Eating Places and Restaurants",
+                "description": "Establishments which serve food and beverages...",
+                "included_in_mcc": ["Restaurants", "Cafes", "Food Courts"],
+                "similar_merchants": [
+                    {"mcc": "5814", "title": "Fast Food Restaurants"},
+                ],
                 "source_image": "mcc-visa-01.jpg",
-                "unparsed": False,
+                "_unparsed": False,
             }
         },
     }

@@ -2,7 +2,7 @@
 Models package - Định nghĩa Schema và Business Entities.
 """
 
-from .base import BaseModel
-from .mcc_entry import MCCEntry
+from .mcc_entry import MCCEntry, SimilarMerchant
+from .ocr_line import OCRLine
 
-__all__ = ["BaseModel", "MCCEntry"]
+__all__ = ["MCCEntry", "SimilarMerchant", "OCRLine"]

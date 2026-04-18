@@ -1,7 +1,7 @@
 ---
 phase: design
 title: System Design & Architecture - Convert MCC Image to JSON
-description: Thiết kế pipeline CLI dùng Florence-2 large để OCR ảnh MCC VISA và xuất JSON có cấu trúc, tuân thủ Clean Architecture.
+description: Thiết kế pipeline CLI dùng Surya OCR để trích xuất ảnh MCC VISA thành JSON có cấu trúc, tuân thủ Clean Architecture. Thay thế giải pháp Florence-2 trước đó.
 ---
 
 # System Design & Architecture
@@ -14,97 +14,115 @@ graph TD
   CLI[CLI Entry<br/>main.py convert-mcc] --> Controller[MCCConvertController]
   Controller --> UseCase[ConvertMCCImagesUseCase]
   UseCase --> Repo[MCCImageRepository<br/>đọc assets/mcc-visa/*.jpg]
-  UseCase --> VisionSvc[Florence2VisionService<br/>OCR_WITH_REGION → list[BBoxTextItem]]
-  UseCase --> TableSvc[TableReconstructionService<br/>BBoxTextItem → 4-col table]
-  UseCase --> Parser[MCCParserService<br/>table rows → MCCEntry list]
+  UseCase --> OCRSvc[SuryaOCRService<br/>OCR → list[OCRLine]]
+  UseCase --> ParserSvc[MCCTableParserService<br/>OCRLine → MCCEntry list]
   UseCase --> Writer[MCCJsonRepository<br/>ghi JSON output]
   UseCase --> Progress[ProgressBarView<br/>tqdm]
   UseCase --> Checkpoint[CheckpointRepository<br/>.mcc-convert-progress.json]
-  VisionSvc -.->|load weights| HF[(HuggingFace Hub<br/>microsoft/Florence-2-large)]
+  OCRSvc -.->|load weights| Surya[(Surya OCR<br/>RecognitionPredictor<br/>DetectionPredictor<br/>FoundationPredictor)]
 ```
 
 ### Thành phần và trách nhiệm
-- **CLI Entry (`main.py`)**: Parse argparse, khởi động logging, gọi Controller.
-- **Controller (`app/controllers/mcc_convert_controller.py`)**: Tiếp nhận tham số (input_dir, output_path, device, y_threshold_pct…), điều phối Use Case, map exception thành exit code.
-- **Use Case (`app/services/convert_mcc_images_use_case.py`)**: Orchestration thuần — lặp qua từng ảnh, gọi vision service → table reconstruction → parser → writer, cập nhật progress. Không biết chi tiết Florence-2.
-- **Florence-2 Vision Service (`app/services/florence2_vision_service.py`)**: Wrap `transformers.AutoModelForCausalLM` + `AutoProcessor`, chạy task `<OCR_WITH_REGION>` với `max_new_tokens=3072`, `num_beams=3`. Trả về `list[BBoxTextItem]` chứa text và tọa độ bbox `[y1, x1, y2, x2]` (normalized 0–1000).
-- **Table Reconstruction Service (`app/services/table_reconstruction_service.py`)**: Nhận `list[BBoxTextItem]` + kích thước ảnh → tái dựng bảng 4 cột VISA. Gồm 3 thuật toán:
-  1. **Row grouping**: nhóm bbox theo trục Y với ngưỡng `y_threshold_pct` (default 0.01 = 1% chiều cao ảnh).
-  2. **Column assignment**: dynamic clustering hoặc mốc X theo % (MCC ~10% trái, Title/Desc ~50%, Included ~75%, Similar ~90%).
-  3. **Multi-line merging**: phát hiện hàng MCC mới (cột `mcc` có giá trị) vs dòng tiếp theo (cột `mcc` trống) — gộp text lại.
-  Expose thêm `visualize_results(image_path, rows) -> PIL.Image` để debug trực quan.
-- **MCC Parser Service (`app/services/mcc_parser_service.py`)**: Nhận danh sách row đã tái dựng → validate 4-digit MCC → tạo `list[MCCEntry]`. Entry không hợp lệ: `mcc=""`, `_unparsed=True`.
+- **CLI Entry (`main.py`)**: Parse argparse, khởi động logging (loguru), gọi Controller.
+- **Controller (`app/controllers/mcc_convert_controller.py`)**: Tiếp nhận tham số (`input_dir`, `output_path`, `resume`), điều phối Use Case, map exception thành exit code.
+- **Use Case (`app/services/convert_mcc_images_use_case.py`)**: Orchestration thuần — lặp qua từng ảnh, gọi OCR service → table parser → writer, cập nhật progress. Không biết chi tiết Surya.
+- **Surya OCR Service (`app/services/surya_ocr_service.py`)**: Wrap `RecognitionPredictor`, `DetectionPredictor`, `FoundationPredictor` từ `surya-ocr`. Load model một lần, tái dùng toàn batch. Gọi `recognition_predictor([image], det_predictor=detection_predictor)` → parse kết quả thành `list[OCRLine]` với pixel bbox `[x1, y1, x2, y2]`. Tự động chọn device (MPS trên Apple M1/M2, CPU fallback).
+- **MCC Table Parser Service (`app/services/mcc_table_parser_service.py`)**: Orchestrator parsing — nhận `list[OCRLine]` + `image_width`, lần lượt gọi 3 sub-component rồi trả `list[MCCEntry]`:
+  1. **`ColumnClassifier`** (`app/services/column_classifier.py`): nhận `OCRLine` + `image_width` → trả tên cột (`mcc`/`desc`/`included`/`similar`/`unknown`) dựa vào x1 % cố định. Không có state — pure function, dễ unit test độc lập.
+  2. **`EntryGrouper`** (`app/services/entry_grouper.py`): nhận `list[(OCRLine, col_name)]` → trả `list[RawEntry]` (dict gồm `mcc` + 3 list dòng theo cột). Trigger entry mới khi gặp 4-digit token ở cột `mcc`.
+  3. **`MCCEntryParser`** (`app/services/mcc_entry_parser.py`): nhận `RawEntry` → `MCCEntry`. Dòng đầu `_desc_lines` → `title`; phần còn lại → `description`; nối tiếp title bị cắt trong `similar_merchants`; gán `_unparsed=True` khi `mcc=""`.
 - **Repositories**:
-  - `MCCImageRepository`: Liệt kê/đọc ảnh từ thư mục input.
-  - `MCCJsonRepository`: Ghi danh sách `MCCEntry` ra JSON (UTF-8, indent=2). Khi dedup: merge `title_description` + `included` từ tất cả entry cùng `mcc` (nối bằng `\n`).
-  - `CheckpointRepository`: Đọc/ghi/xóa checkpoint file (`.mcc-convert-progress.json`) — đặt cùng thư mục với output JSON. Ghi thêm tên ảnh sau mỗi lần thành công; xóa toàn bộ khi pipeline hoàn thành.
-- **Views**: `ProgressBarView` bọc `tqdm` để Use Case không phụ thuộc trực tiếp thư viện UI.
+  - `MCCImageRepository`: Liệt kê/đọc ảnh từ thư mục input, trả `PIL.Image`.
+  - `MCCJsonRepository`: Ghi `list[MCCEntry]` đã sạch ra JSON (UTF-8, indent=2). Không thực hiện dedup/sort — Use Case đã xử lý trước khi gọi.
+  - `CheckpointRepository`: Đọc/ghi/xóa `.mcc-convert-progress.json` — đặt cùng thư mục output. Ghi tên ảnh sau mỗi ảnh thành công; xóa khi pipeline hoàn thành.
+- **Views**: `ProgressBarView` bọc `tqdm`; Use Case không import tqdm trực tiếp.
 
 ### Công nghệ & lý do chọn
 | Thành phần | Công nghệ | Lý do |
 |---|---|---|
-| Vision-Language | `transformers` + `torch` + Florence-2 large | Yêu cầu bắt buộc của Order; Florence-2 hỗ trợ OCR và grounding mạnh, license MIT. |
+| OCR Engine | `surya-ocr` (RecognitionPredictor, DetectionPredictor, FoundationPredictor) | Chạy local, miễn phí, native MPS trên Apple M1/M2; không cần GPU rời. |
 | CLI | `argparse` (stdlib) | Tránh thêm dependency; đủ cho use case đơn giản. |
-| Progress bar | `tqdm` | Gọn nhẹ, quen thuộc, tích hợp tốt terminal; `rich` là lựa chọn thay thế nếu cần UI đẹp hơn. |
+| Progress bar | `tqdm` | Gọn nhẹ, quen thuộc, tích hợp tốt terminal. |
 | Logging | `loguru` | Đã có trong `requirements.txt`. |
-| Image I/O | `Pillow` | Florence-2 processor yêu cầu PIL Image; dùng thêm cho `visualize_results`. |
-| Validation | `pydantic` | Đã có; dùng cho `MCCEntry` model. |
-| Clustering (optional) | `numpy` | Dùng cho DBSCAN-style row grouping nếu threshold tĩnh không đủ. |
+| Image I/O | `Pillow` | Surya yêu cầu `PIL.Image`; đọc ảnh JPG. |
+| Validation | `pydantic` | Dùng cho `MCCEntry` model; validate schema trước khi ghi JSON. |
+| License | GPL-3.0 | Surya phát hành dưới GPL-3.0; sử dụng nội bộ/tooling không vi phạm. |
 
 ## Data Models
 **Dữ liệu cần quản lý:**
 
-### `BBoxTextItem` (transfer object — `app/models/mcc_entry.py`)
+### `OCRLine` (transfer object — `app/models/ocr_line.py`)
 ```python
 @dataclass
-class BBoxTextItem:
+class OCRLine:
     text: str
-    bbox: tuple[float, float, float, float]  # y1, x1, y2, x2 (normalized 0–1000)
+    bbox: tuple[int, int, int, int]  # x1, y1, x2, y2 (pixel coordinates)
+    confidence: float = 1.0
+```
+
+### `SimilarMerchant` (value object — `app/models/mcc_entry.py`)
+```python
+@dataclass
+class SimilarMerchant:
+    mcc: str    # "5995"
+    title: str  # "Pet Shops, Pet Foods and Supplies Store"
 ```
 
 ### `MCCEntry` (domain model — `app/models/mcc_entry.py`)
 ```python
 class MCCEntry(BaseModel):
-    mcc: str                          # "0742"; rỗng "" nếu không parse được
-    title_description: str            # gộp cột "MCC Title/Description"
-    included: str = ""                # cột "Included in this MCC"
-    similar_merchants: list[str] = []
-    source_image: str                 # tên file ảnh nguồn (provenance)
-    _unparsed: bool = False           # True khi mcc = "" do parse thất bại
+    mcc: str                                     # "0742"; rỗng "" nếu không parse được
+    title: str | None = None                     # dòng đầu cột description
+    description: str | None = None               # phần còn lại cột description
+    included_in_mcc: list[str] = []              # danh sách string từ cột included
+    similar_merchants: list[SimilarMerchant] = []
+    source_image: str                            # tên file ảnh nguồn (provenance)
+    _unparsed: bool = False                      # True khi mcc = "" do parse thất bại
 ```
 
 ### Output JSON schema
-- Một file tổng `mcc-visa.json` chứa `list[MCCEntry]` đã serialize.
+Một file tổng `mcc-visa.json` chứa object wrapper với `mcc_list`:
 ```json
-[
-  {
-    "mcc": "0742",
-    "title_description": "Veterinary Services. Merchants classified with this MCC are...",
-    "included": "Animal Doctors, Pet Hospitals, Pet Clinics",
-    "similar_merchants": ["5995 - Pet Shops, Pet Foods and Supplies Store"],
-    "source_image": "visa-merchant-data-standards-manual-hình ảnh-01.jpg",
-    "_unparsed": false
-  },
-  {
-    "mcc": "",
-    "title_description": "",
-    "included": "",
-    "similar_merchants": [],
-    "source_image": "visa-merchant-data-standards-manual-hình ảnh-28.jpg",
-    "_unparsed": true
-  }
-]
+{
+  "source": "Visa Merchant Data Standards Manual",
+  "total_mcc_count": 2,
+  "mcc_list": [
+    {
+      "mcc": "0742",
+      "title": "Veterinary Services",
+      "description": "Merchants classified with this MCC are...",
+      "included_in_mcc": ["Animal Doctors", "Pet Hospitals", "Pet Clinics"],
+      "similar_merchants": [
+        {"mcc": "5995", "title": "Pet Shops, Pet Foods and Supplies Store"}
+      ],
+      "source_image": "visa-merchant-data-standards-manual-hình ảnh-01.jpg",
+      "_unparsed": false
+    },
+    {
+      "mcc": "",
+      "title": null,
+      "description": null,
+      "included_in_mcc": [],
+      "similar_merchants": [],
+      "source_image": "visa-merchant-data-standards-manual-hình ảnh-28.jpg",
+      "_unparsed": true
+    }
+  ]
+}
 ```
 
 ### Luồng dữ liệu
-1. Repository liệt kê file `*.jpg` trong `input_dir` → `list[Path]`.
-2. Nếu `--resume`: CheckpointRepository tải danh sách ảnh đã xong → bỏ qua trong vòng lặp.
-3. Use Case lặp qua mỗi path → VisionService trả về `list[BBoxTextItem]` (text + bbox).
-4. TableReconstructionService nhận `list[BBoxTextItem]` + kích thước ảnh → trả về danh sách row (dict 4 cột).
-5. MCCParserService chuyển row list thành `list[MCCEntry]` (entry không hợp lệ: `mcc=""`, `_unparsed=True`).
-6. CheckpointRepository ghi tên ảnh vào checkpoint sau mỗi ảnh thành công.
-7. Use Case gom tất cả entry; **dedup các entry `_unparsed=False` theo `mcc`** — khi trùng: merge `title_description` và `included` bằng `\n`, giữ nguyên `similar_merchants` (union); giữ nguyên tất cả entry `_unparsed=True`.
-8. MCCJsonRepository ghi JSON; CheckpointRepository xóa checkpoint file.
+1. `MCCImageRepository` liệt kê `*.jpg` trong `input_dir` → `list[Path]`, sort theo tên.
+2. Nếu `--resume`: `CheckpointRepository` tải set ảnh đã xong → skip trong vòng lặp.
+3. Use Case lặp từng path → `MCCImageRepository.read(path)` → `PIL.Image`.
+4. `SuryaOCRService.extract_lines(image)` → `list[OCRLine]` (text + pixel bbox + confidence), đã sort theo `(round(y1/15), x1)`.
+5. `MCCTableParserService.parse(lines, image_width)` → `list[MCCEntry]`:
+   - Phân loại cột theo x1 %.
+   - Gom entry khi gặp 4-digit token ở cột `mcc`.
+   - Parse title/description/included_in_mcc/similar_merchants.
+6. `CheckpointRepository.mark_done(filename)` sau mỗi ảnh thành công.
+7. Use Case gom tất cả entry → **dedup** (giữ entry có `description` dài hơn khi trùng MCC) → **sort** by `mcc` tăng dần.
+8. `MCCJsonRepository.save(entries, output_path)` ghi JSON với danh sách đã sạch; `CheckpointRepository.clear()`.
 
 ## API Design
 **Không có API HTTP** — giao tiếp duy nhất là CLI.
@@ -112,101 +130,108 @@ class MCCEntry(BaseModel):
 ### CLI interface
 ```
 python3 main.py convert-mcc \
-  --input-dir    assets/mcc-visa \          # default: assets/mcc-visa
-  --output       out/mcc-visa.json \        # default: out/mcc-visa.json
-  --device       auto \                     # auto | cpu | cuda  (default: auto)
-  --y-threshold  0.01 \                     # y_threshold_pct (default: 0.01 = 1%)
-  --resume                                  # tiếp tục từ checkpoint (default: off)
+  --input-dir  assets/mcc-visa \    # default: assets/mcc-visa
+  --output     out/mcc-visa.json \  # default: out/mcc-visa.json
+  --resume                          # tiếp tục từ checkpoint (default: off)
 ```
-Checkpoint file được đặt tự động tại `<output-dir>/.mcc-convert-progress.json`.
+Checkpoint file tự động đặt tại `<output-dir>/.mcc-convert-progress.json`.
+
+> **Lưu ý**: Không có `--device` flag. Surya tự động chọn MPS (Apple M1/M2) hoặc CPU. Không cần `--y-threshold` vì column detection dùng % cố định.
 
 ### Internal interfaces (abstractions — Dependency Rule)
 ```python
-class VisionService(Protocol):
-    def extract_regions(self, image_path: Path) -> list[BBoxTextItem]: ...
+class OCRService(Protocol):
+    def extract_lines(self, image: "PIL.Image.Image") -> list[OCRLine]: ...
 
-class TableReconstructor(Protocol):
-    def reconstruct(
+class ColumnClassifier(Protocol):
+    def classify(self, line: OCRLine, image_width: int) -> str: ...  # "mcc"|"desc"|"included"|"similar"|"unknown"
+
+class EntryGrouper(Protocol):
+    def group(self, classified: list[tuple[OCRLine, str]]) -> list[dict]: ...  # list[RawEntry]
+
+class EntryParser(Protocol):
+    def parse(self, raw: dict, source_image: str) -> MCCEntry: ...
+
+class TableParser(Protocol):
+    def parse(
         self,
-        regions: list[BBoxTextItem],
-        image_size: tuple[int, int],   # (width, height) pixels
-    ) -> list[dict[str, str]]: ...     # list of {mcc, title_description, included, similar_merchants}
-
-    def visualize_results(
-        self,
-        image_path: Path,
-        rows: list[dict[str, str]],
-    ) -> "PIL.Image.Image": ...
-
-class MCCParser(Protocol):
-    def parse(self, rows: list[dict[str, str]], source: str) -> list[MCCEntry]: ...
+        lines: list[OCRLine],
+        image_width: int,
+    ) -> list[MCCEntry]: ...
 
 class ImageRepository(Protocol):
     def list_images(self, dir_path: Path) -> list[Path]: ...
+    def read(self, path: Path) -> "PIL.Image.Image": ...
 
 class JsonRepository(Protocol):
     def save(self, entries: list[MCCEntry], output: Path) -> None: ...
 
 class CheckpointRepository(Protocol):
-    def load(self) -> set[str]: ...           # trả về set tên file đã xong
+    def load(self) -> set[str]: ...
     def mark_done(self, filename: str) -> None: ...
     def clear(self) -> None: ...
 ```
-Use Case phụ thuộc vào các Protocol trên (D trong SOLID), implementation cụ thể nằm ở `services/` & `repositories/`.
+Use Case phụ thuộc vào Protocol (D trong SOLID); implementation cụ thể được inject bởi Controller.
 
 ## Component Breakdown
 **Các khối chính:**
 
 - **Presentation layer**
-  - `main.py` — subcommand `convert-mcc`.
-  - `app/views/progress_bar_view.py` — wrap tqdm.
+  - `main.py` — subcommand `convert-mcc`, argparse.
+  - `app/views/progress_bar_view.py` — wrap `tqdm`.
 - **Controller layer**
   - `app/controllers/mcc_convert_controller.py`.
 - **Use case / Service layer**
-  - `app/services/convert_mcc_images_use_case.py`
-  - `app/services/florence2_vision_service.py` — implements `VisionService`
-  - `app/services/table_reconstruction_service.py` — implements `TableReconstructor`
-  - `app/services/mcc_parser_service.py` — implements `MCCParser`
-  - `app/services/protocols.py` — định nghĩa tất cả Protocol
+  - `app/services/convert_mcc_images_use_case.py` — orchestration, dedup, sort
+  - `app/services/surya_ocr_service.py` — implements `OCRService`
+  - `app/services/mcc_table_parser_service.py` — implements `TableParser`; gọi 3 sub-component bên dưới
+  - `app/services/column_classifier.py` — implements `ColumnClassifier`
+  - `app/services/entry_grouper.py` — implements `EntryGrouper`
+  - `app/services/mcc_entry_parser.py` — implements `EntryParser`
+  - `app/services/protocols.py` — tất cả Protocol definitions
 - **Repository layer**
   - `app/repositories/mcc_image_repository.py`
   - `app/repositories/mcc_json_repository.py`
   - `app/repositories/checkpoint_repository.py`
 - **Domain models**
-  - `app/models/mcc_entry.py` — `MCCEntry` (pydantic) + `BBoxTextItem` (dataclass)
+  - `app/models/ocr_line.py` — `OCRLine` (dataclass)
+  - `app/models/mcc_entry.py` — `MCCEntry` (pydantic), `SimilarMerchant` (dataclass)
 - **Third-party**
-  - HuggingFace Hub (download weights lần đầu).
+  - `surya-ocr`: tải weights ~1–2GB từ HuggingFace lần đầu; cache local.
 
 ## Design Decisions
 **Vì sao chọn cách này?**
 
-1. **Tách Florence-2 thành service riêng sau Protocol**: Tôn trọng Dependency Inversion — tương lai có thể swap sang model khác (Qwen-VL, GPT-4V) mà không đổi Use Case.
-2. **Tách `TableReconstructionService` khỏi `MCCParserService`**: Hai concern độc lập — tái dựng bảng từ bbox (geometric) vs. validate business rule (MCC 4 chữ số). Tách giúp test riêng bằng fixture và tái dùng thuật toán cho Mastercard/JCB.
-3. **`VisionService` trả `list[BBoxTextItem]` thay vì `str`**: `<OCR_WITH_REGION>` cung cấp tọa độ không gian — cần thiết cho table reconstruction. Trả `str` sẽ mất thông tin này.
-4. **`y_threshold_pct` expose qua CLI**: Tài liệu VISA, Mastercard, NAPAS có mật độ dòng khác nhau. Parameterize cho phép benchmark nhiều ngưỡng (0.005, 0.01, 0.015) mà không sửa code.
-5. **Dedup strategy: merge fields**: Khi cùng MCC xuất hiện ở nhiều ảnh (trang bị split), merge `title_description` + `included` bằng `\n`; không dùng last-wins để tránh mất data.
-6. **Một file JSON tổng hợp**: Dễ consume cho feature mapping VSIC-to-MCC sau này. Chế độ per-file không thuộc V1 scope.
-7. **Không abort khi 1 ảnh lỗi**: Pipeline log lỗi và tiếp tục — phù hợp yêu cầu và UX batch xử lý.
-8. **`tqdm` thay vì `rich.progress`**: `tqdm` nhẹ hơn, không chiếm header/footer màn hình, đủ cho yêu cầu "loading bar".
+1. **Surya thay Florence-2**: Surya chuyên biệt cho OCR (detection + recognition), không cần CUDA, native MPS trên Apple M1/M2. Florence-2 là VLM đa năng — overhead không cần thiết cho bài toán OCR thuần.
+2. **Tách `SuryaOCRService` khỏi `MCCTableParserService`**: OCR là I/O-heavy và model-dependent; parsing là logic thuần. Tách giúp test parser với fixture mock, không cần load model thật.
+3. **`MCCTableParserService` tách thành 3 sub-component (`ColumnClassifier`, `EntryGrouper`, `MCCEntryParser`)**: Mỗi sub-component có 1 trách nhiệm rõ ràng và có thể test độc lập bằng fixture nhỏ (không cần load model OCR). `MCCTableParserService` đóng vai trò orchestrator gọi tuần tự.
+4. **Column detection dùng % cố định (không dynamic clustering)**: Layout bảng VISA nhất quán — 4 cột tỷ lệ x cố định. Fixed % đơn giản, predictable, dễ test, không cần numpy/DBSCAN.
+5. **Tách `title` và `description` thay vì gộp `title_description`**: Downstream mapping cần title riêng để match merchant name; description riêng để tìm kiếm full-text. Tách ở tầng model tốt hơn là để downstream phải split.
+6. **`similar_merchants: list[SimilarMerchant]` thay vì `list[str]`**: Structured data cho phép downstream tra cứu cross-reference theo MCC code mà không cần parse lại string.
+7. **Dedup strategy: giữ `description` dài hơn**: Khi cùng MCC xuất hiện ở nhiều ảnh (trang bị split), entry với description đầy đủ hơn thường là trang chính. Không merge bằng `\n` để tránh duplicate content.
+8. **Không có `visualize_results` trong V1**: Lab script (`labs/mcc_extractor_surya.py`) đủ để debug thủ công. Có thể thêm sau nếu cần.
 9. **Alternatives considered:**
-   - Dùng Tesseract OCR + LLM phụ parse: bị loại vì Order yêu cầu rõ Florence-2.
-   - Dùng DBSCAN trên trục Y thay vì % threshold: là phương án nâng cao — implement sau nếu threshold tĩnh không đủ chính xác.
-   - Dùng `click` cho CLI: bị loại để giảm dependency; argparse đủ dùng.
+   - Giữ Florence-2: bị loại vì cần CUDA/GPU hoặc chậm trên CPU; không native MPS.
+   - Tesseract OCR: bbox pixel-perfect nhưng độ chính xác thấp hơn với ảnh scan nghiêng/nhiễu.
+   - Dynamic clustering (DBSCAN) cho column detection: bị loại cho V1 — cần numpy, phức tạp hơn, chưa cần thiết với layout VISA nhất quán.
+   - `click` cho CLI: bị loại để giảm dependency; argparse đủ dùng.
 
 ## Non-Functional Requirements
 **Hiệu suất & chất lượng:**
 
 - **Performance:**
-  - Lazy-load Florence-2 (chỉ load khi bắt đầu batch); tái dùng instance cho toàn batch.
-  - Cho phép half-precision (`torch.float16`) khi chạy CUDA để giảm VRAM.
+  - Load 3 Surya predictor một lần trước vòng lặp batch; tái dùng toàn session.
+  - Target: ≤ 60 giây/ảnh trên CPU (mục tiêu tham khảo, không ràng buộc cứng).
+  - Trên Apple M1/M2 với MPS: nhanh hơn đáng kể so với CPU.
 - **Scalability:**
-  - Hiện xử lý tuần tự; có thể mở rộng sang batch inference (nhiều ảnh/lần) nếu dataset tăng — không implement vòng đầu.
+  - Hiện xử lý tuần tự (1 ảnh/lần); có thể mở rộng batch inference sau nếu dataset tăng — không implement V1.
 - **Security:**
-  - Không có dữ liệu nhạy cảm; chỉ đọc ảnh local và ghi JSON local.
-  - Pin phiên bản `transformers`, `torch` trong `requirements.txt` để tránh supply-chain drift.
+  - Chỉ đọc ảnh local và ghi JSON local; không có network call ngoài lần đầu tải weights.
+  - Pin phiên bản `surya-ocr`, `Pillow` trong `requirements.txt`.
 - **Reliability:**
-  - Exception trên 1 ảnh không làm crash toàn bộ; log `WARNING` kèm file name.
-  - Trước khi ghi JSON, validate qua `MCCEntry` pydantic (fail-fast nếu thiếu field).
+  - Exception trên 1 ảnh không crash toàn bộ pipeline; log `WARNING` kèm tên file, tiếp tục ảnh kế tiếp.
+  - Validate `MCCEntry` qua pydantic trước khi ghi JSON (fail-fast nếu thiếu required field).
+  - `--resume` + checkpoint đảm bảo idempotency khi pipeline bị ngắt giữa chừng.
 - **Observability:**
-  - Log: số ảnh input, số entry parse thành công, số ảnh lỗi, tổng thời gian, device đang dùng.
-  - `visualize_results` xuất ảnh debug với bbox + label hàng/cột để kiểm tra trực quan thuật toán.
+  - Log (loguru): số ảnh input, số entry parse thành công/lỗi, tổng thời gian, device đang dùng (MPS/CPU).
+  - Progress bar (`tqdm`): `Processing N/M [████░░] X%` cập nhật sau mỗi ảnh.

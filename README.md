@@ -40,7 +40,7 @@ python3 main.py
 
 ### Convert MCC Images to JSON
 
-Sử dụng lệnh `convert-mcc` để chuyển đổi ảnh MCC sang JSON:
+Sử dụng lệnh `convert-mcc` để chuyển đổi ảnh MCC sang JSON bằng **Surya OCR**:
 
 ```bash
 # Cơ bản - sử dụng thư mục mặc định
@@ -48,12 +48,6 @@ python3 main.py convert-mcc
 
 # Tùy chỉnh thư mục input/output
 python3 main.py convert-mcc --input-dir path/to/images --output path/to/output.json
-
-# Chọn device (auto/cuda/mps/cpu)
-python3 main.py convert-mcc --device cuda
-
-# Tùy chỉnh ngưỡng Y cho row grouping (mặc định 0.01)
-python3 main.py convert-mcc --y-threshold 0.02
 
 # Resume từ checkpoint
 python3 main.py convert-mcc --resume
@@ -63,15 +57,36 @@ python3 main.py convert-mcc --resume
 
 - `--input-dir, -i`: Thư mục chứa ảnh MCC (mặc định: `assets/mcc-visa`)
 - `--output, -o`: Đường dẫn file JSON output (mặc định: `out/mcc-visa.json`)
-- `--device, -d`: Device để chạy inference (auto/cuda/mps/cpu, mặc định: auto)
-- `--y-threshold`: Ngưỡng trục Y cho row grouping theo % chiều cao ảnh (mặc định: 0.01)
 - `--resume`: Resume từ checkpoint, bỏ qua ảnh đã xử lý
+
+**Schema JSON output:**
+
+```json
+{
+  "source": "out/mcc-visa.json",
+  "total_mcc_count": 91,
+  "mcc_list": [
+    {
+      "mcc": "0742",
+      "title": "Veterinary Services",
+      "description": "...",
+      "included_in_mcc": ["Pet Hospitals", "Pet Clinics"],
+      "similar_merchants": [
+        {"mcc": "5995", "title": "Pet Shops, Pet Foods and Supplies Store"}
+      ],
+      "source_image": "page-27.jpg",
+      "unparsed": false
+    }
+  ]
+}
+```
 
 **Yêu cầu phần cứng:**
 
 - RAM ≥ 8GB
-- Khuyến nghị GPU ≥ 6GB VRAM cho tốc độ ổn định
-- Lần chạy đầu cần kết nối Internet để tải Florence-2 model (~1.5GB)
+- Apple M1/M2 được khuyến nghị (Surya chạy native trên MPS, không cần CUDA)
+- Lần chạy đầu cần kết nối Internet để tải Surya weights (~1-2GB) từ HuggingFace Hub
+- Tốc độ tham khảo: ~40s/ảnh trên Apple Silicon MPS
 
 ## Quy chuẩn code
 

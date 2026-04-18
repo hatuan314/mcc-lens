@@ -3,15 +3,23 @@ Services package - Chứa Business Logic cốt lõi (Domain Services).
 """
 
 from app.services.protocols import (
-    VisionService,
-    MCCParser,
+    OCRService,
+    ColumnClassifier,
+    EntryGrouper,
+    EntryParser,
+    TableParser,
     ImageRepository,
     JsonRepository,
+    CheckpointRepository,
 )
 
 __all__ = [
-    "VisionService",
-    "MCCParser",
+    "OCRService",
+    "ColumnClassifier",
+    "EntryGrouper",
+    "EntryParser",
+    "TableParser",
     "ImageRepository",
     "JsonRepository",
+    "CheckpointRepository",
 ]

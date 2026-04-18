@@ -5,15 +5,24 @@ Stores the set of already-processed image filenames to support `--resume`.
 """
 
 import json
+import unicodedata
 from pathlib import Path
 from typing import Set
 
 from loguru import logger
 
 
+def _nfc(value: str) -> str:
+    """Normalize a filename to NFC so macOS NFD filesystem names match JSON content."""
+    return unicodedata.normalize("NFC", value)
+
+
 class CheckpointRepository:
     """
     File-backed checkpoint repository.
+
+    All filenames are stored and compared in NFC form to avoid mismatches
+    between macOS filesystem (NFD) and Python string literals (NFC).
 
     Attributes:
         checkpoint_path: Path to the JSON checkpoint file.
@@ -24,23 +33,23 @@ class CheckpointRepository:
         self._done: Set[str] = set()
 
     def load(self) -> Set[str]:
-        """Load the set of already-processed filenames from disk."""
+        """Load the set of already-processed filenames from disk (NFC-normalized)."""
         if not self.checkpoint_path.exists():
             return set()
         try:
             data = json.loads(self.checkpoint_path.read_text(encoding="utf-8"))
             if isinstance(data, list):
-                self._done = set(data)
+                self._done = {_nfc(name) for name in data if isinstance(name, str)}
             else:
                 self._done = set()
         except (json.JSONDecodeError, OSError) as e:
             logger.warning(f"Failed to load checkpoint {self.checkpoint_path}: {e}")
             self._done = set()
-        return self._done
+        return set(self._done)
 
     def mark_done(self, filename: str) -> None:
-        """Append a filename to the checkpoint and persist immediately."""
-        self._done.add(filename)
+        """Append a filename to the checkpoint (NFC-normalized) and persist immediately."""
+        self._done.add(_nfc(filename))
         self._persist()
 
     def clear(self) -> None:

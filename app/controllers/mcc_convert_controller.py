@@ -2,19 +2,18 @@
 MCC Convert Controller.
 """
 
-import sys
 from pathlib import Path
-from typing import Optional
 
 from loguru import logger
 
 from app.services.convert_mcc_images_use_case import ConvertMCCImagesUseCase
-from app.services.florence2_vision_service import Florence2VisionService
-from app.services.table_reconstruction_service import TableReconstructionService
-from app.services.mcc_parser_service import MCCParserService
-from app.repositories.mcc_image_repository import MCCImageRepository
-from app.repositories.mcc_json_repository import MCCJsonRepository
-from app.views.progress_bar_view import ProgressBarView
+from app.services.protocols import (
+    CheckpointRepository,
+    ImageRepository,
+    JsonRepository,
+    OCRService,
+    TableParser,
+)
 
 
 class MCCConvertController:
@@ -28,21 +27,26 @@ class MCCConvertController:
         3: IO error (output write failed)
     """
 
-    def __init__(self):
+    def __init__(
+        self,
+        ocr_service: OCRService,
+        table_parser: TableParser,
+        image_repository: ImageRepository,
+        json_repository: JsonRepository,
+        checkpoint_repository: CheckpointRepository,
+    ):
         self.use_case = ConvertMCCImagesUseCase(
-            vision_service=Florence2VisionService(),
-            table_reconstructor=TableReconstructionService(),
-            parser_service=MCCParserService(),
-            image_repository=MCCImageRepository(),
-            json_repository=MCCJsonRepository(),
+            ocr_service=ocr_service,
+            table_parser=table_parser,
+            image_repository=image_repository,
+            json_repository=json_repository,
+            checkpoint_repository=checkpoint_repository,
         )
 
     def execute(
         self,
         input_dir: Path,
         output_path: Path,
-        device: Optional[str] = None,
-        y_threshold_pct: float = 0.01,
         resume: bool = False,
     ) -> int:
         """
@@ -51,8 +55,6 @@ class MCCConvertController:
         Args:
             input_dir: Directory containing input images.
             output_path: Path to output JSON file.
-            device: Device to run inference on (cuda/mps/cpu).
-            y_threshold_pct: Y-axis threshold for row grouping.
             resume: Resume from checkpoint when True.
 
         Returns:
@@ -62,8 +64,6 @@ class MCCConvertController:
             result = self.use_case.execute(
                 input_dir=input_dir,
                 output_path=output_path,
-                device=device,
-                y_threshold_pct=y_threshold_pct,
                 resume=resume,
             )
 
@@ -82,17 +82,14 @@ class MCCConvertController:
             return 1
 
         except Exception as e:
-            # Check if it's a model load error (infrastructure)
             error_msg = str(e).lower()
-            if "model" in error_msg or "florence" in error_msg or "torch" in error_msg:
+            if "model" in error_msg or "surya" in error_msg:
                 logger.error(f"Infrastructure error (model load failed): {e}")
                 return 2
 
-            # Check if it's an IO error
             if "io" in error_msg or "permission" in error_msg or "disk" in error_msg:
                 logger.error(f"IO error: {e}")
                 return 3
 
-            # Default to config error
             logger.error(f"Conversion failed: {e}")
             return 1

@@ -48,7 +48,7 @@ def main() -> int:
 
     convert_parser = subparsers.add_parser(
         "convert-mcc",
-        help="Convert MCC images to JSON using Florence-2",
+        help="Convert MCC images to JSON using Surya OCR",
     )
     convert_parser.add_argument(
         "--input-dir",
@@ -67,22 +67,9 @@ def main() -> int:
         help="Output JSON file path (default: out/mcc-visa.json)",
     )
     convert_parser.add_argument(
-        "--device",
-        "-d",
-        choices=["auto", "cuda", "mps", "cpu"],
-        default="auto",
-        help="Device to run inference on (default: auto)",
-    )
-    convert_parser.add_argument(
         "--resume",
         action="store_true",
         help="Resume from checkpoint, skipping already-processed images",
-    )
-    convert_parser.add_argument(
-        "--y-threshold",
-        type=float,
-        default=0.01,
-        help="Y-axis threshold for row grouping as percentage of image height (default: 0.01)",
     )
 
     args = parser.parse_args()
@@ -94,15 +81,31 @@ def main() -> int:
             logger.info("Starting MCC image conversion...")
             logger.info(f"Input: {args.input_dir}")
             logger.info(f"Output: {args.output}")
-            logger.info(f"Y threshold: {args.y_threshold}")
 
-            device = None if args.device == "auto" else args.device
-            controller = MCCConvertController()
+            from app.services.surya_ocr_service import SuryaOCRService
+            from app.services.mcc_table_parser_service import MCCTableParserService
+            from app.repositories.mcc_image_repository import MCCImageRepository
+            from app.repositories.mcc_json_repository import MCCJsonRepository
+            from app.repositories.checkpoint_repository import CheckpointRepository
+
+            ocr_service = SuryaOCRService()
+            table_parser = MCCTableParserService()
+            image_repo = MCCImageRepository()
+            json_repo = MCCJsonRepository()
+            checkpoint_repo = CheckpointRepository(
+                checkpoint_path=args.output.parent / ".mcc-convert-progress.json"
+            )
+
+            controller = MCCConvertController(
+                ocr_service=ocr_service,
+                table_parser=table_parser,
+                image_repository=image_repo,
+                json_repository=json_repo,
+                checkpoint_repository=checkpoint_repo,
+            )
             return controller.execute(
                 input_dir=args.input_dir,
                 output_path=args.output,
-                device=device,
-                y_threshold_pct=args.y_threshold,
                 resume=args.resume,
             )
 

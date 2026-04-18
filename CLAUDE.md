@@ -45,7 +45,7 @@ app/
 └── views/          # Output formatting (CLI progress, JSON response shaping, etc.)
 ```
 
-**Dependency Rule (strict):** inner layers (`models`, `services`) must not import from outer layers (`repositories`, `controllers`, `views`). Services depend on **Protocols/abstractions** defined alongside them; concrete implementations (e.g. a Florence-2 vision backend, a filesystem JSON writer) are injected by the Controller. When adding a new capability, introduce the Protocol first, then the implementation.
+**Dependency Rule (strict):** inner layers (`models`, `services`) must not import from outer layers (`repositories`, `controllers`, `views`). Services depend on **Protocols/abstractions** defined alongside them; concrete implementations (e.g. a Surya OCR backend, a filesystem JSON writer) are injected by the Controller. When adding a new capability, introduce the Protocol first, then the implementation.
 
 `app/config.py` exposes a `Config` class that reads env vars via `python-dotenv` and self-validates at import time. `main.py` wires `loguru` logging from `Config.LOG_LEVEL` / `Config.LOG_FILE` before dispatching to controllers.
 
@@ -76,9 +76,9 @@ From `.claude/rules/python-standards.md`:
 
 ## Notes for Claude
 
-### Florence-2 Setup
+### Surya OCR Setup
 
-For the `convert-mcc-image-to-json` feature, the project uses Florence-2 large model from Microsoft:
+For the `convert-mcc-image-to-json` feature, the project uses Surya OCR for text extraction:
 
 ```bash
 # Install dependencies
@@ -87,8 +87,9 @@ pip install -r requirements.txt
 # Optional: Set HuggingFace cache directory (recommended for first download)
 export HF_HOME=~/.cache/huggingface
 
-# First run will automatically download weights (~1.5GB)
-# Model: microsoft/Florence-2-large
+# First run will automatically download Surya weights (~1-2GB)
+# Models: surya foundation + recognition + detection predictors
+# Apple M1/M2: MPS native — no CUDA needed
 ```
 
 - Subdirectories under `app/` currently contain only `__init__.py` — the scaffolding is intentional; populate them following the layer rules above rather than inventing a new structure.
