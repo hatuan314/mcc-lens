@@ -322,9 +322,7 @@ class TestCheckpointResume:
         # Image must be skipped because its NFC form is in the checkpoint
         assert len(ocr.batch_calls) == 0
 
-    def test_checkpoint_not_touched_when_resume_false(
-        self, tmp_path: Path
-    ) -> None:
+    def test_checkpoint_not_touched_when_resume_false(self, tmp_path: Path) -> None:
         """When resume=False, checkpoint repo must not be called."""
         img = tmp_path / "a.jpg"
         img.touch()
@@ -504,7 +502,9 @@ class TestBatchProcessing:
         json_repo = CapturingJsonRepository()
         use_case = ConvertMCCImagesUseCase(
             ocr_service=ocr,
-            table_parser=FakeTableParser({"good.jpg": [make_entry("5812", "good.jpg")]}),
+            table_parser=FakeTableParser(
+                {"good.jpg": [make_entry("5812", "good.jpg")]}
+            ),
             image_repository=PartialLoadRepository(),
             json_repository=json_repo,
             checkpoint_repository=InMemoryCheckpointRepository(),
@@ -566,7 +566,10 @@ class TestBatchProcessing:
             img_path.touch()
             images.append(img_path)
 
-        entries_map = {f"img{i:02d}.jpg": [make_entry(str(5000 + i), f"img{i:02d}.jpg")] for i in range(9)}
+        entries_map = {
+            f"img{i:02d}.jpg": [make_entry(str(5000 + i), f"img{i:02d}.jpg")]
+            for i in range(9)
+        }
 
         ocr = FakeOCRService()
         use_case = ConvertMCCImagesUseCase(

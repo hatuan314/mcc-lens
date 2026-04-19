@@ -34,7 +34,9 @@ class TestCheckpointRepositoryLoad:
 
     def test_load_ignores_non_string_entries(self, tmp_path: Path) -> None:
         ckpt = tmp_path / "ckpt.json"
-        ckpt.write_text(json.dumps(["valid.jpg", 42, None, "other.jpg"]), encoding="utf-8")
+        ckpt.write_text(
+            json.dumps(["valid.jpg", 42, None, "other.jpg"]), encoding="utf-8"
+        )
 
         repo = CheckpointRepository(ckpt)
         result = repo.load()

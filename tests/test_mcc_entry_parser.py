@@ -106,9 +106,7 @@ class TestMCCEntryParserSimilarMerchants:
         assert entry.similar_merchants[0].mcc == "5813"
         assert entry.similar_merchants[1].mcc == "5814"
 
-    def test_en_dash_and_hyphen_both_supported(
-        self, parser: MCCEntryParser
-    ) -> None:
+    def test_en_dash_and_hyphen_both_supported(self, parser: MCCEntryParser) -> None:
         raw = {
             "mcc": "5812",
             "_desc_lines": ["Eating Places"],

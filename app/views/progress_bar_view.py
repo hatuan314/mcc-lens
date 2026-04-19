@@ -53,4 +53,4 @@ class ProgressBarView:
         desc: str = "Processing",
         unit: str = "item",
     ) -> Iterable:
-        return tqdm(iterable, desc=desc, unit=unit)
+        return tqdm(iterable, desc=desc, unit=unit)  # type: ignore

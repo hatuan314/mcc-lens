@@ -43,11 +43,11 @@ class TestColumnClassifierBoundaries:
     @pytest.mark.parametrize(
         "x1_ratio,expected",
         [
-            (0.0, "mcc"),           # lower bound of mcc
-            (0.12, "desc"),         # lower bound of desc (half-open)
-            (0.46, "included"),     # lower bound of included
-            (0.64, "similar"),      # lower bound of similar
-            (0.9999, "similar"),    # near upper bound of similar
+            (0.0, "mcc"),  # lower bound of mcc
+            (0.12, "desc"),  # lower bound of desc (half-open)
+            (0.46, "included"),  # lower bound of included
+            (0.64, "similar"),  # lower bound of similar
+            (0.9999, "similar"),  # near upper bound of similar
         ],
     )
     def test_classify_boundaries(

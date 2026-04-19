@@ -256,3 +256,71 @@ class VsicParser(Protocol):
             List of VsicEntry objects with code (string) and digits.
         """
         ...
+
+
+class EmbeddingClient(Protocol):
+    """
+    Protocol for generating text embeddings via Ollama.
+    """
+
+    @abstractmethod
+    def embed(self, texts: List[str]) -> List[List[float]]:
+        """
+        Generate embeddings for a batch of texts.
+
+        Args:
+            texts: List of text strings to embed.
+
+        Returns:
+            List of embedding vectors (each as list of floats).
+        """
+        ...
+
+
+class LLMClient(Protocol):
+    """
+    Protocol for LLM chat completion via Ollama.
+    """
+
+    @abstractmethod
+    def chat(self, system: str, user: str, *, temperature: float = 0.0) -> str:
+        """
+        Generate a chat completion with system and user prompts.
+
+        Args:
+            system: System prompt for the LLM.
+            user: User prompt for the LLM.
+            temperature: Sampling temperature (0.0 = deterministic).
+
+        Returns:
+            LLM response as string.
+        """
+        ...
+
+
+class MappingCheckpointRepository(Protocol):
+    """
+    Protocol for managing VSIC-to-MCC mapping checkpoint state.
+    """
+
+    @abstractmethod
+    def load(self) -> Dict[str, Dict]:
+        """
+        Load completed mapping results from checkpoint.
+
+        Returns:
+            Dict mapping VSIC codes to their mapping results.
+            Empty dict when no checkpoint exists.
+        """
+        ...
+
+    @abstractmethod
+    def save(self, vsic_code: str, result: Dict) -> None:
+        """
+        Save a single VSIC mapping result to checkpoint.
+
+        Args:
+            vsic_code: VSIC code that was just processed.
+            result: Mapping result dict with top_results.
+        """
+        ...

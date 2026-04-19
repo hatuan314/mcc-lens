@@ -8,7 +8,6 @@ IO error (exit 3), generic exception (exit 1).
 from pathlib import Path
 from typing import List
 
-import pytest
 from PIL import Image
 
 from app.controllers.mcc_convert_controller import MCCConvertController
@@ -28,7 +27,9 @@ class FakeTableParser:
     def __init__(self, entries: List[MCCEntry] | None = None) -> None:
         self._entries = entries or []
 
-    def parse(self, lines: List[OCRLine], image_width: int, source_image: str = "") -> List[MCCEntry]:
+    def parse(
+        self, lines: List[OCRLine], image_width: int, source_image: str = ""
+    ) -> List[MCCEntry]:
         return self._entries
 
 
@@ -107,7 +108,9 @@ class TestMCCConvertControllerExitCodes:
 
     def test_infrastructure_error_surya_returns_two(self, tmp_path: Path) -> None:
         controller = self._make_controller(
-            image_repo=RaisingImageRepository(RuntimeError("surya model failed to load"))
+            image_repo=RaisingImageRepository(
+                RuntimeError("surya model failed to load")
+            )
         )
         exit_code = controller.execute(tmp_path, tmp_path / "out.json")
         assert exit_code == 2

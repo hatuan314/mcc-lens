@@ -33,7 +33,10 @@ class MCCImageRepository:
 
         images = []
         for file_path in directory.iterdir():
-            if file_path.is_file() and file_path.suffix.lower() in self.IMAGE_EXTENSIONS:
+            if (
+                file_path.is_file()
+                and file_path.suffix.lower() in self.IMAGE_EXTENSIONS
+            ):
                 images.append(file_path)
 
         images.sort(key=lambda p: p.name)

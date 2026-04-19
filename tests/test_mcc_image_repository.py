@@ -34,7 +34,9 @@ class TestListImages:
         assert len(result) == 1
         assert result[0].name == "image.jpg"
 
-    def test_list_images_includes_all_supported_extensions(self, tmp_path: Path) -> None:
+    def test_list_images_includes_all_supported_extensions(
+        self, tmp_path: Path
+    ) -> None:
         for ext in [".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".webp"]:
             (tmp_path / f"img{ext}").touch()
 

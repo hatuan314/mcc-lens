@@ -49,8 +49,7 @@ class MCCTableParserService:
         """
         # Step 1: Classify each line into a column
         classified = [
-            (line, self.column_classifier.classify(line, image_width))
-            for line in lines
+            (line, self.column_classifier.classify(line, image_width)) for line in lines
         ]
 
         # Step 2: Group classified lines into raw entries

@@ -1,0 +1,11 @@
+{
+  "source": "test",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {"code": "0111", "title": "Trồng lúa", "level": 4, "parent_code": null, "description": ""},
+    {"code": "6201", "title": "Lập trình máy vi tính", "level": 4, "parent_code": null, "description": ""},
+    {"code": "4711", "title": "Bán lẻ lương thực, thực phẩm", "level": 4, "parent_code": null, "description": ""},
+    {"code": "9609", "title": "Hoạt động dịch vụ cá nhân khác chưa được phân vào đâu", "level": 4, "parent_code": null, "description": ""},
+    {"code": "4610", "title": "Đại lý, môi giới, đấu giá", "level": 4, "parent_code": null, "description": ""}
+  ]
+}

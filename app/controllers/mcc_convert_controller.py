@@ -68,7 +68,9 @@ class MCCConvertController:
             )
 
             logger.info(f"Conversion complete: {result['total_entries']} entries")
-            logger.info(f"Processed: {result['processed']}/{result['total_images']} images")
+            logger.info(
+                f"Processed: {result['processed']}/{result['total_images']} images"
+            )
 
             if result["errors"]:
                 logger.warning(f"Errors encountered: {len(result['errors'])}")

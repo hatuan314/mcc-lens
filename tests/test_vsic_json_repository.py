@@ -67,7 +67,9 @@ class TestVsicJsonRepository:
         data = json.loads(out.read_text(encoding="utf-8"))
         assert set(data[0].keys()) == {"code", "title", "digits"}
 
-    def test_creates_parent_dirs(self, repo: VsicJsonRepository, tmp_path: Path) -> None:
+    def test_creates_parent_dirs(
+        self, repo: VsicJsonRepository, tmp_path: Path
+    ) -> None:
         out = tmp_path / "nested" / "dir" / "vsic.json"
         repo.write_entries([], out)
         assert out.exists()

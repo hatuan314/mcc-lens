@@ -71,8 +71,8 @@ class TestEntryGrouperMultipleEntries:
 class TestEntryGrouperSkipBeforeFirstMCC:
     def test_lines_before_first_mcc_are_ignored(self, grouper: EntryGrouper) -> None:
         classified = [
-            (line("Header Title"), "desc"),           # before any MCC code
-            (line("Another header"), "included"),     # before any MCC code
+            (line("Header Title"), "desc"),  # before any MCC code
+            (line("Another header"), "included"),  # before any MCC code
             (line("5812"), "mcc"),
             (line("Eating Places"), "desc"),
         ]
@@ -85,14 +85,12 @@ class TestEntryGrouperSkipBeforeFirstMCC:
     def test_empty_input_returns_empty(self, grouper: EntryGrouper) -> None:
         assert grouper.group([]) == []
 
-    def test_non_mcc_code_in_mcc_column_ignored(
-        self, grouper: EntryGrouper
-    ) -> None:
+    def test_non_mcc_code_in_mcc_column_ignored(self, grouper: EntryGrouper) -> None:
         """A line in mcc column that doesn't match ^\\d{4}$ does NOT trigger a new entry."""
         classified = [
             (line("5812"), "mcc"),
             (line("Eating Places"), "desc"),
-            (line("not-a-code"), "mcc"),   # ignored — not 4 digits
+            (line("not-a-code"), "mcc"),  # ignored — not 4 digits
             (line("More desc"), "desc"),
         ]
         entries = grouper.group(classified)

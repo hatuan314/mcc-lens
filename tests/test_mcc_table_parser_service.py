@@ -25,12 +25,12 @@ class TestMCCTableParserService:
     def test_full_pipeline_happy_path(self, service: MCCTableParserService) -> None:
         # Ratios: mcc=0-12%, desc=12-46%, included=46-64%, similar=64-100%
         lines = [
-            line("5812", x_ratio=0.05),                                  # mcc
-            line("Eating Places", x_ratio=0.20),                         # desc
-            line("Restaurants and cafes serving food.", x_ratio=0.20),   # desc
-            line("Cafes", x_ratio=0.50),                                 # included
-            line("Food Courts", x_ratio=0.50),                           # included
-            line("5814 – Fast Food", x_ratio=0.70),                      # similar
+            line("5812", x_ratio=0.05),  # mcc
+            line("Eating Places", x_ratio=0.20),  # desc
+            line("Restaurants and cafes serving food.", x_ratio=0.20),  # desc
+            line("Cafes", x_ratio=0.50),  # included
+            line("Food Courts", x_ratio=0.50),  # included
+            line("5814 – Fast Food", x_ratio=0.70),  # similar
         ]
         entries = service.parse(lines, image_width=1000, source_image="p1.jpg")
 
@@ -57,16 +57,14 @@ class TestMCCTableParserService:
         assert entries[0].mcc == "5812"
         assert entries[1].mcc == "5814"
 
-    def test_empty_lines_returns_empty(
-        self, service: MCCTableParserService
-    ) -> None:
+    def test_empty_lines_returns_empty(self, service: MCCTableParserService) -> None:
         assert service.parse([], image_width=1000) == []
 
     def test_lines_before_first_mcc_ignored(
         self, service: MCCTableParserService
     ) -> None:
         lines = [
-            line("Header", x_ratio=0.20),           # desc, before any MCC
+            line("Header", x_ratio=0.20),  # desc, before any MCC
             line("5812", x_ratio=0.05),
             line("Eating Places", x_ratio=0.20),
         ]

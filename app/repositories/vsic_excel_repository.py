@@ -34,7 +34,10 @@ class VsicExcelRepository:
 
         for row_idx, row in enumerate(sheet.iter_rows(values_only=True)):
             if row_idx == 0:
-                headers = [cell if cell is not None else f"col_{i}" for i, cell in enumerate(row)]
+                headers = [
+                    cell if cell is not None else f"col_{i}"
+                    for i, cell in enumerate(row)
+                ]
                 continue
 
             if not any(cell is not None for cell in row):

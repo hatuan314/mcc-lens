@@ -1,0 +1,16 @@
+{
+  "source": "test",
+  "total_mcc_count": 10,
+  "mcc_list": [
+    {"mcc": "0111", "title": "Farms", "description": "Agricultural production of crops"},
+    {"mcc": "5411", "title": "Grocery Stores, Supermarkets", "description": "Retail sale of food and beverages"},
+    {"mcc": "7372", "title": "Computer Programming, Data Processing", "description": "Software development and IT services"},
+    {"mcc": "5999", "title": "Miscellaneous and Specialty Retail Stores", "description": "General retail not elsewhere classified"},
+    {"mcc": "7299", "title": "Other Services, NEC", "description": "Personal services not elsewhere classified"},
+    {"mcc": "5912", "title": "Drug Stores and Pharmacies", "description": "Retail pharmacies"},
+    {"mcc": "7011", "title": "Lodging - Hotels, Motels, Resorts", "description": "Hotel and accommodation services"},
+    {"mcc": "5812", "title": "Eating Places, Restaurants", "description": "Restaurant and food service"},
+    {"mcc": "7389", "title": "Services - Not Elsewhere Classified", "description": "Business support services"},
+    {"mcc": "5045", "title": "Computers and Computer Peripherals Equipment", "description": "Computer hardware and peripherals wholesale"}
+  ]
+}

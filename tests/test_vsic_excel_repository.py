@@ -73,9 +73,7 @@ class TestVsicExcelRepository:
         rows = repo.read_rows(excel_path)
         assert rows == []
 
-    def test_skip_empty_rows(
-        self, repo: VsicExcelRepository, tmp_path: Path
-    ) -> None:
+    def test_skip_empty_rows(self, repo: VsicExcelRepository, tmp_path: Path) -> None:
         excel_path = tmp_path / "empty_rows.xlsx"
         wb = Workbook()
         ws = wb.active

@@ -92,6 +92,74 @@ def main() -> int:
         help="Output JSON file path (default: output/vsic.json)",
     )
 
+    mapping_parser = subparsers.add_parser(
+        "map-vsic-mcc",
+        help="Map VSIC codes to MCC codes using Ollama LLM",
+    )
+    mapping_parser.add_argument(
+        "--vsic-input",
+        type=Path,
+        default=Path("output/vsic-vn.json"),
+        help="VSIC JSON input file (default: output/vsic-vn.json)",
+    )
+    mapping_parser.add_argument(
+        "--mcc-input",
+        type=Path,
+        default=Path("output/mcc-visa.json"),
+        help="MCC JSON input file (default: output/mcc-visa.json)",
+    )
+    mapping_parser.add_argument(
+        "--output",
+        "-o",
+        type=Path,
+        default=Path("output/vsic-mcc-mapping.xlsx"),
+        help="Simple Excel output file (default: output/vsic-mcc-mapping.xlsx)",
+    )
+    mapping_parser.add_argument(
+        "--output-detail",
+        type=Path,
+        default=Path("output/vsic-mcc-mapping-detail.xlsx"),
+        help="Detailed Excel output file (default: output/vsic-mcc-mapping-detail.xlsx)",
+    )
+    mapping_parser.add_argument(
+        "--top-k",
+        type=int,
+        default=15,
+        help="Number of top-K MCC candidates for LLM (default: 15)",
+    )
+    mapping_parser.add_argument(
+        "--ollama-host",
+        type=str,
+        default="http://localhost:11434",
+        help="Ollama server URL (default: http://localhost:11434)",
+    )
+    mapping_parser.add_argument(
+        "--llm-model",
+        type=str,
+        default="qwen2.5:14b",
+        help="LLM model name (default: qwen2.5:14b)",
+    )
+    mapping_parser.add_argument(
+        "--embedding-model",
+        type=str,
+        default="bge-m3",
+        help="Embedding model name (default: bge-m3)",
+    )
+    mapping_parser.add_argument(
+        "--template",
+        type=Path,
+        default=Path("assets/template/vsic_mcc_mapping_template.xlsx"),
+        help="Excel template for detailed output (default: assets/template/vsic_mcc_mapping_template.xlsx)",
+    )
+    mapping_parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Resume from checkpoint, skipping already-processed VSIC entries",
+    )
+    mapping_parser.add_argument(
+        "--limit", type=int, help="Limit number of VSIC entries to process"
+    )
+
     args = parser.parse_args()
 
     try:
@@ -151,6 +219,38 @@ def main() -> int:
             return controller.execute(
                 input_path=args.input_path,
                 output_path=args.output,
+            )
+
+        if args.command == "map-vsic-mcc":
+            logger.info("Starting VSIC to MCC mapping...")
+            logger.info(f"VSIC input: {args.vsic_input}")
+            logger.info(f"MCC input: {args.mcc_input}")
+            logger.info(f"Output: {args.output}")
+            logger.info(f"Output detail: {args.output_detail}")
+            logger.info(f"Top-K: {args.top_k}")
+            logger.info(f"Ollama host: {args.ollama_host}")
+            logger.info(f"LLM model: {args.llm_model}")
+            logger.info(f"Embedding model: {args.embedding_model}")
+            logger.info(f"Resume: {args.resume}")
+            if args.limit:
+                logger.info(f"Limit: {args.limit}")
+
+            from app.controllers.mapping_controller import MappingController
+
+            controller = MappingController(
+                ollama_host=args.ollama_host,
+                llm_model=args.llm_model,
+                embedding_model=args.embedding_model,
+                template_path=args.template,
+            )
+            return controller.execute(
+                vsic_input=args.vsic_input,
+                mcc_input=args.mcc_input,
+                output=args.output,
+                output_detail=args.output_detail,
+                top_k=args.top_k,
+                resume=args.resume,
+                limit=args.limit,
             )
 
         logger.info("Khởi động MCC Lens...")

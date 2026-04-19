@@ -26,3 +26,6 @@ transformers>=4.56.1,<5.0.0
 pillow>=10.0.0
 tqdm>=4.65.0
 requests>=2.31.0
+
+# Ollama
+ollama>=0.3.0

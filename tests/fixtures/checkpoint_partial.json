@@ -1,0 +1,23 @@
+{
+  "0111": {
+    "top_results": [
+      {"mcc_code": "0111", "mcc_title": "Farms", "score": 0.92, "comment": "Direct agriculture match"},
+      {"mcc_code": "5411", "mcc_title": "Grocery Stores, Supermarkets", "score": 0.61, "comment": "Related food retail"},
+      {"mcc_code": "5999", "mcc_title": "Miscellaneous Retail", "score": 0.45, "comment": "General retail fallback"}
+    ]
+  },
+  "6201": {
+    "top_results": [
+      {"mcc_code": "7372", "mcc_title": "Computer Programming", "score": 0.95, "comment": "Exact IT services match"},
+      {"mcc_code": "5045", "mcc_title": "Computers and Peripherals", "score": 0.72, "comment": "Computer hardware related"},
+      {"mcc_code": "7389", "mcc_title": "Services NEC", "score": 0.55, "comment": "General business services"}
+    ]
+  },
+  "4711": {
+    "top_results": [
+      {"mcc_code": "5411", "mcc_title": "Grocery Stores, Supermarkets", "score": 0.88, "comment": "Retail food match"},
+      {"mcc_code": "5999", "mcc_title": "Miscellaneous Retail", "score": 0.60, "comment": "General retail"},
+      {"mcc_code": "5912", "mcc_title": "Drug Stores", "score": 0.40, "comment": "Retail related"}
+    ]
+  }
+}

@@ -26,9 +26,7 @@ class MCCJsonRepository:
         """
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        mcc_list = [
-            entry.model_dump(mode="json", by_alias=True) for entry in entries
-        ]
+        mcc_list = [entry.model_dump(mode="json", by_alias=True) for entry in entries]
 
         data = {
             "source": str(output_path),
