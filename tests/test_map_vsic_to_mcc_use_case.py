@@ -55,6 +55,15 @@ VSIC_ENTRIES = [
     {"code": "4711", "title": "Bán lẻ lương thực"},
 ]
 
+# 5 VSIC thực tế đầu tiên từ output/vsic-vn.json
+REAL_VSIC_ENTRIES = [
+    {"code": "1110", "title": "Trồng lúa", "level": 4, "parent_code": None, "description": ""},
+    {"code": "1120", "title": "Trồng ngô và cây lương thực có hạt khác", "level": 4, "parent_code": None, "description": ""},
+    {"code": "1130", "title": "Trồng cây lấy củ có chất bột", "level": 4, "parent_code": None, "description": ""},
+    {"code": "1140", "title": "Trồng cây mía", "level": 4, "parent_code": None, "description": ""},
+    {"code": "1150", "title": "Trồng cây thuốc lá, thuốc lào", "level": 4, "parent_code": None, "description": ""},
+]
+
 MCC_ENTRIES = [
     {"mcc": "0111", "title": "Farms", "description": "Crop farming"},
     {"mcc": "7372", "title": "Computer Programming", "description": "Software"},
@@ -239,3 +248,41 @@ class TestTopKCandidates:
 
     def test_low_score_threshold_constant(self) -> None:
         assert MapVsicToMccUseCase.LOW_SCORE_THRESHOLD == 0.5
+
+
+class TestRealVSICEntries:
+    """Test với 5 mã VSIC thực tế đầu tiên từ output/vsic-vn.json."""
+
+    def test_processes_5_real_vsic_entries(self) -> None:
+        """Xác nhận pipeline xử lý được 5 VSIC thực tế."""
+        use_case, _, _ = _make_use_case(vsic_entries=REAL_VSIC_ENTRIES)
+        results = list(use_case.execute(top_k=3))
+        assert len(results) == 5
+
+    def test_real_vsic_codes_preserved(self) -> None:
+        """Xác nhận mã VSIC thực tế được giữ nguyên trong output."""
+        use_case, _, _ = _make_use_case(vsic_entries=REAL_VSIC_ENTRIES)
+        results = list(use_case.execute(top_k=3))
+        codes = {r.vsic_code for r in results}
+        expected_codes = {"1110", "1120", "1130", "1140", "1150"}
+        assert codes == expected_codes
+
+    def test_real_vsic_titles_preserved(self) -> None:
+        """Xác nhận title tiếng Việt của VSIC thực tế được giữ nguyên."""
+        use_case, _, _ = _make_use_case(vsic_entries=REAL_VSIC_ENTRIES)
+        results = list(use_case.execute(top_k=3))
+        titles = {r.vsic_title for r in results}
+        expected_titles = {
+            "Trồng lúa",
+            "Trồng ngô và cây lương thực có hạt khác",
+            "Trồng cây lấy củ có chất bột",
+            "Trồng cây mía",
+            "Trồng cây thuốc lá, thuốc lào",
+        }
+        assert titles == expected_titles
+
+    def test_real_vsic_checkpoint_saved(self) -> None:
+        """Xác nhận checkpoint được lưu cho 5 VSIC thực tế."""
+        use_case, _, checkpoint_repo = _make_use_case(vsic_entries=REAL_VSIC_ENTRIES)
+        list(use_case.execute(top_k=3))
+        assert set(checkpoint_repo.saves) == {"1110", "1120", "1130", "1140", "1150"}

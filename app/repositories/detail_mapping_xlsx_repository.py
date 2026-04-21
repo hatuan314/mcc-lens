@@ -45,11 +45,15 @@ class DetailMappingXlsxRepository:
         # Get or create Mapping Result sheet
         if "Mapping Result" in wb.sheetnames:
             ws = wb["Mapping Result"]
-            # Clear existing data (keep header row)
-            ws.delete_rows(2, ws.max_row)
+            # Clear existing data (keep first 3 rows as header area)
+            if ws.max_row >= 4:
+                ws.delete_rows(4, ws.max_row)
         else:
             ws = wb.create_sheet("Mapping Result")
-            # Header
+            # Ensure data starts at row 4 by adding 2 empty rows then header
+            ws.append([])  # Row 1
+            ws.append([])  # Row 2
+            # Header at Row 3
             header = [
                 "Mã VSIC",
                 "Tên Ngành (Tiếng Việt)",

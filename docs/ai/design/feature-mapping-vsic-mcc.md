@@ -77,7 +77,7 @@ Chỉ dùng `title` + `description` cho embedding và prompt LLM. Bỏ qua `incl
 class RankedMcc(BaseModel):
     mcc_code: str
     mcc_title: str
-    score: float        # cosine similarity từ embedding, thứ tự sắp xếp theo LLM chọn
+    score: float        # điểm từ 0.0 đến 1.0 do LLM đánh giá, hoặc fallback về cosine similarity
     comment: str        # 1 câu ngắn do LLM sinh ra
 
 class MappingEntry(BaseModel):
@@ -157,7 +157,7 @@ class MappingCheckpointRepository(Protocol):
 - `app/services/map_vsic_to_mcc_use_case.py` — orchestration:
   1. Precompute embeddings của tất cả MCC (title + description concat, 1 lần).
   2. Với mỗi VSIC chưa done: embed title → cosine sim.
-  3. Áp dụng Adaptive Top-K Escalation: Lấy `top_k` candidates → LLM re-rank. Nếu LLM trả kết quả rỗng hoặc top-1 score < 0.5, tự động nhân đôi `top_k` (giới hạn max e.g. 100) và gọi lại LLM.
+  3. Áp dụng Adaptive Top-K Escalation: Lấy `top_k` candidates → LLM re-rank và chấm điểm (LLM-as-judge score). Nếu LLM trả kết quả rỗng hoặc top-1 LLM score < 0.5, tự động nhân đôi `top_k` (giới hạn max e.g. 100) và gọi lại LLM.
   4. Validate kết quả → lưu checkpoint.
 - `app/services/mcc_code_validator.py` — check MCC code có trong danh sách hợp lệ, fallback top-1 embedding nếu LLM hallucinate.
 - `app/repositories/ollama_llm_client.py` — wrap `ollama.chat()`, retry, timeout.
@@ -175,8 +175,8 @@ class MappingCheckpointRepository(Protocol):
 
 ## Design Decisions
 
-- **2-stage retrieval với Adaptive Top-K**: gửi 903 MCC cho Qwen2.5:14b trong 1 prompt sẽ vượt context comfortable, tốn token × 743 VSIC. Pre-filter mặc định top-15 giảm ~60 lần token. Trade-off: nếu embedding miss → LLM không có cơ hội chọn đúng. Mitigation: Áp dụng cơ chế **Adaptive Top-K Escalation**, tự động nhân đôi `top_k` (15 → 30 → 60) cho các ca khó (LLM trả rỗng hoặc score < 0.5) thay vì dùng 1 mức `top_k` lớn cho toàn bộ, giúp cân bằng giữa độ chính xác và chi phí token.
-- **Score = cosine similarity, thứ tự = LLM**: giữ score khách quan từ embedding, nhưng để LLM quyết định rank cuối cùng dựa trên ngữ nghĩa sâu hơn. Trade-off: score không phản ánh tuyệt đối "độ chắc chắn" của LLM, nhưng đơn giản hơn và không cần thêm lần gọi.
+- **2-stage retrieval với Adaptive Top-K**: gửi 903 MCC cho Qwen2.5:14b trong 1 prompt sẽ vượt context comfortable, tốn token × 743 VSIC. Pre-filter mặc định top-60 giảm token đáng kể. Trade-off: nếu embedding miss → LLM không có cơ hội chọn đúng. Mitigation: Áp dụng cơ chế **Adaptive Top-K Escalation**, tự động nhân đôi `top_k` (60 → 120 → ...) cho các ca khó (LLM trả rỗng hoặc score < 0.5) cho đến khi đạt tối đa toàn bộ danh sách MCC (903 mã), giúp cân bằng giữa độ chính xác và chi phí token.
+- **Score = LLM-as-judge, thứ tự = LLM**: dùng điểm số do LLM đánh giá (0.0-1.0) thay vì cosine similarity (cross-lingual) để phản ánh đúng độ phù hợp ngữ nghĩa. Nếu LLM lỗi, fallback về điểm cosine.
 - **2 file Excel riêng biệt**: simple file cho downstream pipeline, detail file cho human review. Không dùng sheet ẩn.
 - **Ollama làm backend duy nhất cho cả LLM + embedding**: giảm phụ thuộc, không cần GPU/CUDA, chạy MPS native trên M1.
 - **Checkpoint per-VSIC JSON** thay vì SQLite: đơn giản, đủ nhanh với 743 rows.

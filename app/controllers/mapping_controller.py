@@ -49,7 +49,7 @@ class MappingController:
         mcc_input: Path,
         output: Path,
         output_detail: Path,
-        top_k: int = 15,
+        top_k: int = 60,
         resume: bool = False,
         limit: Optional[int] = None,
     ) -> int:

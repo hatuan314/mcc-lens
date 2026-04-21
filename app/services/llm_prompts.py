@@ -3,8 +3,10 @@
 SYSTEM_PROMPT = (
     "Bạn là chuyên gia phân loại ngành. Xếp hạng top-3 MCC phù hợp nhất cho "
     "ngành VSIC. Trả về JSON object đúng định dạng: "
-    '{"results": [{"mcc_code": "xxxx", "comment": "..."}]}. '
+    '{"results": [{"mcc_code": "xxxx", "score": 0.9, "comment": "..."}]}. '
     "Mảng results chứa tối đa 3 phần tử, sắp xếp theo thứ tự phù hợp nhất. "
+    "score là điểm số thể hiện độ phù hợp ngữ nghĩa (từ 0.0 đến 1.0): "
+    ">= 0.9 (khớp hoàn toàn), 0.7-0.89 (khớp tốt), 0.5-0.69 (liên quan nhưng khác phạm vi), < 0.5 (chỉ khớp một phần). "
     "comment là 1 câu ngắn tiếng Việt giải thích tại sao. "
     'Nếu không có MCC nào phù hợp, trả về {"results": []}. '
     "KHÔNG thêm text ngoài JSON."

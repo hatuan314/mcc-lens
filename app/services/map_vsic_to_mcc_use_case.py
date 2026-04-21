@@ -26,7 +26,6 @@ class MapVsicToMccUseCase:
     """
 
     LOW_SCORE_THRESHOLD = 0.5
-    MAX_TOP_K = 100
 
     @staticmethod
     def _strip_html(text: str) -> str:
@@ -135,20 +134,9 @@ class MapVsicToMccUseCase:
             # Get top-K candidates
             similarities.sort(reverse=True, key=lambda x: x[0])
             top_k_similarities = similarities[:top_k]
-            # Warn if top-1 score is low
-            if (
-                top_k_similarities
-                and top_k_similarities[0][0] < self.LOW_SCORE_THRESHOLD
-            ):
-                logger.warning(
-                    f"VSIC '{vsic_code}' top-1 embedding score="
-                    f"{top_k_similarities[0][0]:.2f} thấp "
-                    f"(< {self.LOW_SCORE_THRESHOLD}). Thử tăng --top-k để "
-                    "cải thiện kết quả."
-                )
 
             # Adaptive Top-K Escalation: double top_k and retry if LLM returns
-            # empty or top-1 score is low (hard cases need more candidates)
+            # empty or its top-1 score is low (hard cases need more candidates)
             current_top_k = top_k
             ranked_results: list = []
             while True:
@@ -174,19 +162,20 @@ class MapVsicToMccUseCase:
                 llm_response = self.llm_client.chat(SYSTEM_PROMPT, user_prompt)
                 ranked_results = self._parse_llm_response(llm_response, candidates)
 
-                top1_score = top_k_slice[0][0] if top_k_slice else 1.0
+                top1_llm_score = ranked_results[0].score if ranked_results else 0.0
                 needs_escalation = (
-                    not ranked_results or top1_score < self.LOW_SCORE_THRESHOLD
+                    not ranked_results or top1_llm_score < self.LOW_SCORE_THRESHOLD
                 )
                 next_top_k = current_top_k * 2
+                max_allowed_top_k = len(self.mcc_entries)
 
-                if needs_escalation and next_top_k <= self.MAX_TOP_K:
+                if needs_escalation and current_top_k < max_allowed_top_k:
+                    current_top_k = min(next_top_k, max_allowed_top_k)
                     logger.info(
                         f"VSIC '{vsic_code}': escalating top_k "
-                        f"{current_top_k} → {next_top_k} "
-                        f"(empty={not ranked_results}, score={top1_score:.2f})"
+                        f"to {current_top_k} "
+                        f"(empty={not ranked_results}, score={top1_llm_score:.2f})"
                     )
-                    current_top_k = next_top_k
                 else:
                     break
 
@@ -250,6 +239,7 @@ class MapVsicToMccUseCase:
                     continue
                 mcc_code = item.get("mcc_code", "")
                 comment = item.get("comment", "")
+                llm_score = item.get("score")
 
                 # Find original candidate to get title and score
                 original = next((c for c in candidates if c["mcc"] == mcc_code), None)
@@ -257,11 +247,22 @@ class MapVsicToMccUseCase:
                     # Validate MCC code
                     valid_mcc = self.validator.validate(mcc_code, candidates[0]["mcc"])
                     if valid_mcc:
+                        final_score = original["score"]
+                        if llm_score is not None:
+                            try:
+                                final_score = float(llm_score)
+                            except (ValueError, TypeError):
+                                logger.warning(
+                                    f"Invalid LLM score '{llm_score}' for "
+                                    f"MCC {mcc_code}, "
+                                    "fallback to cosine score"
+                                )
+                        
                         ranked_results.append(
                             RankedMcc(
                                 mcc_code=valid_mcc,
                                 mcc_title=original["title"],
-                                score=original["score"],
+                                score=round(float(final_score), 2),
                                 comment=comment,
                             )
                         )
@@ -270,7 +271,10 @@ class MapVsicToMccUseCase:
                             f"Invalid MCC {mcc_code} after validation, skipping"
                         )
                 else:
-                    logger.warning(f"MCC {mcc_code} not found in candidates, skipping")
+                    logger.warning(
+                        f"LLM hallucinated MCC {mcc_code} "
+                        "not in candidate list, skipping"
+                    )
 
             return ranked_results
 

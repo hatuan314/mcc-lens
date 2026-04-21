@@ -136,7 +136,7 @@ python3 main.py map-vsic-mcc \
 - `--mcc-input`: File JSON MCC input (mặc định: `output/mcc-visa.json`)
 - `--output, -o`: File Excel simple output (mặc định: `output/vsic-mcc-mapping.xlsx`)
 - `--output-detail`: File Excel detailed output (mặc định: `output/vsic-mcc-mapping-detail.xlsx`)
-- `--top-k`: Số lượng MCC candidates gửi đến LLM (mặc định: 15)
+- `--top-k`: Số lượng MCC candidates gửi đến LLM (mặc định: 60)
 - `--ollama-host`: URL Ollama server (mặc định: `http://localhost:11434`)
 - `--llm-model`: Tên model LLM (mặc định: `qwen2.5:14b`)
 - `--embedding-model`: Tên model embedding (mặc định: `bge-m3`)
