@@ -11,7 +11,12 @@ from tqdm import tqdm
 
 # #region agent log helpers
 import os as _os
-_DEBUG_LOG = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))), ".cursor", "debug-c603c2.log")
+_DEBUG_LOG = _os.path.join(
+    "/content/drive/MyDrive/projects/mcc-lens"
+    if _os.path.isdir("/content/drive/MyDrive/projects/mcc-lens")
+    else _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))),
+    ".cursor", "debug-c603c2.log"
+)
 
 def _dblog(msg: str, data: dict, hypothesis: str) -> None:
     _os.makedirs(_os.path.dirname(_DEBUG_LOG), exist_ok=True)
@@ -95,8 +100,10 @@ class MapVsicToMccUseCase:
             text = f"{title} — {description[:500]}"
             mcc_texts.append(text)
 
-        # Batch embeddings to manage memory and show progress
-        batch_size = 32
+        # Batch size reduced to 8 to avoid Ollama NaN errors on batches
+        # where total token count across mixed-length texts exceeds the
+        # bge-m3 internal limit, causing a 500 with "unsupported value: NaN".
+        batch_size = 8
         mcc_embeddings = []
 
         with tqdm(total=len(mcc_texts), desc="Computing MCC embeddings") as pbar:
