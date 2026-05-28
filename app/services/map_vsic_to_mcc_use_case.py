@@ -2,11 +2,21 @@
 
 import json
 import re
+import time as _time
 from typing import Generator
 
 import numpy as np
 from loguru import logger
 from tqdm import tqdm
+
+# #region agent log helpers
+_DEBUG_LOG = "/Users/tuanha/Work/projects/python/convert-vsic-to-mcc/mcc-lens/.cursor/debug-c603c2.log"
+
+def _dblog(msg: str, data: dict, hypothesis: str) -> None:
+    entry = json.dumps({"sessionId": "c603c2", "timestamp": int(_time.time() * 1000), "location": "map_vsic_to_mcc_use_case.py", "message": msg, "data": data, "hypothesisId": hypothesis})
+    with open(_DEBUG_LOG, "a") as _f:
+        _f.write(entry + "\n")
+# #endregion
 
 from app.models.mapping_entry import MappingEntry, RankedMcc
 from app.services.llm_prompts import SYSTEM_PROMPT, build_user_prompt
@@ -90,6 +100,11 @@ class MapVsicToMccUseCase:
         with tqdm(total=len(mcc_texts), desc="Computing MCC embeddings") as pbar:
             for i in range(0, len(mcc_texts), batch_size):
                 batch = mcc_texts[i : i + batch_size]
+                # #region agent log H-B/H-C: scan batch for suspicious entries before embed
+                suspicious = [{"global_idx": i+j, "mcc_raw": self.mcc_entries[i+j], "text": t, "text_len": len(t)} for j, t in enumerate(batch) if not t.strip() or len(t) > 400]
+                if suspicious:
+                    _dblog("mcc_batch_suspicious_entries", {"batch_start": i, "suspicious": suspicious}, "H-B/H-C")
+                # #endregion
                 batch_embeddings = self.embedding_client.embed(batch)
                 mcc_embeddings.extend(batch_embeddings)
                 pbar.update(len(batch))
