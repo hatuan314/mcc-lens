@@ -1,0 +1,12 @@
+---
+description: Cập nhật docs/ai/planning để phản ánh tiến độ triển khai hiện tại.
+alwaysApply: false
+---
+
+Hòa giải tiến độ triển khai hiện tại với tài liệu lập kế hoạch.
+
+1. **Thu thập Ngữ cảnh** — Nếu chưa được cung cấp, hỏi: tên feature/branch và trạng thái ngắn, các tasks đã hoàn thành kể từ lần update cuối, các tasks mới phát hiện, blockers/risks hiện tại, đường dẫn planning doc (mặc định `docs/ai/planning/feature-{name}.md`).
+2. **Review & Hòa giải** — Tóm tắt milestones, task breakdown, và dependencies hiện có. Đối với mỗi task đã lập kế hoạch: đánh dấu trạng thái (completed / in-progress / blocked / not-started), ghi scope changes, ghi lại blockers, xác định tasks bị bỏ qua hoặc thêm mới.
+3. **Tạo Updated Checklist** — Nhóm theo: Đã hoàn thành / Đang tiến hành / Bị chặn / Công việc Mới — với ghi chú ngắn cho mỗi task.
+4. **Các Bước Tiếp theo** — Đề xuất 2-3 actionable tasks tiếp theo và chuẩn bị summary paragraph cho planning doc.
+5. **Tiếp theo** — Quay lại `execute-plan` cho công việc còn lại. Khi tất cả implementation tasks xong, chạy `check-implementation`.

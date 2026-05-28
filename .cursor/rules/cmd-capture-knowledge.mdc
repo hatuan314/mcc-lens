@@ -1,0 +1,13 @@
+---
+description: Tài liệu hóa một điểm nhập code trong docs/ai/implementation/knowledge-{name}.md.
+alwaysApply: false
+---
+
+Hướng dẫn tôi tạo sự hiểu có cấu trúc về một điểm nhập code và lưu vào tài liệu kiến thức.
+
+1. **Thu thập & Xác thực Điểm Nhập** — Nếu chưa được cung cấp, hỏi: điểm nhập (file, thư mục, hàm, API), tại sao nó quan trọng, và độ sâu mong muốn. Xác nhận điểm nhập tồn tại.
+2. **Thu thập Ngữ cảnh Nguồn** — Đọc file/module chính và tóm tắt mục đích, exports, các patterns chính. Đối với thư mục: liệt kê cấu trúc, làm nổi bật modules chính. Đối với function/API: nắm signature, params, return values, error handling. Trích xuất các đoạn code quan trọng (tránh large blocks).
+3. **Phân tích Phụ thuộc** — Xây dựng dependency view đến depth 3. Phân loại: imports, function calls, services, external packages. Ghi chú external systems hoặc generated code để loại trừ.
+4. **Tổng hợp Giải thích** — Soạn overview (mục đích, ngôn ngữ, high-level behavior). Chi tiết core logic, execution flow, patterns chính. Làm nổi bật error handling, performance, security considerations. Xác định potential improvements hoặc risks.
+5. **Tạo Tài liệu** — Chuẩn hóa tên thành kebab-case. Tạo `docs/ai/implementation/knowledge-{name}.md` với: Overview, Implementation Details, Dependencies, Visual Diagrams (mermaid), Additional Perspectives, Metadata, Next Steps. Thêm mermaid diagrams khi chúng làm rõ flows hoặc relationships.
+6. **Tiếp theo** — Đề xuất `remember` cho các rules cần persist lâu dài.

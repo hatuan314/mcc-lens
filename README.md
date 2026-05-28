@@ -105,6 +105,45 @@ python3 main.py convert-vsic --input path/to/vsic.xlsx --output path/to/vsic.jso
 - `--input, -i`: File Excel input (mặc định: `assets/vsic-vn/vsic.xlsx`)
 - `--output, -o`: File JSON output (mặc định: `output/vsic.json`)
 
+### Convert VSIC 2025 Excel to JSON
+
+Sử dụng lệnh `convert-vsic-2025` để chuyển đổi file `vsic-2025.xlsx` sang JSON nested:
+
+```bash
+# Cơ bản - dùng input/output mặc định
+python3 main.py convert-vsic-2025
+
+# Tùy chỉnh file input/output
+python3 main.py convert-vsic-2025 \
+  --input assets/vsic-vn/vsic-2025.xlsx \
+  --output output/vsic-vn.json
+```
+
+**Tham số:**
+
+- `--input, -i`: File Excel input (mặc định: `assets/vsic-vn/vsic-2025.xlsx`)
+- `--output, -o`: File JSON output (mặc định: `output/vsic-vn.json`)
+
+**Schema JSON output (rút gọn):**
+
+```json
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 2,
+  "vsic_list": [
+    {
+      "code": "0111",
+      "title": "Trồng lúa",
+      "children_level5": [
+        { "code": "01110", "title": "Trồng lúa hạt" }
+      ]
+    }
+  ]
+}
+```
+
+Lưu ý: `source` luôn là **input file path** thực tế được dùng để convert.
+
 ### Map VSIC to MCC
 
 Sử dụng lệnh `map-vsic-mcc` để map mã VSIC sang MCC sử dụng **Ollama LLM** (2-stage retrieval):

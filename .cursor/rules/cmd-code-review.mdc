@@ -1,0 +1,18 @@
+---
+description: Review code trước khi push — kiểm tra theo design doc, security, edge cases, và conventions.
+alwaysApply: false
+---
+
+Thực hiện code review cục bộ **trước** khi push các thay đổi.
+
+1. **Thu thập Ngữ cảnh** — Nếu chưa được cung cấp, hỏi: mô tả feature/branch, danh sách file đã sửa, design docs liên quan, các risk areas đã biết, và tests đã chạy. Review diff qua `git status` và `git diff --stat`.
+2. **Hiểu Design** — Đối với mỗi design doc, tóm tắt architectural intent và critical constraints.
+3. **Review từng File** — Đối với mỗi file đã sửa:
+   - Kiểm tra sự phù hợp với design/requirements, đánh dấu deviations.
+   - Phát hiện logic issues, edge cases, dead code.
+   - Đánh dấu security concerns (input validation, secrets, auth, data handling).
+   - Kiểm tra error handling, performance, observability.
+   - Xác định missing hoặc outdated tests.
+4. **Cross-cutting Concerns** — Nhất quán naming và project conventions. Docs/comments đã update khi behavior thay đổi. Missing tests (unit, integration, E2E). Cần config updates/migrations không.
+5. **Tóm tắt** — Phân loại mỗi finding là **blocking**, **important**, hoặc **nice-to-have** với: file, vấn đề, tác động, đề xuất, và design reference.
+6. **Tiếp theo** — Nếu còn blocking issues, quay lại `execute-plan` hoặc `writing-test`; nếu sạch, tiến hành push/PR.

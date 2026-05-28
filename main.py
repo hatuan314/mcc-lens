@@ -92,6 +92,27 @@ def main() -> int:
         help="Output JSON file path (default: output/vsic.json)",
     )
 
+    vsic_2025_parser = subparsers.add_parser(
+        "convert-vsic-2025",
+        help="Convert VSIC 2025 Excel to JSON with nested children_level5",
+    )
+    vsic_2025_parser.add_argument(
+        "--input",
+        "-i",
+        dest="vsic_2025_input",
+        type=Path,
+        default=Path("assets/vsic-vn/vsic-2025.xlsx"),
+        help="Input Excel file path (default: assets/vsic-vn/vsic-2025.xlsx)",
+    )
+    vsic_2025_parser.add_argument(
+        "--output",
+        "-o",
+        dest="vsic_2025_output",
+        type=Path,
+        default=Path("output/vsic-vn.json"),
+        help="Output JSON file path (default: output/vsic-vn.json)",
+    )
+
     mapping_parser = subparsers.add_parser(
         "map-vsic-mcc",
         help="Map VSIC codes to MCC codes using Ollama LLM",
@@ -219,6 +240,36 @@ def main() -> int:
             return controller.execute(
                 input_path=args.input_path,
                 output_path=args.output,
+            )
+
+        if args.command == "convert-vsic-2025":
+            logger.info("Starting VSIC 2025 Excel conversion...")
+            logger.info(f"Input: {args.vsic_2025_input}")
+            logger.info(f"Output: {args.vsic_2025_output}")
+
+            from app.repositories.vsic_2025_excel_repository import (
+                Vsic2025ExcelRepository,
+            )
+            from app.repositories.vsic_2025_json_repository import (
+                Vsic2025JsonRepository,
+            )
+            from app.services.vsic_2025_parser_service import (
+                Vsic2025ParserService,
+            )
+            from app.controllers.vsic_2025_controller import Vsic2025Controller
+
+            excel_repo = Vsic2025ExcelRepository()
+            parser = Vsic2025ParserService()
+            json_repo = Vsic2025JsonRepository()
+
+            controller = Vsic2025Controller(
+                excel_repository=excel_repo,
+                parser_service=parser,
+                json_repository=json_repo,
+            )
+            return controller.execute(
+                input_path=args.vsic_2025_input,
+                output_path=args.vsic_2025_output,
             )
 
         if args.command == "map-vsic-mcc":

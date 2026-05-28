@@ -1,0 +1,21 @@
+---
+description: Review thiết kế tính năng để đảm bảo tính đầy đủ, nhất quán kiến trúc, và không có gaps.
+alwaysApply: false
+---
+
+Review tài liệu thiết kế trong `docs/ai/design/feature-{name}.md`.
+
+1. Tóm tắt:
+   - Tổng quan kiến trúc (đảm bảo diagram mermaid có và chính xác)
+   - Các components chính và responsibilities
+   - Technology choices và lý do
+   - Data models và relationships
+   - API/interface contracts (inputs, outputs, auth)
+   - Các design decisions chính và trade-offs
+   - Non-functional requirements phải được giữ
+2. **Làm rõ và khám phá (lặp cho đến khi hội tụ)**:
+   - Đặt câu hỏi làm rõ cho mỗi gap, inconsistency, hoặc mismatch giữa requirements và design.
+   - Brainstorm các alternatives cho architectural decisions chính với trade-offs.
+   - Thách thức các assumptions và đề xuất creative alternatives.
+   - Lặp lại cho đến khi không còn open questions.
+3. **Tiếp theo** — Nếu có requirements gaps, quay lại `review-requirements`; nếu design vững, tiếp tục `execute-plan`.

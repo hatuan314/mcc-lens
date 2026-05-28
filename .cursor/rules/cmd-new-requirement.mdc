@@ -1,0 +1,18 @@
+---
+description: Tạo khung tài liệu tính năng mới từ yêu cầu đến lập kế hoạch (requirements → design → planning).
+alwaysApply: false
+---
+
+Hướng dẫn tôi thêm một tính năng mới, từ tài liệu hóa yêu cầu đến sẵn sàng triển khai.
+
+1. **Nắm bắt Yêu cầu** — Nếu chưa được cung cấp, hỏi: tên tính năng (kebab-case), vấn đề nó giải quyết và ai sẽ dùng, các user stories chính.
+2. **Tạo Cấu trúc Tài liệu** — Copy nội dung mỗi template (giữ nguyên YAML frontmatter + headings) vào:
+   - `docs/ai/requirements/README.md` → `docs/ai/requirements/feature-{name}.md`
+   - `docs/ai/design/README.md` → `docs/ai/design/feature-{name}.md`
+   - `docs/ai/planning/README.md` → `docs/ai/planning/feature-{name}.md`
+   - `docs/ai/implementation/README.md` → `docs/ai/implementation/feature-{name}.md`
+   - `docs/ai/testing/README.md` → `docs/ai/testing/feature-{name}.md`
+3. **Giai đoạn Yêu cầu** — Điền vào `requirements/feature-{name}.md`: problem statement, mục tiêu/non-goals, user stories, tiêu chí thành công, ràng buộc, câu hỏi mở.
+4. **Giai đoạn Thiết kế** — Điền vào `design/feature-{name}.md`: thay đổi kiến trúc, data models, API/interface, components, design decisions, security/performance.
+5. **Giai đoạn Lập kế hoạch** — Điền vào `planning/feature-{name}.md`: task breakdown với subtasks, dependencies, effort estimates, thứ tự triển khai, risks.
+6. **Tiếp theo** — Chạy `review-requirements` trước, sau đó `review-design`. Nếu cả hai đạt, tiếp tục `execute-plan`.
