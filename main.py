@@ -8,6 +8,7 @@ from pathlib import Path
 
 from loguru import logger
 from app.config import Config
+from app.controllers.mapping_controller import DEFAULT_TOP_K
 from app.controllers.mcc_convert_controller import MCCConvertController
 
 
@@ -145,8 +146,8 @@ def main() -> int:
     mapping_parser.add_argument(
         "--top-k",
         type=int,
-        default=15,
-        help="Number of top-K MCC candidates for LLM (default: 15)",
+        default=DEFAULT_TOP_K,
+        help=f"Number of top-K MCC candidates for LLM (default: {DEFAULT_TOP_K})",
     )
     mapping_parser.add_argument(
         "--ollama-host",
@@ -157,8 +158,8 @@ def main() -> int:
     mapping_parser.add_argument(
         "--llm-model",
         type=str,
-        default="qwen2.5:14b",
-        help="LLM model name (default: qwen2.5:14b)",
+        default="qwen3.5:9b",
+        help="LLM model name (default: qwen3.5:9b)",
     )
     mapping_parser.add_argument(
         "--embedding-model",
@@ -176,6 +177,11 @@ def main() -> int:
         "--resume",
         action="store_true",
         help="Resume from checkpoint, skipping already-processed VSIC entries",
+    )
+    mapping_parser.add_argument(
+        "--gdrive-output-dir",
+        type=Path,
+        help="Base directory on Google Drive for all outputs and checkpoint",
     )
     mapping_parser.add_argument(
         "--limit", type=int, help="Limit number of VSIC entries to process"
@@ -285,6 +291,8 @@ def main() -> int:
             logger.info(f"Resume: {args.resume}")
             if args.limit:
                 logger.info(f"Limit: {args.limit}")
+            if args.gdrive_output_dir:
+                logger.info(f"Google Drive output dir: {args.gdrive_output_dir}")
 
             from app.controllers.mapping_controller import MappingController
 
@@ -302,6 +310,7 @@ def main() -> int:
                 top_k=args.top_k,
                 resume=args.resume,
                 limit=args.limit,
+                gdrive_output_dir=args.gdrive_output_dir,
             )
 
         logger.info("Khởi động MCC Lens...")

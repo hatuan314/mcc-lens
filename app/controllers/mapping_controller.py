@@ -18,6 +18,8 @@ from app.services.map_vsic_to_mcc_use_case import MapVsicToMccUseCase
 from app.services.mcc_code_validator import MccCodeValidator
 from app.services.ollama_health_check import check_ollama_models
 
+DEFAULT_TOP_K = 60
+
 
 class MappingController:
     """Controller for orchestrating the mapping pipeline."""
@@ -25,7 +27,7 @@ class MappingController:
     def __init__(
         self,
         ollama_host: str = "http://localhost:11434",
-        llm_model: str = "qwen2.5:14b",
+        llm_model: str = "qwen3.5:9b",
         embedding_model: str = "bge-m3",
         template_path: Optional[Path] = None,
     ) -> None:
@@ -49,9 +51,10 @@ class MappingController:
         mcc_input: Path,
         output: Path,
         output_detail: Path,
-        top_k: int = 60,
+        top_k: int = DEFAULT_TOP_K,
         resume: bool = False,
         limit: Optional[int] = None,
+        gdrive_output_dir: Optional[Path] = None,
     ) -> int:
         """
         Execute the mapping pipeline.
@@ -64,11 +67,30 @@ class MappingController:
             top_k: Number of top-K candidates for LLM.
             resume: Whether to resume from checkpoint.
             limit: Maximum number of VSIC entries to process.
+            gdrive_output_dir: Base directory on Google Drive for all outputs.
 
         Returns:
             Exit code (0 = success, 1 = file not found, 2 = Ollama error, 3 = IO error).
         """
         try:
+            # Override paths if gdrive_output_dir is provided
+            if gdrive_output_dir:
+                # Check if it looks like a Colab Drive path and verify mount
+                if str(gdrive_output_dir).startswith("/content/drive"):
+                    if not Path("/content/drive/MyDrive").exists():
+                        logger.warning(
+                            "Path starts with /content/drive but Google Drive "
+                            "does not appear to be mounted. Output will be local."
+                        )
+
+                gdrive_output_dir.mkdir(parents=True, exist_ok=True)
+                output = gdrive_output_dir / "vsic-mcc-mapping.xlsx"
+                output_detail = gdrive_output_dir / "vsic-mcc-mapping-detail.xlsx"
+                checkpoint_path = gdrive_output_dir / ".mapping-progress.json"
+                logger.info(f"Using Google Drive output directory: {gdrive_output_dir}")
+            else:
+                checkpoint_path = output.parent / ".mapping-progress.json"
+
             # Check input files
             if not vsic_input.exists():
                 logger.error(f"VSIC input file not found: {vsic_input}")
@@ -120,7 +142,6 @@ class MappingController:
             )
             llm_client = OllamaLLMClient(self.ollama_host, self.llm_model)
 
-            checkpoint_path = output.parent / ".mapping-progress.json"
             checkpoint_repo = MappingCheckpointRepositoryImpl(checkpoint_path)
 
             valid_mcc_codes = [mcc["mcc"] for mcc in mcc_entries]

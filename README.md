@@ -159,14 +159,11 @@ python3 main.py map-vsic-mcc \
   --output output/vsic-mcc-mapping.xlsx \
   --output-detail output/vsic-mcc-mapping-detail.xlsx
 
-# Resume từ checkpoint
-python3 main.py map-vsic-mcc --resume
-
-# Tùy chỉnh models
+# Chạy trên Google Colab (với GPU và Google Drive)
 python3 main.py map-vsic-mcc \
-  --llm-model qwen2.5:14b \
-  --embedding-model bge-m3 \
-  --top-k 20
+  --gdrive-output-dir /content/drive/MyDrive/projects/mcc-lens \
+  --llm-model qwen3.5:9b \
+  --resume
 ```
 
 **Tham số:**
@@ -175,13 +172,25 @@ python3 main.py map-vsic-mcc \
 - `--mcc-input`: File JSON MCC input (mặc định: `output/mcc-visa.json`)
 - `--output, -o`: File Excel simple output (mặc định: `output/vsic-mcc-mapping.xlsx`)
 - `--output-detail`: File Excel detailed output (mặc định: `output/vsic-mcc-mapping-detail.xlsx`)
+- `--gdrive-output-dir`: Thư mục gốc trên Google Drive để lưu tất cả output và checkpoint (khuyên dùng cho Colab)
 - `--top-k`: Số lượng MCC candidates gửi đến LLM (mặc định: 60)
 - `--ollama-host`: URL Ollama server (mặc định: `http://localhost:11434`)
-- `--llm-model`: Tên model LLM (mặc định: `qwen2.5:14b`)
+- `--llm-model`: Tên model LLM (mặc định: `qwen3.5:9b`)
 - `--embedding-model`: Tên model embedding (mặc định: `bge-m3`)
 - `--template`: File Excel template cho detailed output
 - `--resume`: Resume từ checkpoint, bỏ qua VSIC đã xử lý
-- `--limit`: Giới hạn số lượng bản ghi VSIC cần xử lý (hữu ích cho việc test nhanh)
+- `--limit`: Giới hạn số lượng bản ghi VSIC cần xử lý
+
+### Running on Google Colab
+
+Để chạy pipeline trên Google Colab với GPU:
+
+1. Sử dụng notebook mẫu tại `colab/mapping_vsic_mcc_colab.ipynb`.
+2. Notebook sẽ tự động:
+   - Mount Google Drive.
+   - Cài đặt và khởi động Ollama.
+   - Pull các mô hình cần thiết (`qwen3.5:9b`, `bge-m3`).
+   - Chạy lệnh mapping với kết quả lưu trực tiếp lên Drive.
 
 **Yêu cầu:**
 
