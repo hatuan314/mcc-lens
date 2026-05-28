@@ -1,0 +1,234 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 20,
+  "vsic_list": [
+    {
+      "code": "5911",
+      "title": "Hoạt động sản xuất phim điện ảnh, video và chương trình truyền hình",
+      "children_level5": [
+        {
+          "code": "59111",
+          "title": "Hoạt động sản xuất phim điện ảnh"
+        },
+        {
+          "code": "59112",
+          "title": "Hoạt động sản xuất video"
+        },
+        {
+          "code": "59113",
+          "title": "Hoạt động sản xuất chương trình truyền hình"
+        }
+      ]
+    },
+    {
+      "code": "5912",
+      "title": "Hoạt động hậu kỳ phim điện ảnh, video và chương trình truyền hình",
+      "children_level5": [
+        {
+          "code": "59120",
+          "title": "Hoạt động hậu kỳ phim điện ảnh, video và chương trình truyền hình"
+        }
+      ]
+    },
+    {
+      "code": "5913",
+      "title": "Hoạt động phát hành phim điện ảnh, video và chương trình truyền hình",
+      "children_level5": [
+        {
+          "code": "59130",
+          "title": "Hoạt động phát hành phim điện ảnh, video và chương trình truyền hình"
+        }
+      ]
+    },
+    {
+      "code": "5914",
+      "title": "Hoạt động chiếu phim",
+      "children_level5": [
+        {
+          "code": "59141",
+          "title": "Hoạt động chiếu phim cố định"
+        },
+        {
+          "code": "59142",
+          "title": "Hoạt động chiếu phim lưu động"
+        }
+      ]
+    },
+    {
+      "code": "5920",
+      "title": "Hoạt động ghi âm và xuất bản âm nhạc",
+      "children_level5": [
+        {
+          "code": "59200",
+          "title": "Hoạt động ghi âm và xuất bản âm nhạc"
+        }
+      ]
+    },
+    {
+      "code": "6010",
+      "title": "Hoạt động phát thanh và phân phối âm thanh",
+      "children_level5": [
+        {
+          "code": "60100",
+          "title": "Hoạt động phát thanh và phân phối âm thanh"
+        }
+      ]
+    },
+    {
+      "code": "6020",
+      "title": "Hoạt động xây dựng chương trình truyền hình, phát sóng truyền hình và phân phối video",
+      "children_level5": [
+        {
+          "code": "60201",
+          "title": "Hoạt động xây dựng chương trình truyền hình"
+        },
+        {
+          "code": "60202",
+          "title": "Hoạt động phát sóng truyền hình"
+        },
+        {
+          "code": "60203",
+          "title": "Hoạt động phân phối video"
+        }
+      ]
+    },
+    {
+      "code": "6031",
+      "title": "Hoạt động thông tấn",
+      "children_level5": [
+        {
+          "code": "60310",
+          "title": "Hoạt động thông tấn"
+        }
+      ]
+    },
+    {
+      "code": "6039",
+      "title": "Hoạt động các trang mạng xã hội và hoạt động phân phối nội dung khác",
+      "children_level5": [
+        {
+          "code": "60390",
+          "title": "Hoạt động các trang mạng xã hội và hoạt động phân phối nội dung khác"
+        }
+      ]
+    },
+    {
+      "code": "6110",
+      "title": "Hoạt động viễn thông có dây, không dây và vệ tinh",
+      "children_level5": [
+        {
+          "code": "61100",
+          "title": "Hoạt động viễn thông có dây, không dây và vệ tinh"
+        }
+      ]
+    },
+    {
+      "code": "6120",
+      "title": "Hoạt động bán lại dịch vụ viễn thông và dịch vụ trung gian cho hoạt động viễn thông",
+      "children_level5": [
+        {
+          "code": "61201",
+          "title": "Hoạt động bán lại dịch vụ viễn thông"
+        },
+        {
+          "code": "61202",
+          "title": "Dịch vụ trung gian cho hoạt động viễn thông"
+        }
+      ]
+    },
+    {
+      "code": "6190",
+      "title": "Hoạt động viễn thông khác",
+      "children_level5": [
+        {
+          "code": "61900",
+          "title": "Hoạt động viễn thông khác"
+        }
+      ]
+    },
+    {
+      "code": "6211",
+      "title": "Phát triển trò chơi điện tử, phần mềm trò chơi điện tử và các công cụ phần mềm trò chơi điện tử",
+      "children_level5": [
+        {
+          "code": "62110",
+          "title": "Phát triển trò chơi điện tử, phần mềm trò chơi điện tử và các công cụ phần mềm trò chơi điện tử"
+        }
+      ]
+    },
+    {
+      "code": "6219",
+      "title": "Lập trình máy tính khác",
+      "children_level5": [
+        {
+          "code": "62190",
+          "title": "Lập trình máy tính khác"
+        }
+      ]
+    },
+    {
+      "code": "6220",
+      "title": "Tư vấn máy tính và quản lý cơ sở hạ tầng máy tính",
+      "children_level5": [
+        {
+          "code": "62200",
+          "title": "Tư vấn máy tính và quản lý cơ sở hạ tầng máy tính"
+        }
+      ]
+    },
+    {
+      "code": "6290",
+      "title": "Hoạt động dịch vụ máy tính và công nghệ thông tin khác",
+      "children_level5": [
+        {
+          "code": "62900",
+          "title": "Hoạt động dịch vụ máy tính và công nghệ thông tin khác"
+        }
+      ]
+    },
+    {
+      "code": "6310",
+      "title": "Cơ sở hạ tầng công nghệ thông tin, xử lý dữ liệu, lưu trữ và các hoạt động liên quan",
+      "children_level5": [
+        {
+          "code": "63100",
+          "title": "Cơ sở hạ tầng công nghệ thông tin, xử lý dữ liệu, lưu trữ và các hoạt động liên quan"
+        }
+      ]
+    },
+    {
+      "code": "6390",
+      "title": "Hoạt động cổng tìm kiếm web và các dịch vụ thông tin khác",
+      "children_level5": [
+        {
+          "code": "63901",
+          "title": "Hoạt động cổng tìm kiếm web"
+        },
+        {
+          "code": "63909",
+          "title": "Dịch vụ thông tin khác"
+        }
+      ]
+    },
+    {
+      "code": "6411",
+      "title": "Hoạt động Ngân hàng trung ương",
+      "children_level5": [
+        {
+          "code": "64110",
+          "title": "Hoạt động Ngân hàng trung ương"
+        }
+      ]
+    },
+    {
+      "code": "6419",
+      "title": "Hoạt động trung gian tiền tệ khác",
+      "children_level5": [
+        {
+          "code": "64190",
+          "title": "Hoạt động trung gian tiền tệ khác"
+        }
+      ]
+    }
+  ]
+}

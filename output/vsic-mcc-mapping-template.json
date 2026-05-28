@@ -1,0 +1,26 @@
+{
+  "description": "Template cấu trúc mapping giữa VSIC (Vietnam Standard Industrial Classification) và MCC (Merchant Category Code)",
+  "source_file": "output/vsic-mcc-mapping.xlsx",
+  "total_mappings": 743,
+  
+  "comment_1": "CẤU TRÚC 1: DẠNG DANH SÁCH PHẲNG (FLAT LIST) - Phù hợp để import vào Database hoặc lặp qua danh sách",
+  "mappings_list": [
+    {
+      "vsic": "Mã ngành VSIC gồm 4-5 chữ số (dạng chuỗi, ví dụ: '1110')",
+      "mcc": "Mã MCC gồm 4 chữ số (dạng chuỗi, ví dụ: '0763')",
+      "industry_name": "Tên ngành kinh tế theo phân loại VSIC (ví dụ: 'Trồng lúa')"
+    }
+  ],
+
+  "comment_2": "CẤU TRÚC 2: DẠNG BẢN ĐỒ TRA CỨU NHANH (LOOKUP MAP) - Phù hợp để tra cứu trực tiếp VSIC -> MCC với độ phức tạp O(1)",
+  "mappings_map": {
+    "1110": {
+      "mcc": "0763",
+      "industry_name": "Trồng lúa"
+    },
+    "1120": {
+      "mcc": "0763",
+      "industry_name": "Trồng ngô và cây lương thực có hạt khác"
+    }
+  }
+}

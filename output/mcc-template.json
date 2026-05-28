@@ -1,0 +1,21 @@
+{
+  "total_mcc_count": 1,
+  "mcc_list": [
+    {
+      "mcc": "Mã MCC gồm 4 chữ số (ví dụ: '0742')",
+      "title": "Tiêu đề hoặc tên ngành nghề của MCC (ví dụ: 'Veterinary Services')",
+      "description": "Mô tả chi tiết về phạm vi áp dụng, đối tượng khách hàng hoặc các hoạt động kinh doanh thuộc MCC này",
+      "included_in_mcc": [
+        "Danh sách các tên gọi thương mại, từ khóa hoặc dịch vụ cụ thể thuộc MCC này",
+        "Ví dụ: 'Pet Hospitals'",
+        "Ví dụ: 'Veterinary Services'"
+      ],
+      "similar_merchants": [
+        {
+          "mcc": "Mã MCC của ngành nghề tương tự hoặc có liên quan (ví dụ: '5995')",
+          "title": "Tiêu đề của ngành nghề tương tự đó (ví dụ: 'Pet Shops, Pet Foods and Supplies Store')"
+        }
+      ]
+    }
+  ]
+}

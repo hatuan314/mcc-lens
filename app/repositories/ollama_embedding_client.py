@@ -12,7 +12,12 @@ from app.services.protocols import EmbeddingClient
 # #region agent log helpers
 import os as _os, time as _time
 
-_DEBUG_LOG = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))), ".cursor", "debug-c603c2.log")
+_DEBUG_LOG = _os.path.join(
+    "/content/drive/MyDrive/projects/mcc-lens"
+    if _os.path.isdir("/content/drive/MyDrive/projects/mcc-lens")
+    else _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))),
+    ".cursor", "debug-c603c2.log"
+)
 
 def _dblog(msg: str, data: dict, hypothesis: str) -> None:
     _os.makedirs(_os.path.dirname(_DEBUG_LOG), exist_ok=True)

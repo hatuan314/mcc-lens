@@ -1,0 +1,222 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 20,
+  "vsic_list": [
+    {
+      "code": "3092",
+      "title": "Sản xuất xe đạp và xe cho người khuyết tật",
+      "children_level5": [
+        {
+          "code": "30920",
+          "title": "Sản xuất xe đạp và xe cho người khuyết tật"
+        }
+      ]
+    },
+    {
+      "code": "3099",
+      "title": "Sản xuất phương tiện và thiết bị vận tải khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "30990",
+          "title": "Sản xuất phương tiện và thiết bị vận tải khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "3101",
+      "title": "Sản xuất giường, tủ, bàn, ghế bằng gỗ",
+      "children_level5": [
+        {
+          "code": "31010",
+          "title": "Sản xuất giường, tủ, bàn, ghế bằng gỗ"
+        }
+      ]
+    },
+    {
+      "code": "3102",
+      "title": "Sản xuất giường, tủ, bàn, ghế bằng kim loại",
+      "children_level5": [
+        {
+          "code": "31020",
+          "title": "Sản xuất giường, tủ, bàn, ghế bằng kim loại"
+        }
+      ]
+    },
+    {
+      "code": "3109",
+      "title": "Sản xuất giường, tủ, bàn, ghế bằng vật liệu khác",
+      "children_level5": [
+        {
+          "code": "31090",
+          "title": "Sản xuất giường, tủ, bàn, ghế bằng vật liệu khác"
+        }
+      ]
+    },
+    {
+      "code": "3211",
+      "title": "Sản xuất đồ kim hoàn và chi tiết liên quan",
+      "children_level5": [
+        {
+          "code": "32110",
+          "title": "Sản xuất đồ kim hoàn và chi tiết liên quan"
+        }
+      ]
+    },
+    {
+      "code": "3212",
+      "title": "Sản xuất đồ giả kim hoàn và chi tiết liên quan",
+      "children_level5": [
+        {
+          "code": "32120",
+          "title": "Sản xuất đồ giả kim hoàn và chi tiết liên quan"
+        }
+      ]
+    },
+    {
+      "code": "3220",
+      "title": "Sản xuất nhạc cụ",
+      "children_level5": [
+        {
+          "code": "32200",
+          "title": "Sản xuất nhạc cụ"
+        }
+      ]
+    },
+    {
+      "code": "3230",
+      "title": "Sản xuất dụng cụ thể dục, thể thao",
+      "children_level5": [
+        {
+          "code": "32300",
+          "title": "Sản xuất dụng cụ thể dục, thể thao"
+        }
+      ]
+    },
+    {
+      "code": "3240",
+      "title": "Sản xuất đồ chơi, trò chơi",
+      "children_level5": [
+        {
+          "code": "32400",
+          "title": "Sản xuất đồ chơi, trò chơi"
+        }
+      ]
+    },
+    {
+      "code": "3250",
+      "title": "Sản xuất thiết bị, dụng cụ y tế, nha khoa, chỉnh hình và phục hồi chức năng",
+      "children_level5": [
+        {
+          "code": "32501",
+          "title": "Sản xuất thiết bị, dụng cụ y tế, nha khoa"
+        },
+        {
+          "code": "32502",
+          "title": "Sản xuất dụng cụ chỉnh hình, phục hồi chức năng"
+        }
+      ]
+    },
+    {
+      "code": "3290",
+      "title": "Sản xuất khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "32900",
+          "title": "Sản xuất khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "3311",
+      "title": "Sửa chữa, bảo dưỡng các sản phẩm kim loại đúc sẵn",
+      "children_level5": [
+        {
+          "code": "33110",
+          "title": "Sửa chữa, bảo dưỡng các sản phẩm kim loại đúc sẵn"
+        }
+      ]
+    },
+    {
+      "code": "3312",
+      "title": "Sửa chữa, bảo dưỡng máy móc, thiết bị",
+      "children_level5": [
+        {
+          "code": "33120",
+          "title": "Sửa chữa, bảo dưỡng máy móc, thiết bị"
+        }
+      ]
+    },
+    {
+      "code": "3313",
+      "title": "Sửa chữa, bảo dưỡng thiết bị điện tử và quang học",
+      "children_level5": [
+        {
+          "code": "33130",
+          "title": "Sửa chữa, bảo dưỡng thiết bị điện tử và quang học"
+        }
+      ]
+    },
+    {
+      "code": "3314",
+      "title": "Sửa chữa, bảo dưỡng thiết bị điện",
+      "children_level5": [
+        {
+          "code": "33140",
+          "title": "Sửa chữa, bảo dưỡng thiết bị điện"
+        }
+      ]
+    },
+    {
+      "code": "3315",
+      "title": "Sửa chữa, bảo dưỡng phương tiện vận tải (trừ ô tô, mô tô, xe máy và xe có động cơ khác)",
+      "children_level5": [
+        {
+          "code": "33150",
+          "title": "Sửa chữa, bảo dưỡng phương tiện vận tải (trừ ô tô, mô tô, xe máy và xe có động cơ khác)"
+        }
+      ]
+    },
+    {
+      "code": "3319",
+      "title": "Sửa chữa, bảo dưỡng thiết bị khác",
+      "children_level5": [
+        {
+          "code": "33190",
+          "title": "Sửa chữa, bảo dưỡng thiết bị khác"
+        }
+      ]
+    },
+    {
+      "code": "3320",
+      "title": "Lắp đặt máy móc và thiết bị công nghiệp",
+      "children_level5": [
+        {
+          "code": "33200",
+          "title": "Lắp đặt máy móc và thiết bị công nghiệp"
+        }
+      ]
+    },
+    {
+      "code": "3511",
+      "title": "Sản xuất điện từ nguồn năng lượng không tái tạo",
+      "children_level5": [
+        {
+          "code": "35111",
+          "title": "Nhiệt điện than"
+        },
+        {
+          "code": "35112",
+          "title": "Nhiệt điện khí"
+        },
+        {
+          "code": "35113",
+          "title": "Điện hạt nhân"
+        },
+        {
+          "code": "35119",
+          "title": "Sản xuất điện từ nguồn năng lượng không tái tạo khác"
+        }
+      ]
+    }
+  ]
+}

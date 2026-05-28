@@ -1,0 +1,218 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 20,
+  "vsic_list": [
+    {
+      "code": "1313",
+      "title": "Hoàn thiện sản phẩm dệt",
+      "children_level5": [
+        {
+          "code": "13130",
+          "title": "Hoàn thiện sản phẩm dệt"
+        }
+      ]
+    },
+    {
+      "code": "1391",
+      "title": "Sản xuất vải dệt kim, vải đan móc và vải không dệt khác",
+      "children_level5": [
+        {
+          "code": "13910",
+          "title": "Sản xuất vải dệt kim, vải đan móc và vải không dệt khác"
+        }
+      ]
+    },
+    {
+      "code": "1392",
+      "title": "Sản xuất hàng dệt sẵn (trừ trang phục)",
+      "children_level5": [
+        {
+          "code": "13920",
+          "title": "Sản xuất hàng dệt sẵn (trừ trang phục)"
+        }
+      ]
+    },
+    {
+      "code": "1393",
+      "title": "Sản xuất thảm, chăn, đệm",
+      "children_level5": [
+        {
+          "code": "13930",
+          "title": "Sản xuất thảm, chăn, đệm"
+        }
+      ]
+    },
+    {
+      "code": "1394",
+      "title": "Sản xuất các loại dây bện và lưới",
+      "children_level5": [
+        {
+          "code": "13940",
+          "title": "Sản xuất các loại dây bện và lưới"
+        }
+      ]
+    },
+    {
+      "code": "1399",
+      "title": "Sản xuất các loại hàng dệt khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "13990",
+          "title": "Sản xuất các loại hàng dệt khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "1410",
+      "title": "Sản xuất trang phục (trừ trang phục từ da lông thú)",
+      "children_level5": [
+        {
+          "code": "14100",
+          "title": "Sản xuất trang phục (trừ trang phục từ da lông thú)"
+        }
+      ]
+    },
+    {
+      "code": "1420",
+      "title": "Sản xuất sản phẩm từ da lông thú",
+      "children_level5": [
+        {
+          "code": "14200",
+          "title": "Sản xuất sản phẩm từ da lông thú"
+        }
+      ]
+    },
+    {
+      "code": "1430",
+      "title": "Sản xuất trang phục đan móc",
+      "children_level5": [
+        {
+          "code": "14300",
+          "title": "Sản xuất trang phục đan móc"
+        }
+      ]
+    },
+    {
+      "code": "1511",
+      "title": "Thuộc, sơ chế da; sơ chế và nhuộm da lông thú",
+      "children_level5": [
+        {
+          "code": "15110",
+          "title": "Thuộc, sơ chế da; sơ chế và nhuộm da lông thú"
+        }
+      ]
+    },
+    {
+      "code": "1512",
+      "title": "Sản xuất vali, túi xách và các loại tương tự, sản xuất yên đệm",
+      "children_level5": [
+        {
+          "code": "15120",
+          "title": "Sản xuất vali, túi xách và các loại tương tự, sản xuất yên đệm"
+        }
+      ]
+    },
+    {
+      "code": "1520",
+      "title": "Sản xuất giày, dép",
+      "children_level5": [
+        {
+          "code": "15200",
+          "title": "Sản xuất giày, dép"
+        }
+      ]
+    },
+    {
+      "code": "1610",
+      "title": "Cưa, xẻ, bào gỗ và bảo quản gỗ",
+      "children_level5": [
+        {
+          "code": "16101",
+          "title": "Cưa, xẻ và bào gỗ"
+        },
+        {
+          "code": "16102",
+          "title": "Bảo quản gỗ"
+        }
+      ]
+    },
+    {
+      "code": "1621",
+      "title": "Sản xuất gỗ dán, gỗ lạng, ván ép và ván mỏng khác",
+      "children_level5": [
+        {
+          "code": "16210",
+          "title": "Sản xuất gỗ dán, gỗ lạng, ván ép và ván mỏng khác"
+        }
+      ]
+    },
+    {
+      "code": "1622",
+      "title": "Sản xuất đồ gỗ xây dựng",
+      "children_level5": [
+        {
+          "code": "16220",
+          "title": "Sản xuất đồ gỗ xây dựng"
+        }
+      ]
+    },
+    {
+      "code": "1623",
+      "title": "Sản xuất bao bì bằng gỗ",
+      "children_level5": [
+        {
+          "code": "16230",
+          "title": "Sản xuất bao bì bằng gỗ"
+        }
+      ]
+    },
+    {
+      "code": "1629",
+      "title": "Sản xuất sản phẩm khác từ gỗ; sản xuất sản phẩm từ tre, nứa, rơm, rạ và vật liệu tết bện",
+      "children_level5": [
+        {
+          "code": "16291",
+          "title": "Sản xuất sản phẩm khác từ gỗ"
+        },
+        {
+          "code": "16292",
+          "title": "Sản xuất sản phẩm từ lâm sản (trừ gỗ), cói và vật liệu tết bện"
+        }
+      ]
+    },
+    {
+      "code": "1701",
+      "title": "Sản xuất bột giấy, giấy và bìa",
+      "children_level5": [
+        {
+          "code": "17010",
+          "title": "Sản xuất bột giấy, giấy và bìa"
+        }
+      ]
+    },
+    {
+      "code": "1702",
+      "title": "Sản xuất giấy nhăn, bìa nhăn, bao bì từ giấy và bìa",
+      "children_level5": [
+        {
+          "code": "17021",
+          "title": "Sản xuất bao bì bằng giấy, bìa"
+        },
+        {
+          "code": "17022",
+          "title": "Sản xuất giấy nhăn và bìa nhăn"
+        }
+      ]
+    },
+    {
+      "code": "1709",
+      "title": "Sản xuất các sản phẩm khác từ giấy và bìa chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "17090",
+          "title": "Sản xuất các sản phẩm khác từ giấy và bìa chưa được phân vào đâu"
+        }
+      ]
+    }
+  ]
+}

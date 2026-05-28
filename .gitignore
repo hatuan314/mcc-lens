@@ -211,8 +211,6 @@ assets/
 
 # Pipeline output & OCR cache
 out/
-output/
-output/*.json
 output/*.xlsx
 output/~$*
 

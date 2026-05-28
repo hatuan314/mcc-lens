@@ -1,0 +1,246 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 20,
+  "vsic_list": [
+    {
+      "code": "5231",
+      "title": "Hoạt động dịch vụ trung gian cho vận tải hàng hóa",
+      "children_level5": [
+        {
+          "code": "52310",
+          "title": "Hoạt động dịch vụ trung gian cho vận tải hàng hóa"
+        }
+      ]
+    },
+    {
+      "code": "5232",
+      "title": "Hoạt động dịch vụ trung gian cho vận tải hành khách",
+      "children_level5": [
+        {
+          "code": "52320",
+          "title": "Hoạt động dịch vụ trung gian cho vận tải hành khách"
+        }
+      ]
+    },
+    {
+      "code": "5310",
+      "title": "Bưu chính",
+      "children_level5": [
+        {
+          "code": "53100",
+          "title": "Bưu chính"
+        }
+      ]
+    },
+    {
+      "code": "5320",
+      "title": "Chuyển phát",
+      "children_level5": [
+        {
+          "code": "53200",
+          "title": "Chuyển phát"
+        }
+      ]
+    },
+    {
+      "code": "5330",
+      "title": "Hoạt động dịch vụ trung gian cho hoạt động bưu chính và chuyển phát",
+      "children_level5": [
+        {
+          "code": "53300",
+          "title": "Hoạt động dịch vụ trung gian cho hoạt động bưu chính và chuyển phát"
+        }
+      ]
+    },
+    {
+      "code": "5510",
+      "title": "Khách sạn và dịch vụ lưu trú tương tự",
+      "children_level5": [
+        {
+          "code": "55100",
+          "title": "Khách sạn và dịch vụ lưu trú tương tự"
+        }
+      ]
+    },
+    {
+      "code": "5520",
+      "title": "Dịch vụ lưu trú ngắn ngày khác",
+      "children_level5": [
+        {
+          "code": "55201",
+          "title": "Biệt thự hoặc căn hộ kinh doanh dịch vụ lưu trú ngắn ngày"
+        },
+        {
+          "code": "55202",
+          "title": "Nhà khách, nhà nghỉ kinh doanh dịch vụ lưu trú ngắn ngày"
+        },
+        {
+          "code": "55203",
+          "title": "Nhà trọ, phòng trọ và các cơ sở lưu trú ngắn ngày tương tự"
+        }
+      ]
+    },
+    {
+      "code": "5530",
+      "title": "Hoạt động dịch vụ trung gian cho dịch vụ lưu trú",
+      "children_level5": [
+        {
+          "code": "55300",
+          "title": "Hoạt động dịch vụ trung gian cho dịch vụ lưu trú"
+        }
+      ]
+    },
+    {
+      "code": "5590",
+      "title": "Cơ sở lưu trú khác",
+      "children_level5": [
+        {
+          "code": "55901",
+          "title": "Ký túc xá học sinh, sinh viên"
+        },
+        {
+          "code": "55902",
+          "title": "Chỗ nghỉ trọ trên xe lưu động, lều quán, trại dùng để nghỉ tạm"
+        },
+        {
+          "code": "55909",
+          "title": "Cơ sở lưu trú khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "5610",
+      "title": "Nhà hàng và các dịch vụ ăn uống phục vụ lưu động",
+      "children_level5": [
+        {
+          "code": "56101",
+          "title": "Nhà hàng, quán ăn, hàng ăn uống (trừ cửa hàng ăn uống thuộc chuỗi cửa hàng ăn nhanh)"
+        },
+        {
+          "code": "56102",
+          "title": "Cửa hàng ăn uống thuộc chuỗi cửa hàng ăn nhanh"
+        },
+        {
+          "code": "56109",
+          "title": "Dịch vụ ăn uống phục vụ lưu động khác"
+        }
+      ]
+    },
+    {
+      "code": "5621",
+      "title": "Cung cấp dịch vụ ăn uống theo hợp đồng không thường xuyên với khách hàng",
+      "children_level5": [
+        {
+          "code": "56210",
+          "title": "Cung cấp dịch vụ ăn uống theo hợp đồng không thường xuyên với khách hàng"
+        }
+      ]
+    },
+    {
+      "code": "5629",
+      "title": "Dịch vụ ăn uống khác",
+      "children_level5": [
+        {
+          "code": "56290",
+          "title": "Dịch vụ ăn uống khác"
+        }
+      ]
+    },
+    {
+      "code": "5630",
+      "title": "Dịch vụ phục vụ đồ uống",
+      "children_level5": [
+        {
+          "code": "56301",
+          "title": "Quán rượu, bia, quầy bar"
+        },
+        {
+          "code": "56302",
+          "title": "Quán cà phê, giải khát"
+        },
+        {
+          "code": "56309",
+          "title": "Dịch vụ phục vụ đồ uống khác"
+        }
+      ]
+    },
+    {
+      "code": "5640",
+      "title": "Hoạt động dịch vụ trung gian cho dịch vụ ăn uống",
+      "children_level5": [
+        {
+          "code": "56400",
+          "title": "Hoạt động dịch vụ trung gian cho dịch vụ ăn uống"
+        }
+      ]
+    },
+    {
+      "code": "5811",
+      "title": "Xuất bản sách",
+      "children_level5": [
+        {
+          "code": "58110",
+          "title": "Xuất bản sách"
+        }
+      ]
+    },
+    {
+      "code": "5812",
+      "title": "Xuất bản báo",
+      "children_level5": [
+        {
+          "code": "58120",
+          "title": "Xuất bản báo"
+        }
+      ]
+    },
+    {
+      "code": "5813",
+      "title": "Xuất bản tạp chí và các ấn phẩm định kỳ",
+      "children_level5": [
+        {
+          "code": "58130",
+          "title": "Xuất bản tạp chí và các ấn phẩm định kỳ"
+        }
+      ]
+    },
+    {
+      "code": "5819",
+      "title": "Hoạt động xuất bản khác",
+      "children_level5": [
+        {
+          "code": "58190",
+          "title": "Hoạt động xuất bản khác"
+        }
+      ]
+    },
+    {
+      "code": "5821",
+      "title": "Xuất bản trò chơi điện tử",
+      "children_level5": [
+        {
+          "code": "58210",
+          "title": "Xuất bản trò chơi điện tử"
+        }
+      ]
+    },
+    {
+      "code": "5829",
+      "title": "Xuất bản phần mềm khác",
+      "children_level5": [
+        {
+          "code": "58291",
+          "title": "Xuất bản phần mềm hệ thống"
+        },
+        {
+          "code": "58292",
+          "title": "Xuất bản phần mềm ứng dụng"
+        },
+        {
+          "code": "58299",
+          "title": "Xuất bản phần mềm khác chưa được phân vào đâu"
+        }
+      ]
+    }
+  ]
+}

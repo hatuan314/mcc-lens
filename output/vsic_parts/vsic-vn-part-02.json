@@ -1,0 +1,270 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 20,
+  "vsic_list": [
+    {
+      "code": "142",
+      "title": "Chăn nuôi ngựa, lừa, la và sản xuất giống ngựa, lừa",
+      "children_level5": [
+        {
+          "code": "1421",
+          "title": "Sản xuất giống ngựa, lừa"
+        },
+        {
+          "code": "1422",
+          "title": "Chăn nuôi ngựa, lừa, la"
+        }
+      ]
+    },
+    {
+      "code": "144",
+      "title": "Chăn nuôi dê, cừu, hươu, nai và sản xuất giống dê, cừu, hươu, nai",
+      "children_level5": [
+        {
+          "code": "1441",
+          "title": "Sản xuất giống dê, cừu, hươu, nai"
+        },
+        {
+          "code": "1442",
+          "title": "Chăn nuôi dê, cừu, hươu, nai"
+        }
+      ]
+    },
+    {
+      "code": "145",
+      "title": "Chăn nuôi lợn và sản xuất giống lợn",
+      "children_level5": [
+        {
+          "code": "1451",
+          "title": "Sản xuất giống lợn"
+        },
+        {
+          "code": "1452",
+          "title": "Chăn nuôi lợn"
+        }
+      ]
+    },
+    {
+      "code": "146",
+      "title": "Chăn nuôi gia cầm",
+      "children_level5": [
+        {
+          "code": "1461",
+          "title": "Hoạt động ấp trứng và sản xuất giống gia cầm"
+        },
+        {
+          "code": "1462",
+          "title": "Chăn nuôi gà"
+        },
+        {
+          "code": "1463",
+          "title": "Chăn nuôi vịt, ngan, ngỗng"
+        },
+        {
+          "code": "1469",
+          "title": "Chăn nuôi gia cầm khác"
+        }
+      ]
+    },
+    {
+      "code": "149",
+      "title": "Chăn nuôi khác",
+      "children_level5": [
+        {
+          "code": "1490",
+          "title": "Chăn nuôi khác"
+        }
+      ]
+    },
+    {
+      "code": "150",
+      "title": "Trồng trọt, chăn nuôi hỗn hợp",
+      "children_level5": [
+        {
+          "code": "1500",
+          "title": "Trồng trọt, chăn nuôi hỗn hợp"
+        }
+      ]
+    },
+    {
+      "code": "161",
+      "title": "Hoạt động dịch vụ trồng trọt",
+      "children_level5": [
+        {
+          "code": "1610",
+          "title": "Hoạt động dịch vụ trồng trọt"
+        }
+      ]
+    },
+    {
+      "code": "162",
+      "title": "Hoạt động dịch vụ chăn nuôi",
+      "children_level5": [
+        {
+          "code": "1620",
+          "title": "Hoạt động dịch vụ chăn nuôi"
+        }
+      ]
+    },
+    {
+      "code": "163",
+      "title": "Hoạt động dịch vụ sau thu hoạch",
+      "children_level5": [
+        {
+          "code": "1630",
+          "title": "Hoạt động dịch vụ sau thu hoạch"
+        }
+      ]
+    },
+    {
+      "code": "164",
+      "title": "Xử lý hạt giống để nhân giống",
+      "children_level5": [
+        {
+          "code": "1640",
+          "title": "Xử lý hạt giống để nhân giống"
+        }
+      ]
+    },
+    {
+      "code": "170",
+      "title": "Săn bắt, đánh bẫy và hoạt động dịch vụ có liên quan",
+      "children_level5": [
+        {
+          "code": "1700",
+          "title": "Săn bắt, đánh bẫy và hoạt động dịch vụ có liên quan"
+        }
+      ]
+    },
+    {
+      "code": "210",
+      "title": "Trồng rừng, chăm sóc rừng và ươm giống cây lâm nghiệp",
+      "children_level5": [
+        {
+          "code": "2101",
+          "title": "Trồng rừng và chăm sóc rừng cây thân gỗ"
+        },
+        {
+          "code": "2102",
+          "title": "Trồng rừng và chăm sóc rừng họ tre"
+        },
+        {
+          "code": "2103",
+          "title": "Trồng rừng và chăm sóc rừng khác"
+        },
+        {
+          "code": "2104",
+          "title": "Ươm giống cây lâm nghiệp"
+        }
+      ]
+    },
+    {
+      "code": "220",
+      "title": "Khai thác gỗ",
+      "children_level5": [
+        {
+          "code": "2200",
+          "title": "Khai thác gỗ"
+        }
+      ]
+    },
+    {
+      "code": "230",
+      "title": "Khai thác, thu nhặt lâm sản trừ gỗ",
+      "children_level5": [
+        {
+          "code": "2301",
+          "title": "Khai thác lâm sản trừ gỗ"
+        },
+        {
+          "code": "2302",
+          "title": "Thu nhặt lâm sản trừ gỗ"
+        }
+      ]
+    },
+    {
+      "code": "240",
+      "title": "Hoạt động dịch vụ lâm nghiệp",
+      "children_level5": [
+        {
+          "code": "2400",
+          "title": "Hoạt động dịch vụ lâm nghiệp"
+        }
+      ]
+    },
+    {
+      "code": "311",
+      "title": "Khai thác thủy sản biển",
+      "children_level5": [
+        {
+          "code": "3110",
+          "title": "Khai thác thủy sản biển"
+        }
+      ]
+    },
+    {
+      "code": "312",
+      "title": "Khai thác thủy sản nội địa",
+      "children_level5": [
+        {
+          "code": "3120",
+          "title": "Khai thác thủy sản nội địa"
+        }
+      ]
+    },
+    {
+      "code": "321",
+      "title": "Nuôi trồng thủy sản biển",
+      "children_level5": [
+        {
+          "code": "3211",
+          "title": "Nuôi cá"
+        },
+        {
+          "code": "3212",
+          "title": "Nuôi tôm"
+        },
+        {
+          "code": "3213",
+          "title": "Nuôi thủy sản khác"
+        },
+        {
+          "code": "3214",
+          "title": "Sản xuất giống thủy sản biển"
+        }
+      ]
+    },
+    {
+      "code": "322",
+      "title": "Nuôi trồng thủy sản nội địa",
+      "children_level5": [
+        {
+          "code": "3221",
+          "title": "Nuôi cá"
+        },
+        {
+          "code": "3222",
+          "title": "Nuôi tôm"
+        },
+        {
+          "code": "3223",
+          "title": "Nuôi thủy sản khác"
+        },
+        {
+          "code": "3224",
+          "title": "Sản xuất giống thủy sản nội địa"
+        }
+      ]
+    },
+    {
+      "code": "331",
+      "title": "Hoạt động dịch vụ hỗ trợ khai thác thủy sản",
+      "children_level5": [
+        {
+          "code": "3310",
+          "title": "Hoạt động dịch vụ hỗ trợ khai thác thủy sản"
+        }
+      ]
+    }
+  ]
+}

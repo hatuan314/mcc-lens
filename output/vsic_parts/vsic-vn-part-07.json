@@ -1,0 +1,222 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 20,
+  "vsic_list": [
+    {
+      "code": "2393",
+      "title": "Sản xuất sản phẩm gốm sứ khác",
+      "children_level5": [
+        {
+          "code": "23930",
+          "title": "Sản xuất sản phẩm gốm sứ khác"
+        }
+      ]
+    },
+    {
+      "code": "2394",
+      "title": "Sản xuất xi măng, vôi và thạch cao",
+      "children_level5": [
+        {
+          "code": "23941",
+          "title": "Sản xuất xi măng"
+        },
+        {
+          "code": "23942",
+          "title": "Sản xuất vôi"
+        },
+        {
+          "code": "23943",
+          "title": "Sản xuất thạch cao"
+        }
+      ]
+    },
+    {
+      "code": "2395",
+      "title": "Sản xuất bê tông và các sản phẩm từ bê tông, xi măng và thạch cao",
+      "children_level5": [
+        {
+          "code": "23950",
+          "title": "Sản xuất bê tông và các sản phẩm từ bê tông, xi măng và thạch cao"
+        }
+      ]
+    },
+    {
+      "code": "2396",
+      "title": "Cắt, tạo dáng và hoàn thiện đá",
+      "children_level5": [
+        {
+          "code": "23960",
+          "title": "Cắt, tạo dáng và hoàn thiện đá"
+        }
+      ]
+    },
+    {
+      "code": "2399",
+      "title": "Sản xuất sản phẩm từ chất khoáng phi kim loại khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "23990",
+          "title": "Sản xuất sản phẩm từ chất khoáng phi kim loại khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "2410",
+      "title": "Sản xuất sắt, thép, gang",
+      "children_level5": [
+        {
+          "code": "24100",
+          "title": "Sản xuất sắt, thép, gang"
+        }
+      ]
+    },
+    {
+      "code": "2420",
+      "title": "Sản xuất kim loại quý và kim loại màu",
+      "children_level5": [
+        {
+          "code": "24201",
+          "title": "Sản xuất kim loại quý"
+        },
+        {
+          "code": "24202",
+          "title": "Sản xuất kim loại màu"
+        }
+      ]
+    },
+    {
+      "code": "2431",
+      "title": "Đúc sắt, thép",
+      "children_level5": [
+        {
+          "code": "24310",
+          "title": "Đúc sắt, thép"
+        }
+      ]
+    },
+    {
+      "code": "2432",
+      "title": "Đúc kim loại màu",
+      "children_level5": [
+        {
+          "code": "24320",
+          "title": "Đúc kim loại màu"
+        }
+      ]
+    },
+    {
+      "code": "2511",
+      "title": "Sản xuất các cấu kiện kim loại",
+      "children_level5": [
+        {
+          "code": "25110",
+          "title": "Sản xuất các cấu kiện kim loại"
+        }
+      ]
+    },
+    {
+      "code": "2512",
+      "title": "Sản xuất thùng, bể chứa và dụng cụ chứa đựng bằng kim loại",
+      "children_level5": [
+        {
+          "code": "25120",
+          "title": "Sản xuất thùng, bể chứa và dụng cụ chứa đựng bằng kim loại"
+        }
+      ]
+    },
+    {
+      "code": "2513",
+      "title": "Sản xuất nồi hơi (trừ nồi hơi trung tâm)",
+      "children_level5": [
+        {
+          "code": "25130",
+          "title": "Sản xuất nồi hơi (trừ nồi hơi trung tâm)"
+        }
+      ]
+    },
+    {
+      "code": "2520",
+      "title": "Sản xuất vũ khí và đạn dược",
+      "children_level5": [
+        {
+          "code": "25200",
+          "title": "Sản xuất vũ khí và đạn dược"
+        }
+      ]
+    },
+    {
+      "code": "2591",
+      "title": "Rèn, dập, ép và cán kim loại; luyện bột kim loại",
+      "children_level5": [
+        {
+          "code": "25910",
+          "title": "Rèn, dập, ép và cán kim loại; luyện bột kim loại"
+        }
+      ]
+    },
+    {
+      "code": "2592",
+      "title": "Gia công cơ khí; xử lý và tráng phủ kim loại",
+      "children_level5": [
+        {
+          "code": "25920",
+          "title": "Gia công cơ khí; xử lý và tráng phủ kim loại"
+        }
+      ]
+    },
+    {
+      "code": "2593",
+      "title": "Sản xuất dao kéo, dụng cụ cầm tay và đồ kim loại thông dụng",
+      "children_level5": [
+        {
+          "code": "25930",
+          "title": "Sản xuất dao kéo, dụng cụ cầm tay và đồ kim loại thông dụng"
+        }
+      ]
+    },
+    {
+      "code": "2599",
+      "title": "Sản xuất sản phẩm khác bằng kim loại chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "25991",
+          "title": "Sản xuất đồ dùng bằng kim loại cho nhà bếp, nhà vệ sinh và nhà ăn"
+        },
+        {
+          "code": "25999",
+          "title": "Sản xuất sản phẩm khác còn lại bằng kim loại chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "2611",
+      "title": "Sản xuất pin mặt trời, tấm pin mặt trời và bộ biến tần quang điện",
+      "children_level5": [
+        {
+          "code": "26110",
+          "title": "Sản xuất pin mặt trời, tấm pin mặt trời và bộ biến tần quang điện"
+        }
+      ]
+    },
+    {
+      "code": "2619",
+      "title": "Sản xuất linh kiện điện tử khác",
+      "children_level5": [
+        {
+          "code": "26190",
+          "title": "Sản xuất linh kiện điện tử khác"
+        }
+      ]
+    },
+    {
+      "code": "2620",
+      "title": "Sản xuất máy tính và thiết bị ngoại vi của máy tính",
+      "children_level5": [
+        {
+          "code": "26200",
+          "title": "Sản xuất máy tính và thiết bị ngoại vi của máy tính"
+        }
+      ]
+    }
+  ]
+}

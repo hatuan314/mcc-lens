@@ -1,0 +1,210 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 20,
+  "vsic_list": [
+    {
+      "code": "9122",
+      "title": "Hoạt động di tích lịch sử và di tích",
+      "children_level5": [
+        {
+          "code": "91220",
+          "title": "Hoạt động di tích lịch sử và di tích"
+        }
+      ]
+    },
+    {
+      "code": "9130",
+      "title": "Bảo tồn, phục hồi và các hoạt động hỗ trợ khác cho di sản văn hóa",
+      "children_level5": [
+        {
+          "code": "91300",
+          "title": "Bảo tồn, phục hồi và các hoạt động hỗ trợ khác cho di sản văn hóa"
+        }
+      ]
+    },
+    {
+      "code": "9141",
+      "title": "Hoạt động của các vườn bách thảo và bách thú",
+      "children_level5": [
+        {
+          "code": "91410",
+          "title": "Hoạt động của các vườn bách thảo và bách thú"
+        }
+      ]
+    },
+    {
+      "code": "9142",
+      "title": "Hoạt động của khu bảo tồn thiên nhiên",
+      "children_level5": [
+        {
+          "code": "91420",
+          "title": "Hoạt động của khu bảo tồn thiên nhiên"
+        }
+      ]
+    },
+    {
+      "code": "9200",
+      "title": "Hoạt động xổ số, cá cược và đánh bạc",
+      "children_level5": [
+        {
+          "code": "92001",
+          "title": "Hoạt động xổ số"
+        },
+        {
+          "code": "92002",
+          "title": "Hoạt động cá cược và đánh bạc"
+        }
+      ]
+    },
+    {
+      "code": "9311",
+      "title": "Hoạt động của các cơ sở thể thao",
+      "children_level5": [
+        {
+          "code": "93110",
+          "title": "Hoạt động của các cơ sở thể thao"
+        }
+      ]
+    },
+    {
+      "code": "9312",
+      "title": "Hoạt động của các câu lạc bộ thể thao",
+      "children_level5": [
+        {
+          "code": "93120",
+          "title": "Hoạt động của các câu lạc bộ thể thao"
+        }
+      ]
+    },
+    {
+      "code": "9319",
+      "title": "Hoạt động thể thao khác",
+      "children_level5": [
+        {
+          "code": "93190",
+          "title": "Hoạt động thể thao khác"
+        }
+      ]
+    },
+    {
+      "code": "9321",
+      "title": "Hoạt động của các công viên vui chơi và công viên theo chủ đề",
+      "children_level5": [
+        {
+          "code": "93210",
+          "title": "Hoạt động của các công viên vui chơi và công viên theo chủ đề"
+        }
+      ]
+    },
+    {
+      "code": "9329",
+      "title": "Hoạt động vui chơi giải trí khác",
+      "children_level5": [
+        {
+          "code": "93290",
+          "title": "Hoạt động vui chơi giải trí khác"
+        }
+      ]
+    },
+    {
+      "code": "9411",
+      "title": "Hoạt động của các hiệp hội kinh doanh và nghiệp chủ",
+      "children_level5": [
+        {
+          "code": "94110",
+          "title": "Hoạt động của các hiệp hội kinh doanh và nghiệp chủ"
+        }
+      ]
+    },
+    {
+      "code": "9412",
+      "title": "Hoạt động của các hội nghề nghiệp",
+      "children_level5": [
+        {
+          "code": "94120",
+          "title": "Hoạt động của các hội nghề nghiệp"
+        }
+      ]
+    },
+    {
+      "code": "9420",
+      "title": "Hoạt động của công đoàn",
+      "children_level5": [
+        {
+          "code": "94200",
+          "title": "Hoạt động của công đoàn"
+        }
+      ]
+    },
+    {
+      "code": "9491",
+      "title": "Hoạt động của các tổ chức tôn giáo",
+      "children_level5": [
+        {
+          "code": "94910",
+          "title": "Hoạt động của các tổ chức tôn giáo"
+        }
+      ]
+    },
+    {
+      "code": "9499",
+      "title": "Hoạt động của các tổ chức khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "94990",
+          "title": "Hoạt động của các tổ chức khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "9510",
+      "title": "Sửa chữa, bảo dưỡng máy tính, thiết bị thông tin và truyền thông",
+      "children_level5": [
+        {
+          "code": "95100",
+          "title": "Sửa chữa, bảo dưỡng máy tính, thiết bị thông tin và truyền thông"
+        }
+      ]
+    },
+    {
+      "code": "9521",
+      "title": "Sửa chữa, bảo dưỡng thiết bị nghe nhìn điện tử gia dụng",
+      "children_level5": [
+        {
+          "code": "95210",
+          "title": "Sửa chữa, bảo dưỡng thiết bị nghe nhìn điện tử gia dụng"
+        }
+      ]
+    },
+    {
+      "code": "9522",
+      "title": "Sửa chữa, bảo dưỡng thiết bị, đồ dùng gia đình",
+      "children_level5": [
+        {
+          "code": "95220",
+          "title": "Sửa chữa, bảo dưỡng thiết bị, đồ dùng gia đình"
+        }
+      ]
+    },
+    {
+      "code": "9523",
+      "title": "Sửa chữa, bảo dưỡng giày, dép, hàng da và giả da",
+      "children_level5": [
+        {
+          "code": "95230",
+          "title": "Sửa chữa, bảo dưỡng giày, dép, hàng da và giả da"
+        }
+      ]
+    },
+    {
+      "code": "9524",
+      "title": "Sửa chữa, bảo dưỡng giường, tủ, bàn, ghế và đồ nội thất tương tự",
+      "children_level5": [
+        {
+          "code": "95240",
+          "title": "Sửa chữa, bảo dưỡng giường, tủ, bàn, ghế và đồ nội thất tương tự"
+        }
+      ]
+    }
+  ]
+}

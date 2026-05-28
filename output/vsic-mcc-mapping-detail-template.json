@@ -1,0 +1,35 @@
+{
+  "description": "Template cấu trúc kết quả mapping chi tiết từ VSIC sang các mã MCC đề cử xếp hạng 1, 2, 3 (Cấu trúc phân cấp lồng nhau)",
+  "source_file": "Đường dẫn của file Excel gốc chứa dữ liệu mapping chi tiết",
+  "sheet_name": "Tên sheet dữ liệu gốc trong Excel (ví dụ: 'Mapping Result')",
+  "total_records": 1,
+  "mappings": [
+    {
+      "vsic_code": "Mã ngành kinh tế Việt Nam (VSIC) dạng chuỗi (ví dụ: '1110')",
+      "vsic_name": "Tên ngành kinh tế theo phân loại VSIC (ví dụ: 'Trồng lúa')",
+      "mcc_candidates": [
+        {
+          "rank": 1,
+          "mcc_code": "Mã MCC xếp hạng 1 có điểm số phù hợp cao nhất (ví dụ: '0763')",
+          "mcc_name": "Tên ngành nghề tương ứng của mã MCC (ví dụ: 'Agricultural Co-operatives')",
+          "score": 0.9,
+          "comment": "Nhận xét hoặc giải trình chi tiết về lý do lựa chọn mapping mã này"
+        },
+        {
+          "rank": 2,
+          "mcc_code": "Mã MCC xếp hạng 2 (ví dụ: '5261')",
+          "mcc_name": "Tên ngành nghề tương ứng của mã MCC xếp hạng 2 (ví dụ: 'Nurseries and Lawn and Garden Supply Stores')",
+          "score": 0.8,
+          "comment": "Nhận xét lý do xếp hạng 2"
+        },
+        {
+          "rank": 3,
+          "mcc_code": "Mã MCC xếp hạng 3 (ví dụ: '0780')",
+          "mcc_name": "Tên ngành nghề tương ứng của mã MCC xếp hạng 3 (ví dụ: 'Landscaping and Horticultural Services')",
+          "score": 0.7,
+          "comment": "Nhận xét lý do xếp hạng 3"
+        }
+      ]
+    }
+  ]
+}
