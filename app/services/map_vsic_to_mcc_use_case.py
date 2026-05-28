@@ -108,6 +108,7 @@ class MapVsicToMccUseCase:
         batch_size = 1
         mcc_embeddings = []
 
+        embedding_dim: int = 0
         with tqdm(total=len(mcc_texts), desc="Computing MCC embeddings") as pbar:
             for i in range(0, len(mcc_texts), batch_size):
                 batch = mcc_texts[i : i + batch_size]
@@ -116,8 +117,28 @@ class MapVsicToMccUseCase:
                 if suspicious:
                     _dblog("mcc_batch_suspicious_entries", {"batch_start": i, "suspicious": suspicious}, "H-B/H-C")
                 # #endregion
-                batch_embeddings = self.embedding_client.embed(batch)
-                mcc_embeddings.extend(batch_embeddings)
+                try:
+                    batch_embeddings = self.embedding_client.embed(batch)
+                    if embedding_dim == 0 and batch_embeddings:
+                        embedding_dim = len(batch_embeddings[0])
+                    mcc_embeddings.extend(batch_embeddings)
+                except RuntimeError as emb_err:
+                    # #region agent log H-F: log skip on unrecoverable embed error
+                    _dblog("mcc_embed_skipped", {
+                        "batch_start": i,
+                        "batch": [{"idx": i+j, "text": t[:120]} for j, t in enumerate(batch)],
+                        "error": str(emb_err),
+                    }, "H-F")
+                    # #endregion
+                    logger.warning(
+                        f"MCC embedding failed for batch at index {i} "
+                        f"after all retries — skipping with zero vector. "
+                        f"Error: {emb_err}"
+                    )
+                    dim = embedding_dim if embedding_dim > 0 else 1024
+                    mcc_embeddings.extend(
+                        [[0.0] * dim for _ in batch]
+                    )
                 pbar.update(len(batch))
 
         logger.info(f"Computed embeddings for {len(mcc_embeddings)} MCC entries")
