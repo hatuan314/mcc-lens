@@ -188,6 +188,8 @@ python3 main.py map-vsic-mcc \
 1. Sử dụng notebook mẫu tại `colab/mapping_vsic_mcc_colab.ipynb`.
 2. Notebook sẽ tự động:
    - Mount Google Drive.
+   - Clone code từ GitHub.
+   - Cài dependencies tối thiểu qua `colab/requirements-mapping.txt` (không dùng `requirements.txt` đầy đủ).
    - Cài đặt và khởi động Ollama.
    - Pull các mô hình cần thiết (`qwen3.5:9b`, `bge-m3`).
    - Chạy lệnh mapping với kết quả lưu trực tiếp lên Drive.
