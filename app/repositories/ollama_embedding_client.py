@@ -97,7 +97,7 @@ class OllamaEmbeddingClient(EmbeddingClient):
                 return embeddings
 
             except Exception as e:
-                # #region agent log H-A/H-B/H-C: log failure details
+                # #region agent log H-A/H-B/H-C/H-F: log failure details
                 _dblog("embed_attempt_failed", {
                     "attempt": attempt + 1,
                     "error": str(e),
@@ -106,6 +106,22 @@ class OllamaEmbeddingClient(EmbeddingClient):
                 # #endregion
                 logger.warning(f"Embedding attempt {attempt + 1} failed: {e}")
                 if attempt < max_retries - 1:
+                    # Unload then reload the model to reset Ollama GPU state
+                    # which can get corrupted after many sequential calls (NaN).
+                    try:
+                        logger.info(
+                            f"Resetting Ollama model state for {self.model}..."
+                        )
+                        self.client.generate(
+                            model=self.model, prompt="", keep_alive=0
+                        )
+                        time.sleep(3)
+                        # #region agent log H-F: model unload attempted
+                        _dblog("ollama_model_unload", {"model": self.model, "attempt": attempt + 1}, "H-F")
+                        # #endregion
+                    except Exception as unload_err:
+                        _dblog("ollama_unload_failed", {"error": str(unload_err)}, "H-F")
+                        logger.warning(f"Model unload failed (non-fatal): {unload_err}")
                     wait_time = 2**attempt
                     logger.info(f"Retrying in {wait_time}s...")
                     time.sleep(wait_time)
