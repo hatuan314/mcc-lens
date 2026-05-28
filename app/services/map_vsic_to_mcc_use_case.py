@@ -100,10 +100,12 @@ class MapVsicToMccUseCase:
             text = f"{title} — {description[:500]}"
             mcc_texts.append(text)
 
-        # Batch size reduced to 8 to avoid Ollama NaN errors on batches
-        # where total token count across mixed-length texts exceeds the
-        # bge-m3 internal limit, causing a 500 with "unsupported value: NaN".
-        batch_size = 8
+        # Use batch_size=1 to avoid Ollama NaN (status 500) errors.
+        # bge-m3 via Ollama produces NaN embeddings when the total token count
+        # across a batch exceeds its internal limit, which is unpredictable
+        # with variable-length MCC descriptions (100-560 chars). Processing
+        # one text at a time is the only reliable workaround.
+        batch_size = 1
         mcc_embeddings = []
 
         with tqdm(total=len(mcc_texts), desc="Computing MCC embeddings") as pbar:
