@@ -12,9 +12,10 @@ from app.services.protocols import EmbeddingClient
 # #region agent log helpers
 import os as _os, time as _time
 
-_DEBUG_LOG = "/Users/tuanha/Work/projects/python/convert-vsic-to-mcc/mcc-lens/.cursor/debug-c603c2.log"
+_DEBUG_LOG = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))), ".cursor", "debug-c603c2.log")
 
 def _dblog(msg: str, data: dict, hypothesis: str) -> None:
+    _os.makedirs(_os.path.dirname(_DEBUG_LOG), exist_ok=True)
     entry = json.dumps({"sessionId": "c603c2", "timestamp": int(_time.time() * 1000), "location": "ollama_embedding_client.py", "message": msg, "data": data, "hypothesisId": hypothesis})
     with open(_DEBUG_LOG, "a") as _f:
         _f.write(entry + "\n")

@@ -10,9 +10,11 @@ from loguru import logger
 from tqdm import tqdm
 
 # #region agent log helpers
-_DEBUG_LOG = "/Users/tuanha/Work/projects/python/convert-vsic-to-mcc/mcc-lens/.cursor/debug-c603c2.log"
+import os as _os
+_DEBUG_LOG = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))), ".cursor", "debug-c603c2.log")
 
 def _dblog(msg: str, data: dict, hypothesis: str) -> None:
+    _os.makedirs(_os.path.dirname(_DEBUG_LOG), exist_ok=True)
     entry = json.dumps({"sessionId": "c603c2", "timestamp": int(_time.time() * 1000), "location": "map_vsic_to_mcc_use_case.py", "message": msg, "data": data, "hypothesisId": hypothesis})
     with open(_DEBUG_LOG, "a") as _f:
         _f.write(entry + "\n")
