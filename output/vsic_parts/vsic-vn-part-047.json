@@ -1,0 +1,80 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "4330",
+      "title": "Hoàn thiện công trình xây dựng",
+      "children_level5": [
+        {
+          "code": "43300",
+          "title": "Hoàn thiện công trình xây dựng"
+        }
+      ]
+    },
+    {
+      "code": "4340",
+      "title": "Hoạt động dịch vụ trung gian cho xây dựng chuyên dụng",
+      "children_level5": [
+        {
+          "code": "43400",
+          "title": "Hoạt động dịch vụ trung gian cho xây dựng chuyên dụng"
+        }
+      ]
+    },
+    {
+      "code": "4390",
+      "title": "Hoạt động xây dựng chuyên dụng khác",
+      "children_level5": [
+        {
+          "code": "43900",
+          "title": "Hoạt động xây dựng chuyên dụng khác"
+        }
+      ]
+    },
+    {
+      "code": "4610",
+      "title": "Đại lý, môi giới, đấu giá hàng hóa",
+      "children_level5": [
+        {
+          "code": "46101",
+          "title": "Đại lý bán hàng hóa"
+        },
+        {
+          "code": "46102",
+          "title": "Môi giới mua bán hàng hóa"
+        },
+        {
+          "code": "46103",
+          "title": "Đấu giá hàng hóa"
+        }
+      ]
+    },
+    {
+      "code": "4620",
+      "title": "Bán buôn nông, lâm sản nguyên liệu (trừ gỗ, tre, nứa) và động vật sống",
+      "children_level5": [
+        {
+          "code": "46201",
+          "title": "Bán buôn thóc, ngô và các loại hạt ngũ cốc khác"
+        },
+        {
+          "code": "46202",
+          "title": "Bán buôn hoa và cây"
+        },
+        {
+          "code": "46203",
+          "title": "Bán buôn động vật sống"
+        },
+        {
+          "code": "46204",
+          "title": "Bán buôn thức ăn và nguyên liệu làm thức ăn cho gia súc, gia cầm và thủy sản"
+        },
+        {
+          "code": "46209",
+          "title": "Bán buôn nông, lâm sản nguyên liệu khác (trừ gỗ, tre, nứa)"
+        }
+      ]
+    }
+  ]
+}

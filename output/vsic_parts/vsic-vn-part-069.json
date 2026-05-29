@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "6421",
+      "title": "Hoạt động công ty nắm giữ tài sản",
+      "children_level5": [
+        {
+          "code": "64210",
+          "title": "Hoạt động công ty nắm giữ tài sản"
+        }
+      ]
+    },
+    {
+      "code": "6422",
+      "title": "Hoạt động của các kênh dẫn vốn",
+      "children_level5": [
+        {
+          "code": "64220",
+          "title": "Hoạt động của các kênh dẫn vốn"
+        }
+      ]
+    },
+    {
+      "code": "6431",
+      "title": "Hoạt động quỹ thị trường tiền tệ",
+      "children_level5": [
+        {
+          "code": "64310",
+          "title": "Hoạt động quỹ thị trường tiền tệ"
+        }
+      ]
+    },
+    {
+      "code": "6432",
+      "title": "Hoạt động quỹ đầu tư phi thị trường tiền tệ",
+      "children_level5": [
+        {
+          "code": "64320",
+          "title": "Hoạt động quỹ đầu tư phi thị trường tiền tệ"
+        }
+      ]
+    },
+    {
+      "code": "6433",
+      "title": "Hoạt động quỹ tín thác, tài sản và tài khoản đại lý",
+      "children_level5": [
+        {
+          "code": "64330",
+          "title": "Hoạt động quỹ tín thác, tài sản và tài khoản đại lý"
+        }
+      ]
+    }
+  ]
+}

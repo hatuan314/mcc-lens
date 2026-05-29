@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1313",
+      "title": "Hoàn thiện sản phẩm dệt",
+      "children_level5": [
+        {
+          "code": "13130",
+          "title": "Hoàn thiện sản phẩm dệt"
+        }
+      ]
+    },
+    {
+      "code": "1391",
+      "title": "Sản xuất vải dệt kim, vải đan móc và vải không dệt khác",
+      "children_level5": [
+        {
+          "code": "13910",
+          "title": "Sản xuất vải dệt kim, vải đan móc và vải không dệt khác"
+        }
+      ]
+    },
+    {
+      "code": "1392",
+      "title": "Sản xuất hàng dệt sẵn (trừ trang phục)",
+      "children_level5": [
+        {
+          "code": "13920",
+          "title": "Sản xuất hàng dệt sẵn (trừ trang phục)"
+        }
+      ]
+    },
+    {
+      "code": "1393",
+      "title": "Sản xuất thảm, chăn, đệm",
+      "children_level5": [
+        {
+          "code": "13930",
+          "title": "Sản xuất thảm, chăn, đệm"
+        }
+      ]
+    },
+    {
+      "code": "1394",
+      "title": "Sản xuất các loại dây bện và lưới",
+      "children_level5": [
+        {
+          "code": "13940",
+          "title": "Sản xuất các loại dây bện và lưới"
+        }
+      ]
+    }
+  ]
+}

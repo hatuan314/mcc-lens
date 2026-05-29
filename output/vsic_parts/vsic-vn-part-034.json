@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2822",
+      "title": "Sản xuất máy công cụ và máy tạo hình kim loại",
+      "children_level5": [
+        {
+          "code": "28220",
+          "title": "Sản xuất máy công cụ và máy tạo hình kim loại"
+        }
+      ]
+    },
+    {
+      "code": "2823",
+      "title": "Sản xuất máy móc, thiết bị cho ngành luyện kim",
+      "children_level5": [
+        {
+          "code": "28230",
+          "title": "Sản xuất máy móc, thiết bị cho ngành luyện kim"
+        }
+      ]
+    },
+    {
+      "code": "2824",
+      "title": "Sản xuất máy khai thác mỏ và xây dựng",
+      "children_level5": [
+        {
+          "code": "28240",
+          "title": "Sản xuất máy khai thác mỏ và xây dựng"
+        }
+      ]
+    },
+    {
+      "code": "2825",
+      "title": "Sản xuất máy chế biến thực phẩm, đồ uống và thuốc lá",
+      "children_level5": [
+        {
+          "code": "28250",
+          "title": "Sản xuất máy chế biến thực phẩm, đồ uống và thuốc lá"
+        }
+      ]
+    },
+    {
+      "code": "2826",
+      "title": "Sản xuất máy cho ngành dệt, may và da",
+      "children_level5": [
+        {
+          "code": "28260",
+          "title": "Sản xuất máy cho ngành dệt, may và da"
+        }
+      ]
+    }
+  ]
+}

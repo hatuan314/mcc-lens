@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "891",
+      "title": "Khai thác khoáng hóa chất và khoáng phân bón",
+      "children_level5": [
+        {
+          "code": "8910",
+          "title": "Khai thác khoáng hóa chất và khoáng phân bón"
+        }
+      ]
+    },
+    {
+      "code": "892",
+      "title": "Khai thác và thu gom than bùn",
+      "children_level5": [
+        {
+          "code": "8920",
+          "title": "Khai thác và thu gom than bùn"
+        }
+      ]
+    },
+    {
+      "code": "893",
+      "title": "Khai thác muối",
+      "children_level5": [
+        {
+          "code": "8930",
+          "title": "Khai thác muối"
+        }
+      ]
+    },
+    {
+      "code": "899",
+      "title": "Khai khoáng khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "8990",
+          "title": "Khai khoáng khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "910",
+      "title": "Hoạt động dịch vụ hỗ trợ khai thác dầu thô và khí tự nhiên",
+      "children_level5": [
+        {
+          "code": "9100",
+          "title": "Hoạt động dịch vụ hỗ trợ khai thác dầu thô và khí tự nhiên"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "3211",
+      "title": "Sản xuất đồ kim hoàn và chi tiết liên quan",
+      "children_level5": [
+        {
+          "code": "32110",
+          "title": "Sản xuất đồ kim hoàn và chi tiết liên quan"
+        }
+      ]
+    },
+    {
+      "code": "3212",
+      "title": "Sản xuất đồ giả kim hoàn và chi tiết liên quan",
+      "children_level5": [
+        {
+          "code": "32120",
+          "title": "Sản xuất đồ giả kim hoàn và chi tiết liên quan"
+        }
+      ]
+    },
+    {
+      "code": "3220",
+      "title": "Sản xuất nhạc cụ",
+      "children_level5": [
+        {
+          "code": "32200",
+          "title": "Sản xuất nhạc cụ"
+        }
+      ]
+    },
+    {
+      "code": "3230",
+      "title": "Sản xuất dụng cụ thể dục, thể thao",
+      "children_level5": [
+        {
+          "code": "32300",
+          "title": "Sản xuất dụng cụ thể dục, thể thao"
+        }
+      ]
+    },
+    {
+      "code": "3240",
+      "title": "Sản xuất đồ chơi, trò chơi",
+      "children_level5": [
+        {
+          "code": "32400",
+          "title": "Sản xuất đồ chơi, trò chơi"
+        }
+      ]
+    }
+  ]
+}

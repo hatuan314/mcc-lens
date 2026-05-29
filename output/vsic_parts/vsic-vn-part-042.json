@@ -1,0 +1,68 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "3600",
+      "title": "Khai thác, xử lý và cung cấp nước",
+      "children_level5": [
+        {
+          "code": "36000",
+          "title": "Khai thác, xử lý và cung cấp nước"
+        }
+      ]
+    },
+    {
+      "code": "3700",
+      "title": "Thoát nước và xử lý nước thải",
+      "children_level5": [
+        {
+          "code": "37001",
+          "title": "Thoát nước"
+        },
+        {
+          "code": "37002",
+          "title": "Xử lý nước thải"
+        }
+      ]
+    },
+    {
+      "code": "3811",
+      "title": "Thu gom rác thải không độc hại",
+      "children_level5": [
+        {
+          "code": "38110",
+          "title": "Thu gom rác thải không độc hại"
+        }
+      ]
+    },
+    {
+      "code": "3812",
+      "title": "Thu gom rác thải độc hại",
+      "children_level5": [
+        {
+          "code": "38121",
+          "title": "Thu gom rác thải y tế"
+        },
+        {
+          "code": "38129",
+          "title": "Thu gom rác thải độc hại khác"
+        }
+      ]
+    },
+    {
+      "code": "3821",
+      "title": "Xử lý và tiêu hủy rác thải không độc hại",
+      "children_level5": [
+        {
+          "code": "38211",
+          "title": "Sản xuất điện từ rác thải"
+        },
+        {
+          "code": "38212",
+          "title": "Xử lý và tiêu hủy rác thải không độc hại khác (trừ sản xuất điện từ rác thải)"
+        }
+      ]
+    }
+  ]
+}

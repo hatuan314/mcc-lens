@@ -1,0 +1,72 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "4759",
+      "title": "Bán lẻ đồ điện gia dụng, giường, tủ, bàn, ghế và đồ nội thất tương tự, đèn và bộ đèn điện, đồ dùng gia đình khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "47591",
+          "title": "Bán lẻ đồ điện gia dụng, đèn và bộ đèn điện"
+        },
+        {
+          "code": "47592",
+          "title": "Bán lẻ giường, tủ, bàn, ghế và đồ dùng nội thất tương tự"
+        },
+        {
+          "code": "47593",
+          "title": "Bán lẻ đồ dùng gia đình bằng gốm, sứ, thủy tinh"
+        },
+        {
+          "code": "47594",
+          "title": "Bán lẻ nhạc cụ"
+        },
+        {
+          "code": "47599",
+          "title": "Bán lẻ đồ dùng gia đình khác còn lại chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "4761",
+      "title": "Bán lẻ sách, báo, tạp chí, văn phòng phẩm",
+      "children_level5": [
+        {
+          "code": "47610",
+          "title": "Bán lẻ sách, báo, tạp chí, văn phòng phẩm"
+        }
+      ]
+    },
+    {
+      "code": "4762",
+      "title": "Bán lẻ thiết bị, dụng cụ thể dục, thể thao",
+      "children_level5": [
+        {
+          "code": "47620",
+          "title": "Bán lẻ thiết bị, dụng cụ thể dục, thể thao"
+        }
+      ]
+    },
+    {
+      "code": "4763",
+      "title": "Bán lẻ trò chơi, đồ chơi",
+      "children_level5": [
+        {
+          "code": "47630",
+          "title": "Bán lẻ trò chơi, đồ chơi"
+        }
+      ]
+    },
+    {
+      "code": "4769",
+      "title": "Bán lẻ sản phẩm văn hóa, giải trí khác chưa phân vào đâu",
+      "children_level5": [
+        {
+          "code": "47690",
+          "title": "Bán lẻ sản phẩm văn hóa, giải trí khác chưa phân vào đâu"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 1,
+  "vsic_list": [
+    {
+      "code": "495",
+      "title": "",
+      "children_level5": [
+        {
+          "code": "743",
+          "title": ""
+        }
+      ]
+    }
+  ]
+}

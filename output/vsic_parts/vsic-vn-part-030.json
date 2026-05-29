@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2670",
+      "title": "Sản xuất thiết bị và dụng cụ quang học",
+      "children_level5": [
+        {
+          "code": "26700",
+          "title": "Sản xuất thiết bị và dụng cụ quang học"
+        }
+      ]
+    },
+    {
+      "code": "2680",
+      "title": "Sản xuất băng, đĩa từ tính và quang học",
+      "children_level5": [
+        {
+          "code": "26800",
+          "title": "Sản xuất băng, đĩa từ tính và quang học"
+        }
+      ]
+    },
+    {
+      "code": "2710",
+      "title": "Sản xuất mô tơ, máy phát, biến thế điện, thiết bị phân phối và điều khiển điện",
+      "children_level5": [
+        {
+          "code": "27101",
+          "title": "Sản xuất mô tơ, máy phát"
+        },
+        {
+          "code": "27102",
+          "title": "Sản xuất biến thế điện, thiết bị phân phối và điều khiển điện"
+        }
+      ]
+    },
+    {
+      "code": "2720",
+      "title": "Sản xuất pin và ắc quy",
+      "children_level5": [
+        {
+          "code": "27200",
+          "title": "Sản xuất pin và ắc quy"
+        }
+      ]
+    },
+    {
+      "code": "2731",
+      "title": "Sản xuất dây cáp, sợi cáp quang học",
+      "children_level5": [
+        {
+          "code": "27310",
+          "title": "Sản xuất dây cáp, sợi cáp quang học"
+        }
+      ]
+    }
+  ]
+}

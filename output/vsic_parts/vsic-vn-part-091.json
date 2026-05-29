@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "8890",
+      "title": "Hoạt động trợ giúp xã hội không tập trung khác",
+      "children_level5": [
+        {
+          "code": "88900",
+          "title": "Hoạt động trợ giúp xã hội không tập trung khác"
+        }
+      ]
+    },
+    {
+      "code": "9011",
+      "title": "Hoạt động sáng tác văn học và sáng tác âm nhạc",
+      "children_level5": [
+        {
+          "code": "90110",
+          "title": "Hoạt động sáng tác văn học và sáng tác âm nhạc"
+        }
+      ]
+    },
+    {
+      "code": "9012",
+      "title": "Hoạt động sáng tạo nghệ thuật thị giác",
+      "children_level5": [
+        {
+          "code": "90120",
+          "title": "Hoạt động sáng tạo nghệ thuật thị giác"
+        }
+      ]
+    },
+    {
+      "code": "9019",
+      "title": "Hoạt động sáng tạo nghệ thuật khác",
+      "children_level5": [
+        {
+          "code": "90190",
+          "title": "Hoạt động sáng tạo nghệ thuật khác"
+        }
+      ]
+    },
+    {
+      "code": "9020",
+      "title": "Hoạt động biểu diễn nghệ thuật",
+      "children_level5": [
+        {
+          "code": "90200",
+          "title": "Hoạt động biểu diễn nghệ thuật"
+        }
+      ]
+    }
+  ]
+}

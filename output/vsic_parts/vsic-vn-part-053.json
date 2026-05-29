@@ -1,0 +1,80 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "4730",
+      "title": "Bán lẻ nhiên liệu động cơ",
+      "children_level5": [
+        {
+          "code": "47300",
+          "title": "Bán lẻ nhiên liệu động cơ"
+        }
+      ]
+    },
+    {
+      "code": "4740",
+      "title": "Bán lẻ thiết bị công nghệ thông tin và truyền thông",
+      "children_level5": [
+        {
+          "code": "47400",
+          "title": "Bán lẻ thiết bị công nghệ thông tin và truyền thông"
+        }
+      ]
+    },
+    {
+      "code": "4751",
+      "title": "Bán lẻ vải, len, sợi, chỉ khâu và hàng dệt khác",
+      "children_level5": [
+        {
+          "code": "47511",
+          "title": "Bán lẻ vải"
+        },
+        {
+          "code": "47519",
+          "title": "Bán lẻ len, sợi, chỉ khâu và hàng dệt khác"
+        }
+      ]
+    },
+    {
+      "code": "4752",
+      "title": "Bán lẻ đồ ngũ kim, sơn, kính, vật liệu và thiết bị lắp đặt khác trong xây dựng",
+      "children_level5": [
+        {
+          "code": "47521",
+          "title": "Bán lẻ đồ ngũ kim"
+        },
+        {
+          "code": "47522",
+          "title": "Bán lẻ sơn, màu, véc ni"
+        },
+        {
+          "code": "47523",
+          "title": "Bán lẻ kính xây dựng"
+        },
+        {
+          "code": "47524",
+          "title": "Bán lẻ xi măng, gạch xây, ngói, đá, cát sỏi, sắt thép và vật liệu xây dựng khác"
+        },
+        {
+          "code": "47525",
+          "title": "Bán lẻ gạch ốp lát, thiết bị vệ sinh"
+        },
+        {
+          "code": "47529",
+          "title": "Bán lẻ thiết bị lắp đặt khác trong xây dựng"
+        }
+      ]
+    },
+    {
+      "code": "4753",
+      "title": "Bán lẻ thảm, đệm, chăn, màn, rèm, vật liệu phủ tường và sàn",
+      "children_level5": [
+        {
+          "code": "47530",
+          "title": "Bán lẻ thảm, đệm, chăn, màn, rèm, vật liệu phủ tường và sàn"
+        }
+      ]
+    }
+  ]
+}

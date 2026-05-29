@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "7214",
+      "title": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học nông nghiệp",
+      "children_level5": [
+        {
+          "code": "72140",
+          "title": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học nông nghiệp"
+        }
+      ]
+    },
+    {
+      "code": "7221",
+      "title": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học xã hội",
+      "children_level5": [
+        {
+          "code": "72210",
+          "title": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học xã hội"
+        }
+      ]
+    },
+    {
+      "code": "7222",
+      "title": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học nhân văn",
+      "children_level5": [
+        {
+          "code": "72220",
+          "title": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học nhân văn"
+        }
+      ]
+    },
+    {
+      "code": "7310",
+      "title": "Quảng cáo",
+      "children_level5": [
+        {
+          "code": "73100",
+          "title": "Quảng cáo"
+        }
+      ]
+    },
+    {
+      "code": "7320",
+      "title": "Nghiên cứu thị trường và thăm dò dư luận",
+      "children_level5": [
+        {
+          "code": "73200",
+          "title": "Nghiên cứu thị trường và thăm dò dư luận"
+        }
+      ]
+    }
+  ]
+}

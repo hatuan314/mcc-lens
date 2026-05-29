@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1079",
+      "title": "Sản xuất thực phẩm khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "10790",
+          "title": "Sản xuất thực phẩm khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "1080",
+      "title": "Sản xuất thức ăn gia súc, gia cầm và thủy sản",
+      "children_level5": [
+        {
+          "code": "10800",
+          "title": "Sản xuất thức ăn gia súc, gia cầm và thủy sản"
+        }
+      ]
+    },
+    {
+      "code": "1101",
+      "title": "Chưng, tinh cất và pha chế các loại rượu mạnh",
+      "children_level5": [
+        {
+          "code": "11010",
+          "title": "Chưng, tinh cất và pha chế các loại rượu mạnh"
+        }
+      ]
+    },
+    {
+      "code": "1102",
+      "title": "Sản xuất rượu vang",
+      "children_level5": [
+        {
+          "code": "11020",
+          "title": "Sản xuất rượu vang"
+        }
+      ]
+    },
+    {
+      "code": "1103",
+      "title": "Sản xuất bia",
+      "children_level5": [
+        {
+          "code": "11030",
+          "title": "Sản xuất bia"
+        }
+      ]
+    }
+  ]
+}

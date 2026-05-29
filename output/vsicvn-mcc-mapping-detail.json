@@ -1,0 +1,3302 @@
+{
+    "description": "Kết quả mapping chi tiết từ VSIC sang các mã MCC đề cử xếp hạng 1, 2, 3 (Cấu trúc phân cấp lồng nhau)",
+    "source_file": "vsic-vn-part-001.json và mcc-visa.json",
+    "sheet_name": "Mapping Result",
+    "total_records": 5,
+    "mappings": [
+        {
+            "vsic_code": "111",
+            "vsic_name": "Trồng lúa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Mô tả MCC 0763 bao gồm các hoạt động canh tác nông nghiệp, trồng trọt và thu hoạch mùa màng (farming operations, planting and cultivating, harvesting crops), hoàn toàn phù hợp với hoạt động trồng lúa."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.65,
+                    "comment": "Bao gồm các dịch vụ liên quan đến gieo hạt, trồng cây và bón phân (planting, fertilizing, seeding, spraying). Dù chủ yếu dành cho cảnh quan nhưng có sự tương đồng một phần về kỹ thuật nông nghiệp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Mã này có mức độ tương đồng nhất định do bao gồm dịch vụ lưu trữ và kho bãi dành cho nông sản (Farm Products) sau khi thu hoạch lúa."
+                }
+            ]
+        },
+        {
+            "vsic_code": "112",
+            "vsic_name": "Trồng ngô và cây lương thực có hạt khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Phù hợp nhất do bao gồm trực tiếp các dịch vụ quản lý nông trại, làm đất, gieo trồng và thu hoạch các loại cây trồng (crops)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.65,
+                    "comment": "Có sự tương đồng ở các công đoạn trồng trọt như gieo hạt, phun thuốc và chăm sóc cây (seeding, spraying)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Phù hợp cho công đoạn hậu cần, bao gồm việc lưu kho các sản phẩm nông nghiệp và lương thực hạt."
+                }
+            ]
+        },
+        {
+            "vsic_code": "113",
+            "vsic_name": "Trồng cây lấy củ có chất bột",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Khớp hoàn toàn với mô tả về hoạt động trồng trọt, canh tác và thu hoạch cây trồng nông nghiệp."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.60,
+                    "comment": "Chứa các mô tả về công đoạn trồng cây và làm vườn, tuy nhiên mức độ tương đồng ít hơn 0763."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Liên quan đến hoạt động kho bãi lưu trữ các nông sản lấy củ sau khi thu hoạch."
+                }
+            ]
+        },
+        {
+            "vsic_code": "114",
+            "vsic_name": "Trồng cây mía",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Rất phù hợp do bao quát toàn bộ vòng đời canh tác nông nghiệp, bao gồm làm đất, gieo trồng và thu hoạch cây mía."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.60,
+                    "comment": "Mô tả có chứa các từ khóa tương đồng liên quan đến việc bón phân, tưới tiêu và chăm sóc đất trồng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Phù hợp với nhóm dịch vụ lưu trữ hàng hóa và nông sản thu hoạch."
+                }
+            ]
+        },
+        {
+            "vsic_code": "115",
+            "vsic_name": "Trồng cây thuốc lá, thuốc lào",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Khớp nhất về ngữ nghĩa canh tác nông nghiệp, làm đất, gieo trồng và thu hoạch cho các loại cây nông nghiệp nói chung."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.60,
+                    "comment": "Đề cập đến các quy trình làm vườn như phun thuốc bảo vệ thực vật, gieo trồng có sự giao thoa nhẹ về ý nghĩa."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Có sự liên đới đối với việc vận chuyển và lưu trữ nông sản cây công nghiệp, thuốc lá thô sau khi thu hái."
+                }
+            ]
+        },
+        {
+            "vsic_code": "116",
+            "vsic_name": "Trồng cây lấy sợi",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Phù hợp nhất do MCC 0763 bao gồm các hoạt động canh tác nông nghiệp (farming operations), làm đất, gieo hạt và thu hoạch mùa màng (harvesting crops)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.60,
+                    "comment": "Có sự liên quan ở khía cạnh lưu trữ và kho bãi dành cho các sản phẩm nông nghiệp (Farm Products) sau thu hoạch."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.40,
+                    "comment": "Lựa chọn thay thế liên quan đến dịch vụ trồng trọt, chăm sóc cây cối cơ bản."
+                }
+            ]
+        },
+        {
+            "vsic_code": "117",
+            "vsic_name": "Trồng cây có hạt chứa dầu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Phù hợp nhất do bao quát toàn bộ hoạt động trồng trọt và canh tác trên các cánh đồng để thu hoạch vụ mùa (nông sản chứa dầu)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.65,
+                    "comment": "Các hạt chứa dầu sau thu hoạch thường đòi hỏi hệ thống kho bãi lưu trữ hàng nông sản (Farm Products)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.40,
+                    "comment": "Liên quan gián tiếp qua các khía cạnh gieo hạt, bón phân, phun thuốc diệt cỏ trong mô tả của MCC này."
+                }
+            ]
+        },
+        {
+            "vsic_code": "118",
+            "vsic_name": "Trồng rau, đậu các loại và trồng hoa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.90,
+                    "comment": "Mã MCC 0780 bao gồm từ khóa 'Horticulture Services' (Dịch vụ nghề làm vườn) cực kỳ tương đồng với các hoạt động trồng hoa và cây cảnh."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Phù hợp mạnh với nhóm nhánh cấp 5 là 'Trồng rau các loại' và 'Trồng đậu các loại' thông qua hoạt động trồng trọt nông nghiệp (farming operations)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Liên quan đến việc bảo quản lạnh (Refrigerated Goods) và kho bãi cho rau củ quả sau thu hoạch."
+                }
+            ]
+        },
+        {
+            "vsic_code": "119",
+            "vsic_name": "Trồng cây hàng năm khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Mã MCC này đại diện chung nhất cho các dịch vụ quản lý, canh tác, thu hoạch mùa màng cho các giống cây trồng (như cây gia vị, dược liệu hàng năm)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.70,
+                    "comment": "Có sự liên quan thông qua các kỹ thuật làm vườn, chăm sóc cây hương liệu, dược liệu thường cần tính chuyên môn nghề vườn (Horticultural Services)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Liên quan đến việc dự trữ và kho bãi hàng nông sản (cây gia vị, dược liệu sau thu hoạch)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "121",
+            "vsic_name": "Trồng cây ăn quả",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Hoàn toàn trùng khớp. Trong mô tả và các từ khóa included_in_mcc của mã 0763 có nhắc trực tiếp đến 'Orchards' (Vườn cây ăn quả) và 'Vineyards' (Vườn nho - khớp hoàn toàn với nhánh cấp 5: 1211 - Trồng nho)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.60,
+                    "comment": "Tương đồng một phần trong công đoạn ươm trồng, chăm sóc và làm vườn (Horticultural)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.55,
+                    "comment": "Các nhà phân phối/bảo quản cây ăn quả thường yêu cầu lưu trữ kho lạnh (Refrigerated storage for perishable products) được miêu tả rõ trong mã 4225."
+                }
+            ]
+        },
+        {
+            "vsic_code": "122",
+            "vsic_name": "Trồng cây lấy quả chứa dầu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Mô tả của mã MCC 0763 bao gồm các hoạt động quản lý nông trại và canh tác trồng trọt (planting and cultivating, harvesting crops), phù hợp nhất với hoạt động trồng cây nông nghiệp (cây lấy quả chứa dầu)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.65,
+                    "comment": "Liên quan một phần đến dịch vụ chăm sóc cây cối, làm vườn (planting, fertilizing)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.50,
+                    "comment": "Liên quan đến các vườn ươm cây giống, phù hợp nếu hoạt động trồng cây bao gồm ươm giống."
+                }
+            ]
+        },
+        {
+            "vsic_code": "123",
+            "vsic_name": "Trồng cây điều",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Cây điều là cây công nghiệp lâu năm, MCC 0763 bao gồm các vườn cây ăn quả/cây công nghiệp (Orchards) và hoạt động canh tác nông nghiệp nói chung."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.65,
+                    "comment": "Có một số điểm chung về chăm sóc và trồng cây trồng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.50,
+                    "comment": "Có thể áp dụng cho các cơ sở ươm trồng cây điều giống."
+                }
+            ]
+        },
+        {
+            "vsic_code": "124",
+            "vsic_name": "Trồng cây hồ tiêu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Phù hợp trực tiếp với các hoạt động trồng trọt, chăm sóc vụ mùa (maintenance of crops, disease and insect control) tương tự như canh tác hồ tiêu."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.60,
+                    "comment": "Có sự tương đồng về dịch vụ trồng trọt, tuy nhiên MCC này thiên về cảnh quan nhiều hơn."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.50,
+                    "comment": "Áp dụng cho trường hợp vườn ươm giống hồ tiêu."
+                }
+            ]
+        },
+        {
+            "vsic_code": "125",
+            "vsic_name": "Trồng cây cao su",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Cây cao su được trồng dưới dạng nông trại/đồn điền lớn, khớp hoàn toàn với mô tả 'farming operations' và 'Orchards' trong MCC 0763."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.60,
+                    "comment": "Phù hợp ở khía cạnh các dịch vụ chăm sóc, phòng bệnh cho cây (spraying)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.50,
+                    "comment": "Áp dụng cho giai đoạn ươm mầm cây cao su giống."
+                }
+            ]
+        },
+        {
+            "vsic_code": "126",
+            "vsic_name": "Trồng cây cà phê",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Tương tự các cây công nghiệp khác, trồng cà phê thuộc nhóm quản lý đồn điền và thu hoạch (harvesting crops), khớp với MCC 0763."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.60,
+                    "comment": "Áp dụng cho các dịch vụ chăm sóc, cắt tỉa hoặc phun bón cho cây trồng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.50,
+                    "comment": "Cung cấp, phân phối hoặc ươm giống cây cà phê."
+                }
+            ]
+        },
+        {
+            "vsic_code": "127",
+            "vsic_name": "Trồng cây chè",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.9,
+                    "comment": "Mã 0763 bao gồm các hoạt động vận hành nông trại, trồng trọt và canh tác mùa màng (farming operations, planting and cultivating, harvesting crops), hoàn toàn phù hợp với việc trồng chè."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.7,
+                    "comment": "Mã này liên quan đến dịch vụ làm vườn và trồng trọt (Horticultural Services) có thể bao gồm một phần hoạt động liên quan đến cây xanh nông nghiệp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.6,
+                    "comment": "Phù hợp với các cơ sở lưu trữ nông sản, kho chứa sản phẩm thu hoạch (như lá chè) sau khi thu hoạch."
+                }
+            ]
+        },
+        {
+            "vsic_code": "128",
+            "vsic_name": "Trồng cây gia vị, cây dược liệu, cây hương liệu lâu năm",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.9,
+                    "comment": "Mã 0763 là nhóm ngành nông nghiệp và quản lý mùa màng nói chung, phù hợp cho canh tác cây dược liệu và cây gia vị."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5193",
+                    "mcc_name": "Florist Supplies, Nursery Stock and Flowers",
+                    "score": 0.75,
+                    "comment": "Một số cây hương liệu và dược liệu có thể được phân loại kinh doanh chung với mảng vật tư làm vườn, cây ươm và nguyên liệu thực vật."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.7,
+                    "comment": "Giao thoa ở khía cạnh dịch vụ làm vườn, gieo hạt, phun trồng bảo vệ đối với cây lâu năm."
+                }
+            ]
+        },
+        {
+            "vsic_code": "129",
+            "vsic_name": "Trồng cây lâu năm khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.85,
+                    "comment": "Ngành này (chứa mã 1291: Trồng cây cảnh lâu năm) phù hợp hoàn hảo với các mô tả về Horticultural Services, planting, gardening của mã 0780."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.8,
+                    "comment": "Việc kinh doanh và canh tác các cây cảnh lâu năm thường gắn liền với mô hình nhà vườn, vựa cây ươm (Nurseries)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.75,
+                    "comment": "Phù hợp với nhánh 1299 (Trồng cây lâu năm khác còn lại) thiên về hoạt động canh tác nông trại nói chung."
+                }
+            ]
+        },
+        {
+            "vsic_code": "130",
+            "vsic_name": "Nhân và chăm sóc cây giống nông nghiệp",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Mã này mô tả việc hỗ trợ nông dân trong quản lý canh tác, gieo trồng (planting) và quản lý mùa màng, rất sát với việc nhân/chăm sóc giống nông nghiệp."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.8,
+                    "comment": "Rất phù hợp với việc ươm tạo giống (Nurseries) dành cho cả cây giống hàng năm và lâu năm."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.75,
+                    "comment": "Phù hợp với các dịch vụ chăm sóc làm vườn (seeding, planting, fertilizing) cho cây con."
+                }
+            ]
+        },
+        {
+            "vsic_code": "141",
+            "vsic_name": "Chăn nuôi trâu, bò và sản xuất giống trâu, bò",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.9,
+                    "comment": "Các hợp tác xã nông nghiệp theo MCC thường bao hàm cả hoạt động chăn nuôi, nông trại chăn nuôi đại gia súc."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.8,
+                    "comment": "Mã này đặc biệt chỉ rõ các dịch vụ liên quan đến vật nuôi (livestock) bao gồm gia súc như cattle (trâu, bò). Rất phù hợp nếu doanh nghiệp tập trung vào chăm sóc con giống/thú y."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products",
+                    "score": 0.6,
+                    "comment": "Dành cho các hoạt động lưu trữ vật tư và sản phẩm liên quan tới chăn nuôi gia súc (sản phẩm nông nghiệp)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "142",
+            "vsic_name": "Chăn nuôi ngựa, lừa, la và sản xuất giống ngựa, lừa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.85,
+                    "comment": "Description của mã MCC này có nhắc trực tiếp đến 'horses' (ngựa) và 'livestock' (vật nuôi), từ khóa rất tương đồng với hoạt động chăn nuôi ngựa, lừa."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.75,
+                    "comment": "Mã này bao gồm các hoạt động điều hành và quản lý nông trại ('farming operations'), có liên quan chung đến chăn nuôi trang trại."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.5,
+                    "comment": "Có sự liên đới đến lưu trữ các sản phẩm nông nghiệp ('farm products')."
+                }
+            ]
+        },
+        {
+            "vsic_code": "144",
+            "vsic_name": "Chăn nuôi dê, cừu, hươu, nai và sản xuất giống dê, cừu, hươu, nai",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.85,
+                    "comment": "Mã MCC đề cập cụ thể đến việc xử lý cho vật nuôi như 'sheep' (cừu) và 'goats' (dê), có sự tương đồng lớn về đối tượng."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.75,
+                    "comment": "Phù hợp với các hoạt động trang trại nông nghiệp chung ('farming operations')."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.5,
+                    "comment": "Bao gồm các dịch vụ lưu bãi, lưu trữ cho sản phẩm trang trại."
+                }
+            ]
+        },
+        {
+            "vsic_code": "145",
+            "vsic_name": "Chăn nuôi lợn và sản xuất giống lợn",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.85,
+                    "comment": "Description MCC này có liệt kê trực tiếp 'hogs' (lợn) trong đối tượng vật nuôi (livestock)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.75,
+                    "comment": "Mã này áp dụng cho các hoạt động chăn nuôi, nông nghiệp theo hình thức hợp tác xã trang trại."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.5,
+                    "comment": "Dịch vụ liên quan đến kho bãi cho sản phẩm trang trại, nông nghiệp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "146",
+            "vsic_name": "Chăn nuôi gia cầm",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.85,
+                    "comment": "Mã MCC này có nhắc trực tiếp đến 'poultry' (gia cầm) là một trong những loại vật nuôi thuộc đối tượng của nó."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.75,
+                    "comment": "Phù hợp với các hoạt động sản xuất, hợp tác xã nông nghiệp liên quan đến gia cầm."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.5,
+                    "comment": "Liên đới đến việc lưu trữ các sản phẩm nông trại (bao gồm cả trứng hoặc thịt gia cầm bảo quản lạnh)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "149",
+            "vsic_name": "Chăn nuôi khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.80,
+                    "comment": "Ngoài các động vật phổ biến, mô tả MCC có nhắc đến 'large or exotic animals' (động vật lớn hoặc khác thường), phù hợp với việc chăn nuôi các loại động vật khác."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.75,
+                    "comment": "Lĩnh vực chăn nuôi thuộc các hoạt động quản lý vận hành trang trại, nông nghiệp nói chung ('farming operations')."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.5,
+                    "comment": "Dịch vụ liên quan đến lưu trữ cho các sản phẩm trang trại và nông nghiệp từ hoạt động chăn nuôi khác."
+                }
+            ]
+        },
+        {
+            "vsic_code": "150",
+            "vsic_name": "Trồng trọt, chăn nuôi hỗn hợp",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Mô tả MCC 0763 bao gồm các hoạt động canh tác nông nghiệp và quản lý trang trại (farming operations, farm management), phù hợp với mô hình nông nghiệp trồng trọt hỗn hợp."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.70,
+                    "comment": "Mã này tương thích một phần vì mảng chăn nuôi hỗn hợp (livestock) thường gắn liền với dịch vụ chăm sóc và y tế thú y."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Liên đới ở mức độ hậu cần lưu kho nông sản sau khi trang trại thu hoạch."
+                }
+            ]
+        },
+        {
+            "vsic_code": "161",
+            "vsic_name": "Hoạt động dịch vụ trồng trọt",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.95,
+                    "comment": "Rất phù hợp vì mã MCC này mô tả cụ thể các dịch vụ quản lý trang trại (farm management services), làm đất, gieo trồng và bảo vệ thực vật."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.70,
+                    "comment": "Có sự trùng lặp với dịch vụ trồng trọt vì cung cấp các dịch vụ gieo hạt, trồng cây và bón phân (planting, fertilizing, seeding)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.40,
+                    "comment": "Chỉ tương đồng nhẹ đối với nhóm dịch vụ hậu cần liên quan tới bảo quản giống hoặc vật tư trồng trọt."
+                }
+            ]
+        },
+        {
+            "vsic_code": "162",
+            "vsic_name": "Hoạt động dịch vụ chăn nuôi",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0742",
+                    "mcc_name": "Veterinary Services",
+                    "score": 0.90,
+                    "comment": "Khớp nhất do tập trung vào cung cấp dịch vụ y tế, phẫu thuật cho đa dạng vật nuôi (livestock như gia súc, ngựa, cừu, dê, gia cầm)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.60,
+                    "comment": "Các hợp tác xã nông nghiệp cũng thường cung cấp hỗ trợ và dịch vụ chung cho bà con nông dân, bao gồm cả mảng chăn nuôi."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.45,
+                    "comment": "Dịch vụ liên quan đến kho bãi có thể bảo quản thức ăn chăn nuôi hoặc lưu trữ các chế phẩm từ vật nuôi."
+                }
+            ]
+        },
+        {
+            "vsic_code": "163",
+            "vsic_name": "Hoạt động dịch vụ sau thu hoạch",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Mã này bao gồm trực tiếp cụm từ 'harvesting crops' (thu hoạch mùa màng), có liên đới chặt chẽ với dịch vụ xử lý sau thu hoạch."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.80,
+                    "comment": "Rất phù hợp vì bước quan trọng nhất của dịch vụ sau thu hoạch là lưu trữ nông sản (Farm Products) và bảo quản lạnh."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4214",
+                    "mcc_name": "Motor Freight Carriers and Trucking – Local and Long Distance, Moving and Storage Companies, and Local Delivery Services",
+                    "score": 0.60,
+                    "comment": "Phù hợp một phần vì dịch vụ sau thu hoạch thường kèm theo hoạt động vận chuyển nông sản về kho hoặc nhà máy chế biến."
+                }
+            ]
+        },
+        {
+            "vsic_code": "164",
+            "vsic_name": "Xử lý hạt giống để nhân giống",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Là mã chung nhất cho các dịch vụ nông nghiệp (Farming operations) bao gồm quá trình chuẩn bị để gieo trồng (planting and cultivating)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.70,
+                    "comment": "Có đề cập rõ ràng đến hoạt động liên quan tới gieo hạt giống (seeding), phù hợp với quy trình xử lý để nhân giống cây trồng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4225",
+                    "mcc_name": "Public Warehousing and Storage – Farm Products, Refrigerated Goods, Household Goods, and Storage",
+                    "score": 0.50,
+                    "comment": "Phù hợp một phần ở khâu bảo quản hạt giống (như một dạng Farm Products) trong điều kiện tiêu chuẩn chờ gieo vụ mới."
+                }
+            ]
+        },
+        {
+            "vsic_code": "170",
+            "vsic_name": "Săn bắt, đánh bẫy và hoạt động dịch vụ có liên quan",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "7999",
+                    "mcc_name": "Recreation Services (Not Elsewhere Classified)",
+                    "score": 0.75,
+                    "comment": "Lựa chọn phù hợp nhất cho các dịch vụ liên quan đến hướng dẫn săn bắn, đánh bẫy, hoặc các khu sinh thái/trang trại cung cấp dịch vụ săn bắt giải trí."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5941",
+                    "mcc_name": "Sporting Goods Stores",
+                    "score": 0.60,
+                    "comment": "Phù hợp ở khía cạnh thương mại, nơi các cửa hàng này chuyên cung cấp dụng cụ thể thao, thiết bị dã ngoại, săn bắn và đánh bẫy động vật."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.45,
+                    "comment": "Lựa chọn thay thế mang tính gián tiếp, liên quan đến quản lý động vật và kiểm soát sinh vật trên các vùng đất nông/lâm nghiệp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "210",
+            "vsic_name": "Trồng rừng, chăm sóc rừng và ươm giống cây lâm nghiệp",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.90,
+                    "comment": "Khớp chính xác với nhánh cấp 5 (2104: Ươm giống cây lâm nghiệp). MCC này đại diện cho các cơ sở ươm tạo cây giống (Nurseries) và cung cấp vật tư trồng cây."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0780",
+                    "mcc_name": "Landscaping and Horticultural Services",
+                    "score": 0.85,
+                    "comment": "Rất phù hợp cho các hoạt động chăm sóc cây xanh, dịch vụ lâm sinh, gieo hạt, bón phân và các kỹ thuật liên quan đến làm đất, trồng cây (Tree planting)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.70,
+                    "comment": "Có mức độ tương đồng tốt vì bao gồm các hoạt động làm đất, gieo trồng và bảo vệ thực vật trên quy mô lớn, có thể áp dụng cho đất rừng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "220",
+            "vsic_name": "Khai thác gỗ",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5031",
+                    "mcc_name": "Lumber, Plywood, Millwork, and Wood Panels",
+                    "score": 0.85,
+                    "comment": "Phù hợp nhất do bao gồm các doanh nghiệp (bán buôn/phân phối) cung cấp gỗ xẻ, gỗ thô (rough lumber) và gỗ chưa qua chế biến từ các hoạt động khai thác rừng."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.75,
+                    "comment": "Tương đồng ở khía cạnh thương mại bán lẻ các sản phẩm vật liệu bằng gỗ sau khi được khai thác và xử lý sơ bộ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "4214",
+                    "mcc_name": "Motor Freight Carriers and Trucking",
+                    "score": 0.50,
+                    "comment": "Hoạt động khai thác gỗ luôn đi kèm chặt chẽ với dịch vụ vận tải hàng hóa nặng (chở gỗ nguyên cành/khúc) qua các chặng đường dài."
+                }
+            ]
+        },
+        {
+            "vsic_code": "230",
+            "vsic_name": "Khai thác, thu nhặt lâm sản trừ gỗ",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.80,
+                    "comment": "Bao phủ rộng các hoạt động hợp tác xã thu hoạch nông sản/lâm sản tự nhiên (harvesting crops), quản lý việc thu hái các sản phẩm thô không phải là gỗ."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.70,
+                    "comment": "Mã này thường được sử dụng cho các đơn vị bán buôn các loại hàng hóa thô chưa phân loại, bao gồm cả các loại lâm sản phụ (nấm, mật ong rừng, thảo dược...)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5999",
+                    "mcc_name": "Miscellaneous and Specialty Retail Stores",
+                    "score": 0.60,
+                    "comment": "Dành cho các cửa hàng bán lẻ đặc sản hoặc lâm sản thô thu nhặt được từ rừng mà không thuộc nhóm ngành thực phẩm hoặc gỗ chuyên biệt."
+                }
+            ]
+        },
+        {
+            "vsic_code": "311",
+            "vsic_name": "Khai thác thủy sản biển",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5146",
+                    "mcc_name": "Fish and Seafood Wholesale",
+                    "score": 0.90,
+                    "comment": "Mã MCC 5146 (Bán buôn cá và hải sản) phù hợp nhất với các doanh nghiệp hoặc tàu cá khai thác thủy sản biển với sản lượng lớn để bán sỉ cho các chợ đầu mối hoặc nhà máy chế biến."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5422",
+                    "mcc_name": "Meat and Seafood Markets",
+                    "score": 0.75,
+                    "comment": "Mã này áp dụng trong trường hợp các hộ đánh bắt thủy sản biển có kết hợp bán lẻ hoặc có cửa hàng hải sản trực tiếp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.60,
+                    "comment": "Áp dụng nếu hoạt động đánh bắt thủy sản được tổ chức dưới dạng các hợp tác xã ngư nghiệp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "312",
+            "vsic_name": "Khai thác thủy sản nội địa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5146",
+                    "mcc_name": "Fish and Seafood Wholesale",
+                    "score": 0.90,
+                    "comment": "Tương tự khai thác biển, hoạt động đánh bắt thủy sản nội địa (sông, hồ) cung cấp nguồn hàng thủy sản bán buôn."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5422",
+                    "mcc_name": "Meat and Seafood Markets",
+                    "score": 0.75,
+                    "comment": "Phù hợp cho các doanh nghiệp, tiểu thương đánh bắt và kinh doanh bán lẻ thủy sản nước ngọt trực tiếp ra thị trường."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.60,
+                    "comment": "Có thể dùng nếu là mô hình hợp tác xã khai thác thủy sản trong các khu vực ao hồ lớn."
+                }
+            ]
+        },
+        {
+            "vsic_code": "321",
+            "vsic_name": "Nuôi trồng thủy sản biển",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Hoạt động nuôi trồng thủy sản (aquaculture) về bản chất là hình thức canh tác nông nghiệp. MCC 0763 bao gồm các hoạt động quản lý trang trại, canh tác."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5146",
+                    "mcc_name": "Fish and Seafood Wholesale",
+                    "score": 0.80,
+                    "comment": "Nếu cơ sở nuôi cá/tôm biển chủ yếu hoạt động như một nhà cung cấp bán sỉ sản phẩm sau thu hoạch."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5422",
+                    "mcc_name": "Meat and Seafood Markets",
+                    "score": 0.70,
+                    "comment": "Áp dụng nếu trang trại có kênh bán lẻ, trực tiếp bán các sản phẩm thủy sản biển (tôm, cá, giống)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "322",
+            "vsic_name": "Nuôi trồng thủy sản nội địa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Nuôi cá, tôm nước ngọt là hoạt động canh tác nông nghiệp tiêu chuẩn, khớp với các trang trại nuôi trồng và hợp tác xã nông nghiệp/thủy sản."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5146",
+                    "mcc_name": "Fish and Seafood Wholesale",
+                    "score": 0.80,
+                    "comment": "Áp dụng đối với các bè nuôi cá, ao nuôi tôm quy mô lớn bán buôn đầu ra cho thương lái hoặc nhà máy."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5422",
+                    "mcc_name": "Meat and Seafood Markets",
+                    "score": 0.70,
+                    "comment": "Phù hợp khi các hộ nuôi trồng trực tiếp bán lẻ sản phẩm của mình dưới dạng thực phẩm."
+                }
+            ]
+        },
+        {
+            "vsic_code": "331",
+            "vsic_name": "Hoạt động dịch vụ hỗ trợ khai thác thủy sản",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.80,
+                    "comment": "Các hợp tác xã thường cung cấp dịch vụ hỗ trợ khai thác (dịch vụ vật tư, kỹ thuật) cho ngư dân, nông dân."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "7399",
+                    "mcc_name": "Business Services, Not Elsewhere Classified",
+                    "score": 0.70,
+                    "comment": "Mã này là nhóm dịch vụ doanh nghiệp B2B chung, phù hợp nếu cung cấp các dịch vụ kỹ thuật, kéo lưới, bảo vệ môi trường biển... chưa được phân loại cụ thể."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5146",
+                    "mcc_name": "Fish and Seafood Wholesale",
+                    "score": 0.60,
+                    "comment": "Một số dịch vụ hỗ trợ như thu mua ngay trên biển, ướp lạnh, bảo quản có thể được phân loại chung với nhóm bán buôn hải sản."
+                }
+            ]
+        },
+        {
+            "vsic_code": "332",
+            "vsic_name": "Hoạt động dịch vụ hỗ trợ nuôi trồng thủy sản",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Mã này bao gồm các dịch vụ quản lý trang trại và nông nghiệp, cũng phù hợp để đại diện cho các hợp tác xã và dịch vụ hỗ trợ cho mảng nuôi trồng thủy sản (được xem là một phần của nông nghiệp)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "8999",
+                    "mcc_name": "Professional Services (Not Elsewhere Classified)",
+                    "score": 0.7,
+                    "comment": "Nuôi trồng thủy sản thường cần các dịch vụ tư vấn và hỗ trợ kỹ thuật chuyên nghiệp. Mã này bao quát các dịch vụ không được phân loại rõ ràng ở nơi khác."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.65,
+                    "comment": "Dành cho các hoạt động cung cấp vật tư công nghiệp và thiết bị liên quan đến máy móc, trang thiết bị cần thiết trong hỗ trợ nuôi trồng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "510",
+            "vsic_name": "Khai thác và thu gom than cứng",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5052",
+                    "mcc_name": "Coal and Other Minerals and Ores",
+                    "score": 0.95,
+                    "comment": "Mã này hoàn toàn trùng khớp với việc khai thác, kinh doanh buôn bán than (Coal) và các loại quặng khoáng sản khác."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5983",
+                    "mcc_name": "Fuel Dealers – Coal, Fuel Oil, Wood, and Equipment",
+                    "score": 0.8,
+                    "comment": "Đại diện cho các nhà buôn lẻ nhiên liệu bao gồm than (Coal). Rất sát với khía cạnh 'thu gom và thương mại' than."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1799",
+                    "mcc_name": "Special Trade Contractors (Not Elsewhere Classified)",
+                    "score": 0.6,
+                    "comment": "Một số công ty thực hiện dịch vụ đào bới, khai thác mỏ có thể sử dụng mã thầu xây dựng chuyên dụng này nếu không có mã MCC cụ thể cho khai thác mỏ thuần túy."
+                }
+            ]
+        },
+        {
+            "vsic_code": "520",
+            "vsic_name": "Khai thác và thu gom than non",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5052",
+                    "mcc_name": "Coal and Other Minerals and Ores",
+                    "score": 0.95,
+                    "comment": "Tương tự mã 510, than non vẫn được phân loại vào nhóm khoáng sản quặng và than đá (Coal) trong hệ thống mã MCC."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5983",
+                    "mcc_name": "Fuel Dealers – Coal, Fuel Oil, Wood, and Equipment",
+                    "score": 0.8,
+                    "comment": "Mã phù hợp nhất nếu tổ chức có tham gia vào mạng lưới cung cấp và kinh doanh than nhiên liệu cung ứng ra thị trường."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1799",
+                    "mcc_name": "Special Trade Contractors (Not Elsewhere Classified)",
+                    "score": 0.6,
+                    "comment": "Giao thoa ở khía cạnh các nhà thầu thi công đặc biệt tham gia trực tiếp vào việc khai phá và thu gom vật liệu."
+                }
+            ]
+        },
+        {
+            "vsic_code": "610",
+            "vsic_name": "Khai thác dầu thô",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5172",
+                    "mcc_name": "Petroleum and Petroleum Products",
+                    "score": 0.95,
+                    "comment": "Đây là mã chuẩn xác nhất dành cho các tổ chức khai thác, kinh doanh buôn bán dầu mỏ (Petroleum) và các sản phẩm từ dầu thô."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5983",
+                    "mcc_name": "Fuel Dealers – Coal, Fuel Oil, Wood, and Equipment",
+                    "score": 0.75,
+                    "comment": "Có sự liên quan ở cấp độ đại lý nhiên liệu và dầu đốt nếu doanh nghiệp bán dầu thô trực tiếp để làm nhiên liệu."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.6,
+                    "comment": "Mã này có thể áp dụng nếu doanh nghiệp cung cấp vật tư phụ trợ trực tiếp cho các dàn khoan và ngành công nghiệp khai thác mỏ dầu."
+                }
+            ]
+        },
+        {
+            "vsic_code": "620",
+            "vsic_name": "Khai thác khí đốt tự nhiên",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "4900",
+                    "mcc_name": "Utilities – Electric, Gas, Heating Oil, Sanitary, Water",
+                    "score": 0.9,
+                    "comment": "Mã này đặc biệt liên quan đến các ngành tiện ích cung cấp khí đốt (Gas) tự nhiên ra thị trường dân dụng hoặc công nghiệp."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5172",
+                    "mcc_name": "Petroleum and Petroleum Products",
+                    "score": 0.85,
+                    "comment": "Quá trình khai thác khí tự nhiên thường đi liền với khai thác dầu thô và các sản phẩm hóa dầu, do đó mã 5172 có mức độ phù hợp cao."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5983",
+                    "mcc_name": "Fuel Dealers – Coal, Fuel Oil, Wood, and Equipment",
+                    "score": 0.75,
+                    "comment": "Có thể áp dụng cho các đơn vị kinh doanh nhiên liệu bao gồm cả việc chiết nạp và phân phối khí đốt dạng thiết bị."
+                }
+            ]
+        },
+        {
+            "vsic_code": "710",
+            "vsic_name": "Khai thác quặng sắt",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5051",
+                    "mcc_name": "Metal Service Centers and Offices",
+                    "score": 0.8,
+                    "comment": "Đây là mã tốt nhất dành cho các nhà phân phối và bán buôn các sản phẩm kim loại, bao gồm cả sắt và các kim loại bán thành phẩm."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.6,
+                    "comment": "Phù hợp cho các doanh nghiệp cung cấp vật tư công nghiệp chung, có thể bao gồm nguyên vật liệu khai khoáng cung cấp cho các nhà máy."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials (Not Elsewhere Classified)",
+                    "score": 0.5,
+                    "comment": "Nếu quặng sắt hoặc các chế phẩm thô từ sắt được bán buôn làm vật liệu xây dựng cơ bản, mã này cũng có thể được áp dụng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "721",
+            "vsic_name": "Khai thác quặng uranium và quặng thorium",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.7,
+                    "comment": "Uranium và Thorium thường được quản lý và mua bán dưới dạng hóa chất, vật liệu công nghiệp đặc biệt. Mã phân phối hóa chất công nghiệp là phù hợp nhất."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.6,
+                    "comment": "Áp dụng cho việc phân phối các vật tư công nghiệp quy mô lớn, bao gồm nguyên liệu quặng cho ngành năng lượng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods (Not Elsewhere Classified)",
+                    "score": 0.5,
+                    "comment": "Lựa chọn thay thế cho bán buôn hàng hóa lâu bền không được phân loại rõ ràng ở các MCC khác."
+                }
+            ]
+        },
+        {
+            "vsic_code": "729",
+            "vsic_name": "Khai thác quặng kim loại khác không chứa sắt",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5051",
+                    "mcc_name": "Metal Service Centers and Offices",
+                    "score": 0.8,
+                    "comment": "Mô tả MCC này liệt kê trực tiếp 'aluminum bars' (từ bô xít) và các kim loại bán thành phẩm phi kim loại quý, rất khớp với nhóm khai thác này."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.6,
+                    "comment": "Phân phối các vật tư và nguyên liệu thô phục vụ công nghiệp chế tác kim loại."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials (Not Elsewhere Classified)",
+                    "score": 0.5,
+                    "comment": "Dành cho bán buôn vật liệu công nghiệp nếu kim loại được ứng dụng chủ yếu trong ngành xây dựng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "730",
+            "vsic_name": "Khai thác quặng kim loại quý hiếm",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5094",
+                    "mcc_name": "Precious Stones and Metals, Watches and Jewelry",
+                    "score": 0.9,
+                    "comment": "Mã này mô tả chính xác hoạt động bán buôn và phân phối kim loại quý ('precious metals'), khớp trực tiếp với ngành khai thác quặng kim loại quý hiếm."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5051",
+                    "mcc_name": "Metal Service Centers and Offices",
+                    "score": 0.6,
+                    "comment": "Tuy loại trừ kim loại quý trong mô tả chuẩn, nhưng đây là mã chung nhất cho các trung tâm phân phối kim loại thô."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5944",
+                    "mcc_name": "Jewelry Stores, Watches, Clocks, and Silverware Stores",
+                    "score": 0.5,
+                    "comment": "Mã dành cho thương mại bán lẻ các sản phẩm được chế tác từ kim loại quý."
+                }
+            ]
+        },
+        {
+            "vsic_code": "810",
+            "vsic_name": "Khai thác đá, cát, sỏi, đất sét",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Phù hợp nhất cho các cơ sở khai thác bán buôn vật liệu xây dựng trực tiếp (đá, cát, sỏi, đất sét) cho nhà thầu."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.8,
+                    "comment": "Mô tả MCC này chỉ đích danh việc buôn bán 'sand, gravel, concrete, bricks' (cát, sỏi, bê tông, gạch), rất phù hợp với danh mục VSIC."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1740",
+                    "mcc_name": "Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors",
+                    "score": 0.6,
+                    "comment": "Có sự liên đới với các dịch vụ thi công đá và nguyên liệu thô (Stonework Contractors)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "891",
+            "vsic_name": "Khai thác khoáng hóa chất và khoáng phân bón",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Mã này mô tả việc buôn bán các sản phẩm hóa chất công nghiệp và khoáng chất, phù hợp nhất với đầu ra của hoạt động khai thác khoáng hóa chất."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5052",
+                    "mcc_name": "Coal and Other Minerals and Ores",
+                    "score": 0.80,
+                    "comment": "Phù hợp do bao gồm các loại khoáng sản và quặng (Minerals and Ores) nói chung."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.50,
+                    "comment": "Tương đồng một phần nhỏ ở khía cạnh thương mại phân bón (fertilizers) cho nông nghiệp có nguồn gốc từ khoáng chất."
+                }
+            ]
+        },
+        {
+            "vsic_code": "892",
+            "vsic_name": "Khai thác và thu gom than bùn",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5052",
+                    "mcc_name": "Coal and Other Minerals and Ores",
+                    "score": 0.90,
+                    "comment": "Rất phù hợp vì than bùn là một loại khoáng sản nhiên liệu tương tự như than đá (Coal), nằm trong nhóm khai khoáng thô."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies Not Elsewhere Classified",
+                    "score": 0.65,
+                    "comment": "Nhiều vật liệu thô công nghiệp và nhiên liệu đốt được xếp vào nhóm vật tư công nghiệp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.55,
+                    "comment": "Than bùn (peat) thường được thu gom và xử lý để làm chất cải tạo đất trong nông nghiệp và làm vườn."
+                }
+            ]
+        },
+        {
+            "vsic_code": "893",
+            "vsic_name": "Khai thác muối",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5052",
+                    "mcc_name": "Coal and Other Minerals and Ores",
+                    "score": 0.85,
+                    "comment": "Muối mỏ hoặc muối biển thô thường được xem là một loại khoáng sản (Minerals) trong phân loại thương mại."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.70,
+                    "comment": "Phù hợp nếu sản phẩm muối sau khai thác được tinh chế và phân phối cho mục đích thực phẩm gia vị."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products, Not Elsewhere Classified",
+                    "score": 0.65,
+                    "comment": "Phù hợp nếu muối được khai thác nhằm phục vụ mục đích sản xuất công nghiệp và hóa chất (ví dụ: muối công nghiệp)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "899",
+            "vsic_name": "Khai khoáng khác chưa được phân vào đâu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5052",
+                    "mcc_name": "Coal and Other Minerals and Ores",
+                    "score": 0.95,
+                    "comment": "Là mã MCC bao quát nhất cho hoạt động phân phối, thương mại liên quan đến khoáng sản và quặng chưa phân loại khác."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies Not Elsewhere Classified",
+                    "score": 0.60,
+                    "comment": "Sản phẩm khai khoáng có thể được phân loại vào vật tư công nghiệp thô."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.55,
+                    "comment": "Tương đồng nếu khoáng sản được khai thác dùng cho mục đích vật liệu xây dựng (ví dụ: đất, đá, sỏi)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "910",
+            "vsic_name": "Hoạt động dịch vụ hỗ trợ khai thác mỏ và quặng",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "8999",
+                    "mcc_name": "Professional Services - Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Dịch vụ hỗ trợ khai thác (khảo sát, tư vấn, kỹ thuật mỏ) thường là các dịch vụ B2B chuyên nghiệp chưa được phân loại vào ngành cụ thể trong hệ thống Visa."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies Not Elsewhere Classified",
+                    "score": 0.70,
+                    "comment": "Liên quan đến việc cung cấp máy móc, thiết bị và vật tư chuyên dụng để hỗ trợ khai thác quặng mỏ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5052",
+                    "mcc_name": "Coal and Other Minerals and Ores",
+                    "score": 0.60,
+                    "comment": "Có sự liên đới về chuỗi cung ứng vì các công ty dịch vụ mỏ đôi khi cũng tham gia vào thương mại quặng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "990",
+            "vsic_name": "Hoạt động dịch vụ hỗ trợ khai khoáng khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "1799",
+                    "mcc_name": "Special Trade Contractors – Not Elsewhere Classified",
+                    "score": 0.70,
+                    "comment": "Lựa chọn phù hợp cho các nhà thầu chuyên cung cấp dịch vụ đặc thù hỗ trợ cho các công trình khai khoáng."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies, Not Elsewhere Classified",
+                    "score": 0.65,
+                    "comment": "Phù hợp dưới góc độ cung cấp vật tư công nghiệp, máy móc và thiết bị hỗ trợ cho hoạt động khai thác mỏ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods, Not Elsewhere Classified",
+                    "score": 0.50,
+                    "comment": "Liên quan gián tiếp đến việc phân phối các thiết bị nặng, hàng hóa lâu bền phục vụ khai khoáng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1010",
+            "vsic_name": "Chế biến, bảo quản thịt và các sản phẩm từ thịt",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5147",
+                    "mcc_name": "Meats, Meat Provisioners",
+                    "score": 0.95,
+                    "comment": "Khớp hoàn toàn với các cơ sở chế biến, cung cấp và phân phối sỉ các loại thịt động vật, gia súc, gia cầm sau khi giết mổ."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5422",
+                    "mcc_name": "Meat Provisioners – Freezer and Locker",
+                    "score": 0.85,
+                    "comment": "Tương đồng rất cao với nhánh cấp 5 (10102: Bảo quản thịt), mã MCC này đại diện cho các cơ sở lưu trữ đông lạnh và bán lẻ thịt."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.60,
+                    "comment": "Lựa chọn bao quát hơn dành cho các sản phẩm đã qua chế biến đóng gói từ thịt."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1020",
+            "vsic_name": "Chế biến, bảo quản thủy sản và các sản phẩm từ thủy sản",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5146",
+                    "mcc_name": "Fish and Seafoods",
+                    "score": 0.95,
+                    "comment": "Khớp chính xác với các đơn vị bán buôn, chế biến và phân phối cá, hải sản và các sản phẩm từ thủy sản."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5422",
+                    "mcc_name": "Meat Provisioners – Freezer and Locker",
+                    "score": 0.80,
+                    "comment": "MCC này không chỉ bao gồm thịt mà còn áp dụng cho các kho lạnh, chợ cá và cơ sở bảo quản thủy sản đông lạnh (khớp nhánh 10201)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.70,
+                    "comment": "Phù hợp để map cho các nhánh chế biến thủy sản dạng khô, nước mắm (10203) thuộc nhóm hàng tạp hóa, thực phẩm."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1030",
+            "vsic_name": "Chế biến và bảo quản rau quả",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5148",
+                    "mcc_name": "Fresh Fruits and Vegetables",
+                    "score": 0.90,
+                    "comment": "Lựa chọn sát nhất cho các đại lý, cơ sở phân phối và chế biến sơ bộ rau củ quả tươi."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Đặc biệt phù hợp cho nhánh cấp 5 (10301: Sản xuất nước ép từ rau quả), vì nước ép đóng chai thuộc nhóm hàng hóa thực phẩm phân phối sỉ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores, Markets, Specialty Stores",
+                    "score": 0.60,
+                    "comment": "Áp dụng cho các cơ sở chế biến và bán lẻ các loại rau quả sấy khô hoặc đặc sản từ rau quả."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1040",
+            "vsic_name": "Sản xuất dầu, mỡ động, thực vật",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Phù hợp nhất để đại diện cho việc phân phối bán buôn các loại dầu ăn, bơ thực vật và mỡ động vật dùng trong ngành công nghiệp thực phẩm."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.70,
+                    "comment": "Phù hợp cho các doanh nghiệp sản xuất dầu/mỡ động thực vật dùng cho các mục đích công nghiệp (không phải thực phẩm) hoặc nguyên liệu thô."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores, Markets, Specialty Stores",
+                    "score": 0.55,
+                    "comment": "Phù hợp cho các cửa hàng bán lẻ chuyên kinh doanh các loại dầu thực vật, dầu ăn đặc sản."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1050",
+            "vsic_name": "Chế biến sữa và các sản phẩm từ sữa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5451",
+                    "mcc_name": "Dairy Products Stores",
+                    "score": 0.90,
+                    "comment": "Mã MCC 5451 áp dụng cho các cơ sở kinh doanh, phân phối và bán lẻ các sản phẩm từ sữa (bơ, phô mai, kem, sữa...). Phù hợp nhất với đầu ra của hoạt động chế biến sữa."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.75,
+                    "comment": "Áp dụng nếu cơ sở sản xuất có kèm theo cửa hàng giới thiệu sản phẩm hoặc bán thực phẩm đặc sản nói chung."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5411",
+                    "mcc_name": "Grocery Stores and Supermarkets",
+                    "score": 0.60,
+                    "comment": "Phù hợp với các công ty sữa quy mô lớn cung cấp hàng hoá trực tiếp thông qua mạng lưới siêu thị/cửa hàng tiện lợi của riêng họ."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1061",
+            "vsic_name": "Xay xát và sản xuất bột thô",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Hoạt động xay xát/sản xuất bột thường là B2B (bán buôn/sản xuất). Mã MCC 5199 bao gồm phân phối bán buôn các loại hàng hóa không bền (trong đó có nguyên liệu thực phẩm, nông sản chế biến)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.70,
+                    "comment": "Phù hợp nếu cơ sở xay xát có kênh bán lẻ gạo, bột trực tiếp cho người tiêu dùng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5411",
+                    "mcc_name": "Grocery Stores and Supermarkets",
+                    "score": 0.60,
+                    "comment": "Các nhà máy xay xát lớn thường phân phối gạo và bột dưới dạng hàng hóa siêu thị."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1062",
+            "vsic_name": "Sản xuất tinh bột và các sản phẩm từ tinh bột",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Tinh bột là nguyên liệu trung gian phục vụ sản xuất công nghiệp và chế biến thực phẩm. Mã MCC 5199 dùng cho bán buôn hàng hóa không bền là lựa chọn phù hợp nhất trong thanh toán B2B."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.70,
+                    "comment": "Áp dụng nếu công ty có cửa hàng chuyên doanh bán tinh bột (bột sắn, bột năng...) cho khách lẻ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5411",
+                    "mcc_name": "Grocery Stores and Supermarkets",
+                    "score": 0.60,
+                    "comment": "Phân phối dưới dạng thực phẩm tiêu dùng thông thường."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1071",
+            "vsic_name": "Sản xuất các loại bánh từ bột",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5462",
+                    "mcc_name": "Bakeries",
+                    "score": 0.95,
+                    "comment": "Mã MCC 5462 (Bakeries) được thiết kế đặc biệt cho các cửa hàng, xưởng làm bánh. Khớp hoàn toàn với mô tả 'Sản xuất các loại bánh từ bột'."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.75,
+                    "comment": "Áp dụng cho các mô hình cửa hàng đồ ngọt hoặc cửa hàng tiện lợi bán kèm bánh kẹo do mình sản xuất."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5411",
+                    "mcc_name": "Grocery Stores and Supermarkets",
+                    "score": 0.60,
+                    "comment": "Nhiều cơ sở sản xuất bánh quy mô lớn được phân loại như các cửa hàng bách hóa thực phẩm."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1072",
+            "vsic_name": "Sản xuất đường",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Sản xuất và tinh luyện đường thường bán buôn khối lượng lớn. Mã MCC 5199 dùng cho bán sỉ các nguyên liệu/hàng hóa không bền."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.70,
+                    "comment": "Áp dụng nếu công ty có cửa hàng chuyên kinh doanh thực phẩm, đường, mật trực tiếp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5411",
+                    "mcc_name": "Grocery Stores and Supermarkets",
+                    "score": 0.65,
+                    "comment": "Đường là nhu yếu phẩm, có thể được gộp chung nếu nhà sản xuất tự phân phối ra kênh bán lẻ tiêu dùng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1073",
+            "vsic_name": "Sản xuất ca cao, sôcôla và bánh kẹo",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5145",
+                    "mcc_name": "Confectionery",
+                    "score": 0.95,
+                    "comment": "Mã 5145 là mã chính xác nhất dành cho các tổ chức sản xuất và bán buôn bánh kẹo, sôcôla và các sản phẩm bánh mứt (Confectionery)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5441",
+                    "mcc_name": "Candy, Nut, and Confectionery Stores",
+                    "score": 0.85,
+                    "comment": "Rất phù hợp nếu cơ sở sản xuất có kết hợp mô hình cửa hàng bán lẻ trực tiếp các sản phẩm kẹo, sôcôla cho người tiêu dùng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5462",
+                    "mcc_name": "Bakeries",
+                    "score": 0.75,
+                    "comment": "Có sự giao thoa với ngành sản xuất bánh kẹo nướng. Phù hợp với các đơn vị sản xuất bánh quy, bánh ngọt thành phẩm."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1074",
+            "vsic_name": "Sản xuất mì ống, mỳ sợi và sản phẩm tương tự",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.9,
+                    "comment": "Mã này bao quát việc phân phối và bán buôn các loại thực phẩm tạp hóa nói chung không có mã riêng, rất phù hợp cho việc sản xuất và thương mại mì sợi, bún, phở khô."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5141",
+                    "mcc_name": "Groceries, General Line",
+                    "score": 0.8,
+                    "comment": "Mã dành cho các nhà phân phối dòng sản phẩm tạp hóa chung, bao gồm các loại thực phẩm khô như mì ống, nui."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.7,
+                    "comment": "Phù hợp nếu doanh nghiệp đóng vai trò như một cửa hàng chuyên biệt bán lẻ các sản phẩm tinh bột, mì sợi."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1075",
+            "vsic_name": "Sản xuất món ăn, thức ăn chế biến sẵn",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Mã bán buôn và cung cấp thực phẩm chế biến chung, phù hợp cho xưởng sản xuất thức ăn chế biến đóng gói từ thịt, thủy sản (10751, 10752)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5142",
+                    "mcc_name": "Packaged Frozen Foods",
+                    "score": 0.85,
+                    "comment": "Cực kỳ phù hợp nếu các món ăn, thức ăn chế biến sẵn này được đông lạnh để bảo quản và phân phối (ví dụ: chả giò, đồ ăn sẵn đông lạnh)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5811",
+                    "mcc_name": "Caterers",
+                    "score": 0.75,
+                    "comment": "Giao thoa ở góc độ cung cấp suất ăn công nghiệp, dịch vụ nấu nướng chế biến sẵn giao tận nơi."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1076",
+            "vsic_name": "Sản xuất chè",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Chè (trà) khô sản xuất và bán buôn thường được liệt kê vào nhóm cung cấp sản phẩm tạp hóa liên quan (Related Products) cho siêu thị/đại lý."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.8,
+                    "comment": "Rất phù hợp cho các thương hiệu trà mở cửa hàng chuyên biệt (Specialty store) để giới thiệu và bán sản phẩm chè đã qua chế biến."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.7,
+                    "comment": "Thường các cơ sở sản xuất chè gắn liền với đồn điền và hợp tác xã nông nghiệp bao tiêu từ khâu trồng đến rang sấy."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1077",
+            "vsic_name": "Sản xuất cà phê",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Phân phối và bán buôn cà phê rang xay, cà phê hòa tan được gom vào nhóm các sản phẩm thực phẩm và đồ uống liên quan."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.8,
+                    "comment": "Tương tự như chè, mã này đại diện cho các cửa hàng thực phẩm chuyên biệt bán cà phê hạt, cà phê rang xay cho người tiêu dùng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5814",
+                    "mcc_name": "Fast Food Restaurants",
+                    "score": 0.7,
+                    "comment": "Mã này thường được Visa gán cho các chuỗi quán cà phê (Coffee shops). Phù hợp nếu cơ sở sản xuất kinh doanh kết hợp mô hình quán phục vụ cà phê pha sẵn."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1079",
+            "vsic_name": "Sản xuất thực phẩm khác chưa được phân vào đâu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Mã này tương đồng gần như tuyệt đối về mặt ngữ nghĩa (thực phẩm chưa được phân loại vào đâu) dưới góc độ phân phối và bán buôn."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5141",
+                    "mcc_name": "Groceries, General Line",
+                    "score": 0.75,
+                    "comment": "Lựa chọn thay thế phù hợp cho việc cung cấp và phân phối các sản phẩm thực phẩm tổng hợp nói chung."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.6,
+                    "comment": "Mã dành cho thương mại bán lẻ các sản phẩm thực phẩm hỗn hợp và đặc sản."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1080",
+            "vsic_name": "Sản xuất thức ăn gia súc, gia cầm và thủy sản",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5995",
+                    "mcc_name": "Pet Shops, Pet Foods, and Supplies Stores",
+                    "score": 0.8,
+                    "comment": "Mã MCC này có mô tả trực tiếp nhắc đến 'Pet Foods' (thức ăn vật nuôi), phù hợp nhất với nhóm sản phẩm này."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.7,
+                    "comment": "Các hợp tác xã nông nghiệp thường xuyên xử lý và cung ứng thức ăn chăn nuôi cho các trang trại."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.5,
+                    "comment": "Một lựa chọn thay thế cho việc bán buôn hàng hóa không bền, trong đó có thể bao gồm thức ăn chăn nuôi công nghiệp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1101",
+            "vsic_name": "Chưng, tinh cất và pha chế các loại rượu mạnh",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5181",
+                    "mcc_name": "Beers, Wine, and Liquor",
+                    "score": 0.9,
+                    "comment": "Mã MCC chuẩn xác nhất dành cho các nhà phân phối bán buôn rượu mạnh ('Liquor')."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5921",
+                    "mcc_name": "Package Stores – Beer, Wine, and Liquor",
+                    "score": 0.8,
+                    "comment": "Dành cho các cửa hàng đóng gói và kinh doanh bán lẻ rượu mạnh đóng chai."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5813",
+                    "mcc_name": "Drinking Places (Alcoholic Beverages), Bars, Taverns, Cocktail lounges, Nightclubs and Discotheques",
+                    "score": 0.6,
+                    "comment": "Mã liên quan gián tiếp, áp dụng nếu các cơ sở chưng cất này có khu vực nếm thử và phục vụ rượu tại chỗ."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1102",
+            "vsic_name": "Sản xuất rượu vang",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5181",
+                    "mcc_name": "Beers, Wine, and Liquor",
+                    "score": 0.9,
+                    "comment": "Nhóm bán buôn này chứa trực tiếp danh mục 'Wine' (rượu vang) cực kỳ phù hợp cho các nhà sản xuất phân phối sỉ."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5921",
+                    "mcc_name": "Package Stores – Beer, Wine, and Liquor",
+                    "score": 0.8,
+                    "comment": "Lựa chọn tốt cho các xưởng rượu vang có bán lẻ trực tiếp các sản phẩm đóng chai của mình."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5813",
+                    "mcc_name": "Drinking Places (Alcoholic Beverages), Bars, Taverns, Cocktail lounges, Nightclubs and Discotheques",
+                    "score": 0.6,
+                    "comment": "Áp dụng cho các nhà xưởng có không gian phục vụ và tiêu thụ rượu vang tại chỗ (như phòng nếm rượu)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1103",
+            "vsic_name": "Sản xuất bia",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5181",
+                    "mcc_name": "Beers, Wine, and Liquor",
+                    "score": 0.9,
+                    "comment": "Hoàn toàn khớp với danh mục 'Beers' dưới góc độ phân phối và cung cấp sỉ từ nhà máy."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5921",
+                    "mcc_name": "Package Stores – Beer, Wine, and Liquor",
+                    "score": 0.8,
+                    "comment": "Áp dụng nếu các xưởng bia (Brewery) có cung cấp bao bì bán lẻ cho khách mang đi."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5813",
+                    "mcc_name": "Drinking Places (Alcoholic Beverages), Bars, Taverns, Cocktail lounges, Nightclubs and Discotheques",
+                    "score": 0.6,
+                    "comment": "Rất phổ biến với các xưởng bia thủ công (Craft Beer) có phục vụ đồ uống trực tiếp ngay tại nhà máy."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1104",
+            "vsic_name": "Sản xuất mạch nha ủ men bia",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5181",
+                    "mcc_name": "Beer, Wine, and Liquor",
+                    "score": 0.85,
+                    "comment": "Mã MCC này đại diện cho các nhà phân phối và bán buôn (wholesale) các loại đồ uống có cồn như bia và rượu, là đầu ra trực tiếp của các cơ sở ủ men bia."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.70,
+                    "comment": "Nhóm bán buôn thực phẩm và thành phần liên quan chưa được phân loại, có thể bao gồm nguyên liệu sản xuất đồ uống và mạch nha thô."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5813",
+                    "mcc_name": "Drinking Places (Alcoholic Beverages) – Bars, Taverns, Nightclubs",
+                    "score": 0.50,
+                    "comment": "Tương đồng nhẹ nếu cơ sở ủ men bia (nhà máy bia thủ công) có kết hợp kinh doanh bán lẻ trực tiếp (Taproom) cho khách hàng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1105",
+            "vsic_name": "Sản xuất đồ uống không cồn, nước khoáng",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5149",
+                    "mcc_name": "Groceries and Related Products, Not Elsewhere Classified",
+                    "score": 0.90,
+                    "comment": "Đây là mã MCC chuẩn dành cho các giao dịch bán buôn đồ uống không cồn, nước đóng chai và các loại tạp hóa thực phẩm."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5499",
+                    "mcc_name": "Miscellaneous Food Stores – Convenience Stores and Specialty Markets",
+                    "score": 0.70,
+                    "comment": "Phù hợp nếu đơn vị sản xuất trực tiếp bán lẻ sản phẩm nước khoáng, nước giải khát của mình đến tay người tiêu dùng cuối thông qua chuỗi cửa hàng tiện lợi."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.55,
+                    "comment": "Nhóm bán buôn hàng hóa tiêu dùng không bền chung, dùng làm phương án dự phòng cho hàng tiêu dùng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1200",
+            "vsic_name": "Sản xuất sản phẩm thuốc lá",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5194",
+                    "mcc_name": "Tobacco and Tobacco Products",
+                    "score": 0.95,
+                    "comment": "Mã MCC này hoàn toàn khớp với hoạt động kinh doanh B2B/bán buôn các sản phẩm thuốc lá và xì gà."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5993",
+                    "mcc_name": "Cigar Stores and Stands",
+                    "score": 0.85,
+                    "comment": "Dành cho trường hợp nhà sản xuất vận hành các quầy bán lẻ hoặc phân phối xì gà, thuốc lá trực tiếp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.50,
+                    "comment": "Nhóm mã chung áp dụng cho mọi hàng hóa thương mại tiêu dùng không bền nến không thể cấp đúng mã chuyên biệt."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1311",
+            "vsic_name": "Sản xuất sợi",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.90,
+                    "comment": "Mã MCC B2B bao gồm việc bán buôn sợi (yarn), vải vóc và các nguyên liệu dùng trong ngành dệt may."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5949",
+                    "mcc_name": "Sewing, Needlework, Fabric, and Piece Goods Stores",
+                    "score": 0.70,
+                    "comment": "Phù hợp với các cơ sở kinh doanh, nhà máy có cửa hàng bán lẻ sợi dệt, vải và đồ may vá."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.50,
+                    "comment": "Mã B2B dự phòng cho các loại hàng hóa và vật tư công nghiệp nhẹ không bền chưa được liệt kê ở nơi khác."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1312",
+            "vsic_name": "Sản xuất vải dệt thoi",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.90,
+                    "comment": "Hoàn toàn phù hợp cho hoạt động phân phối bán buôn thành phẩm vải vóc, vải dệt (woven fabrics) cho các xí nghiệp may mặc."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5949",
+                    "mcc_name": "Sewing, Needlework, Fabric, and Piece Goods Stores",
+                    "score": 0.75,
+                    "comment": "Tương đồng nếu nhà sản xuất vải mở showroom trưng bày và bán lẻ nguyên cuộn vải/vải vụn dệt thoi cho người tiêu dùng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5699",
+                    "mcc_name": "Miscellaneous Apparel and Accessory Shops",
+                    "score": 0.50,
+                    "comment": "Mã phụ trợ dành cho các giao dịch liên quan đến sản phẩm may mặc hoặc thời trang phái sinh từ vải dệt thoi."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1313",
+            "vsic_name": "Hoàn thiện sản phẩm dệt",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.85,
+                    "comment": "Lựa chọn phù hợp nhất cho các cơ sở phân phối bán buôn vải vóc, hàng dệt may sau khi đã được hoàn thiện (nhuộm, in, xử lý bề mặt)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.70,
+                    "comment": "Phù hợp để làm mã đại diện phân phối sỉ các nguyên liệu hoặc sản phẩm dệt thô/bán thành phẩm chưa phân loại."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5949",
+                    "mcc_name": "Sewing, Needlework, Fabric, and Piece Goods Stores",
+                    "score": 0.60,
+                    "comment": "Tương đồng ở khía cạnh thương mại bán lẻ các loại vải vóc, phụ liệu dệt may đã hoàn thiện."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1391",
+            "vsic_name": "Sản xuất vải dệt kim, vải đan móc và vải không dệt khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.90,
+                    "comment": "Mã MCC này hoàn toàn khớp với việc phân phối bán buôn các loại vải cuộn (piece goods), bao gồm vải dệt kim, vải đan móc và vải không dệt."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5949",
+                    "mcc_name": "Sewing, Needlework, Fabric, and Piece Goods Stores",
+                    "score": 0.75,
+                    "comment": "Dành cho các doanh nghiệp vừa sản xuất vừa có cửa hàng bán lẻ trực tiếp các loại vải và vật liệu dệt đan."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.60,
+                    "comment": "Mã dự phòng cho các loại vải kỹ thuật hoặc sản phẩm dệt không nằm trong danh mục vải thời trang."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1392",
+            "vsic_name": "Sản xuất hàng dệt sẵn (trừ trang phục)",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5023",
+                    "mcc_name": "Home Furnishings and Equipment",
+                    "score": 0.85,
+                    "comment": "Rất phù hợp vì hàng dệt sẵn trừ trang phục thường bao gồm rèm cửa, khăn trải bàn, khăn tắm... Các mặt hàng này thuộc nhóm phân phối bán buôn đồ nội thất gia đình (Home Furnishings)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5714",
+                    "mcc_name": "Drapery, Window Covering, and Upholstery Stores",
+                    "score": 0.80,
+                    "comment": "MCC này khớp trực tiếp với mặt hàng dệt sẵn cụ thể là rèm cửa, đồ bọc nệm và vật dụng che màn."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.65,
+                    "comment": "Có thể áp dụng cho các hàng hóa dệt thô khác được phân phối nguyên mảnh."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1393",
+            "vsic_name": "Sản xuất thảm, chăn, đệm",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5713",
+                    "mcc_name": "Floor Covering Stores",
+                    "score": 0.90,
+                    "comment": "Khớp chính xác với sản phẩm 'Thảm' (Carpets/Rugs) được phân phối qua các đại lý hoặc cửa hàng bán lẻ vật liệu lát sàn."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5023",
+                    "mcc_name": "Home Furnishings and Equipment",
+                    "score": 0.85,
+                    "comment": "Mã bán buôn nội thất, bao quát trọn vẹn cả thảm, chăn (blankets) và đệm (mattresses)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5712",
+                    "mcc_name": "Furniture, Home Furnishings, and Equipment Stores, Except Appliances",
+                    "score": 0.75,
+                    "comment": "Phù hợp với các cơ sở bán lẻ chuyên cung cấp giường, đệm và đồ dùng bằng vải trong phòng ngủ."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1394",
+            "vsic_name": "Sản xuất các loại dây bện và lưới",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies, Not Elsewhere Classified",
+                    "score": 0.80,
+                    "comment": "Dây bện (rope, cordage) và lưới (netting) thường được dùng làm vật tư công nghiệp, nông nghiệp hoặc đóng gói, phù hợp để xếp vào nhóm phân phối vật tư công nghiệp."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.65,
+                    "comment": "Phù hợp nếu sản phẩm dây lưới được coi là hàng tiêu hao không bền trong phân phối bán buôn tổng hợp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5941",
+                    "mcc_name": "Sporting Goods Stores",
+                    "score": 0.50,
+                    "comment": "Một số loại lưới (lưới thể thao, lưới đánh cá cá nhân) và dây thừng đặc chủng được phân phối thông qua các cửa hàng thiết bị thể thao/dã ngoại."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1399",
+            "vsic_name": "Sản xuất các loại hàng dệt khác chưa được phân vào đâu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.90,
+                    "comment": "Mã MCC 5131 chuyên dành cho bán buôn các loại vải, sợi, hàng dệt và phụ liệu may mặc. Phù hợp nhất với đầu ra của hoạt động sản xuất hàng dệt."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.80,
+                    "comment": "Sản phẩm dệt may thuộc loại hàng hóa không bền, mã này áp dụng cho các hoạt động bán buôn B2B chung chưa phân loại."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5949",
+                    "mcc_name": "Sewing, Needlework, Fabric, and Piece Goods Stores",
+                    "score": 0.65,
+                    "comment": "Áp dụng nếu công ty sản xuất hàng dệt có mở cửa hàng chuyên bán lẻ vải và phụ liệu dệt may trực tiếp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1410",
+            "vsic_name": "Sản xuất trang phục (trừ trang phục từ da lông thú)",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5137",
+                    "mcc_name": "Men’s, Women’s, and Children’s Uniforms and Commercial Clothing",
+                    "score": 0.95,
+                    "comment": "Mã MCC 5137 là mã chuẩn nhất dành cho bán buôn (wholesale) các loại quần áo, trang phục thông thường. Khớp với đầu ra của xưởng/nhà máy may mặc."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5691",
+                    "mcc_name": "Men’s and Women’s Clothing Stores",
+                    "score": 0.75,
+                    "comment": "Áp dụng nếu nhà sản xuất trang phục có chuỗi cửa hàng bán lẻ trực tiếp các sản phẩm quần áo nam nữ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5699",
+                    "mcc_name": "Miscellaneous Apparel and Accessory Shops",
+                    "score": 0.70,
+                    "comment": "Áp dụng cho các cơ sở sản xuất và bán lẻ trang phục hỗn hợp hoặc phụ kiện may mặc."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1420",
+            "vsic_name": "Sản xuất sản phẩm từ da lông thú",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5681",
+                    "mcc_name": "Furriers and Fur Shops",
+                    "score": 0.95,
+                    "comment": "MCC 5681 chuyên biệt cho các cơ sở kinh doanh, sản xuất và bán các sản phẩm làm từ da, lông thú."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5137",
+                    "mcc_name": "Men’s, Women’s, and Children’s Uniforms and Commercial Clothing",
+                    "score": 0.70,
+                    "comment": "Có thể áp dụng nếu sản phẩm da lông thú được phân phối sỉ cùng với các mặt hàng may mặc thương mại khác."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5699",
+                    "mcc_name": "Miscellaneous Apparel and Accessory Shops",
+                    "score": 0.65,
+                    "comment": "Dành cho các cửa hàng phụ kiện thời trang nếu công ty bán lẻ trực tiếp các sản phẩm lông thú cỡ nhỏ."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1430",
+            "vsic_name": "Sản xuất trang phục đan móc",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5137",
+                    "mcc_name": "Men’s, Women’s, and Children’s Uniforms and Commercial Clothing",
+                    "score": 0.90,
+                    "comment": "Tương tự trang phục nói chung, quần áo đan móc sau khi sản xuất chủ yếu được bán sỉ/bán buôn thông qua mã MCC 5137."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5691",
+                    "mcc_name": "Men’s and Women’s Clothing Stores",
+                    "score": 0.75,
+                    "comment": "Nếu cơ sở sản xuất bán lẻ quần áo đan móc trực tiếp cho người tiêu dùng (ví dụ: áo len, đồ đan)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5699",
+                    "mcc_name": "Miscellaneous Apparel and Accessory Shops",
+                    "score": 0.70,
+                    "comment": "Nếu sản phẩm đan móc thiên về hướng phụ kiện (khăn, mũ len) bán lẻ."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1511",
+            "vsic_name": "Thuộc, sơ chế da; sơ chế và nhuộm da lông thú",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Quá trình thuộc da, nhuộm da là hoạt động tạo ra nguyên vật liệu thô công nghiệp B2B (hàng không bền). MCC 5199 phù hợp nhất cho giao dịch bán sỉ vật tư này."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.75,
+                    "comment": "Da và lông thú sơ chế có thể được coi là vật liệu/phụ liệu may mặc cung cấp cho các nhà máy sản xuất giày da, túi xách."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5681",
+                    "mcc_name": "Furriers and Fur Shops",
+                    "score": 0.65,
+                    "comment": "Trong một số trường hợp, xưởng sơ chế lông thú có thể kiêm luôn việc kinh doanh bán lẻ đồ lông thú theo mô hình truyền thống."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1512",
+            "vsic_name": "Sản xuất vali, túi xách và các loại tương tự, sản xuất yên đệm",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5948",
+                    "mcc_name": "Luggage and Leather Goods Stores",
+                    "score": 0.9,
+                    "comment": "Mã này mô tả chính xác các đơn vị kinh doanh, bán buôn và bán lẻ các sản phẩm từ da, vali, túi xách (Luggage and Leather Goods)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods, Not Elsewhere Classified",
+                    "score": 0.8,
+                    "comment": "Trong trường hợp tổ chức là nhà sản xuất và phân phối bán buôn (B2B) các hàng hóa không bền (bao gồm các sản phẩm đồ da và yên đệm chưa được phân loại khác)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5699",
+                    "mcc_name": "Miscellaneous Apparel and Accessory Shops",
+                    "score": 0.75,
+                    "comment": "Có sự liên quan nếu nhà sản xuất vali, túi xách trực tiếp bán các sản phẩm này như một dạng phụ kiện thời trang."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1520",
+            "vsic_name": "Sản xuất giày, dép",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5139",
+                    "mcc_name": "Commercial Footwear",
+                    "score": 0.95,
+                    "comment": "Mã 5139 là mã chuẩn nhất dành cho hoạt động phân phối thương mại và bán buôn giày dép (Footwear) từ các xưởng sản xuất."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5661",
+                    "mcc_name": "Shoe Stores",
+                    "score": 0.85,
+                    "comment": "Được áp dụng nếu xưởng sản xuất có kết hợp mô hình cửa hàng bán lẻ trực tiếp giày dép cho người tiêu dùng cuối."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "7251",
+                    "mcc_name": "Shoe Repair Shops, Shoe Shine Parlors, and Hat Cleaning Shops",
+                    "score": 0.7,
+                    "comment": "Một số cơ sở sản xuất nhỏ lẻ, đóng giày thủ công thường đi kèm với các dịch vụ sửa chữa và bảo dưỡng giày dép, phù hợp với mã này."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1610",
+            "vsic_name": "Cưa, xẻ, bào gỗ và bảo quản gỗ",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.9,
+                    "comment": "Mã này đặc trưng cho các cơ sở kinh doanh, xưởng mộc cung cấp gỗ xẻ (Lumber) và các vật liệu chế tác từ gỗ."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Phù hợp cho các xưởng cưa xẻ, bảo quản gỗ quy mô công nghiệp để cung cấp nguyên vật liệu cho ngành xây dựng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1750",
+                    "mcc_name": "Carpentry Contractors",
+                    "score": 0.75,
+                    "comment": "Một số công ty cưa xẻ gỗ có thể tham gia vào việc nhận thầu các dịch vụ mộc (Carpentry) cơ bản tại công trình."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1621",
+            "vsic_name": "Sản xuất gỗ dán, gỗ lạng, ván ép và ván mỏng khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.9,
+                    "comment": "Gỗ dán, ván ép là thành phần chính của cửa hàng vật liệu xây dựng và gỗ xẻ (Lumber) trong hệ thống MCC."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Rất phù hợp khi doanh nghiệp tập trung vào việc bán buôn B2B vật liệu xây dựng (ván mỏng, ván ép) cho các nhà thầu."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5712",
+                    "mcc_name": "Furniture, Home Furnishings, and Equipment Stores, Except Appliances",
+                    "score": 0.7,
+                    "comment": "Gỗ ván ép thường được sử dụng làm nguyên liệu chính hoặc phụ trợ trực tiếp cho các nhà cung cấp nội thất (Furniture)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1622",
+            "vsic_name": "Sản xuất đồ gỗ xây dựng",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "1750",
+                    "mcc_name": "Carpentry Contractors",
+                    "score": 0.95,
+                    "comment": "Mã này chuyên dùng cho các nhà thầu mộc (Carpentry), cực kỳ phù hợp với ngành sản xuất và lắp đặt đồ gỗ xây dựng (joinery, carpentry)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.85,
+                    "comment": "Thường các cơ sở sản xuất đồ gỗ xây dựng (như cửa gỗ, cầu thang) cũng sẽ bán trực tiếp các thành phẩm này tại cửa hàng vật liệu."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1520",
+                    "mcc_name": "General Contractors – Residential and Commercial",
+                    "score": 0.75,
+                    "comment": "Nếu việc sản xuất đồ gỗ xây dựng nằm trong gói tổng thầu xây dựng khu dân cư hoặc công nghiệp, mã 1520 sẽ được áp dụng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1623",
+            "vsic_name": "Sản xuất bao bì bằng gỗ",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Bao bì bằng gỗ (như pallet, thùng gỗ) chủ yếu được sử dụng làm vật tư đóng gói công nghiệp, do đó mã bán buôn vật tư công nghiệp là phù hợp nhất."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.70,
+                    "comment": "Các nhà phân phối/cửa hàng vật liệu xây dựng và gỗ thường cũng cung cấp các chế phẩm thô từ gỗ bao gồm cả vật liệu đóng gói."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods (Not Elsewhere Classified)",
+                    "score": 0.60,
+                    "comment": "Mã dự phòng cho bán buôn hàng hóa lâu bền không được phân loại, có thể áp dụng cho các sản phẩm gỗ thô."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1629",
+            "vsic_name": "Sản xuất sản phẩm khác từ gỗ; sản xuất sản phẩm từ tre, nứa, rơm, rạ và vật liệu tết bện",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods (Not Elsewhere Classified)",
+                    "score": 0.80,
+                    "comment": "Phù hợp để đại diện cho việc phân phối sỉ các mặt hàng gia dụng, thủ công mỹ nghệ hoặc đồ dùng làm từ gỗ, tre, nứa."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5999",
+                    "mcc_name": "Miscellaneous and Specialty Retail Shops",
+                    "score": 0.75,
+                    "comment": "Rất phù hợp nếu doanh nghiệp có cửa hàng bán lẻ trực tiếp các sản phẩm thủ công, mỹ nghệ (tre, nứa, vật liệu tết bện) mang tính đặc thù."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.65,
+                    "comment": "Áp dụng nếu các sản phẩm từ gỗ này thiên về phục vụ thi công, trang trí nội thất hoặc vật liệu xây dựng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1701",
+            "vsic_name": "Sản xuất bột giấy, giấy và bìa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5111",
+                    "mcc_name": "Stationery, Office Supplies, Printing, and Writing Paper",
+                    "score": 0.90,
+                    "comment": "Mã này chỉ đích danh việc bán buôn giấy ('Printing and Writing Paper'), hoàn toàn khớp với đầu ra của các nhà máy sản xuất giấy và bìa."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.70,
+                    "comment": "Bột giấy và bìa thô có thể được coi là hàng hóa không bền (nondurable goods) bán buôn cho các ngành công nghiệp khác."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.60,
+                    "comment": "Bột giấy là nguyên liệu thô công nghiệp, do đó mã cung cấp vật tư công nghiệp cũng có thể được áp dụng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1702",
+            "vsic_name": "Sản xuất giấy nhăn, bìa nhăn, bao bì từ giấy và bìa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Bao bì giấy, giấy nhăn (carton) chủ yếu phục vụ nhu cầu đóng gói cho các doanh nghiệp, xếp vào nhóm vật tư công nghiệp (Industrial Supplies) là chính xác nhất."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5111",
+                    "mcc_name": "Stationery, Office Supplies, Printing, and Writing Paper",
+                    "score": 0.80,
+                    "comment": "Vì thành phần chính là giấy và bìa, mã cung cấp bán buôn các sản phẩm từ giấy cũng mang độ tương đồng rất cao."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.65,
+                    "comment": "Bao bì giấy là sản phẩm tiêu hao dùng một lần (không bền), phù hợp với nhóm phân phối sỉ này."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1709",
+            "vsic_name": "Sản xuất các sản phẩm khác từ giấy và bìa chưa được phân vào đâu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5111",
+                    "mcc_name": "Stationery, Office Supplies, Printing, and Writing Paper",
+                    "score": 0.85,
+                    "comment": "Mã MCC tổng quát tốt nhất cho việc phân phối bán buôn mọi loại sản phẩm làm từ giấy, văn phòng phẩm."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5943",
+                    "mcc_name": "Stationery Stores, Office and School Supply Stores",
+                    "score": 0.75,
+                    "comment": "Áp dụng trong trường hợp doanh nghiệp có cửa hàng bán lẻ các sản phẩm từ giấy, đồ dùng học tập hoặc văn phòng trực tiếp cho người tiêu dùng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.70,
+                    "comment": "Một lựa chọn thay thế cho việc phân phối các sản phẩm tiêu hao từ giấy (như giấy vệ sinh, ly giấy, khăn giấy...)."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1811",
+            "vsic_name": "In ấn",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "2741",
+                    "mcc_name": "Miscellaneous Publishing and Printing",
+                    "score": 0.95,
+                    "comment": "Mã MCC này hoàn toàn phù hợp với các cơ sở kinh doanh dịch vụ in ấn (Printing Services), bao gồm cả bán buôn và in ấn thương mại."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "7338",
+                    "mcc_name": "Quick Copy, Reproduction, and Blueprinting Services",
+                    "score": 0.85,
+                    "comment": "Phù hợp cho các doanh nghiệp cung cấp dịch vụ in ấn nhanh, photocopy và sao chép trực tiếp cho khách hàng lẻ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "2791",
+                    "mcc_name": "Typesetting, Plate Making and Related Services",
+                    "score": 0.70,
+                    "comment": "Mã này liên quan đến các dịch vụ phụ trợ quá trình in ấn nhưng vẫn nằm trong nhóm ngành công nghiệp in."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1812",
+            "vsic_name": "Dịch vụ liên quan đến in",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "2791",
+                    "mcc_name": "Typesetting, Plate Making and Related Services",
+                    "score": 0.95,
+                    "comment": "Phù hợp tuyệt đối với 'Dịch vụ liên quan đến in' vì MCC này bao gồm các dịch vụ chế bản, xếp chữ, làm khuôn in (chuẩn bị trước khi in)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "2741",
+                    "mcc_name": "Miscellaneous Publishing and Printing",
+                    "score": 0.80,
+                    "comment": "Nhiều dịch vụ liên quan đến in (như đóng sách, hoàn thiện bản in) cũng được quy định trong mã in ấn xuất bản nói chung này."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "7338",
+                    "mcc_name": "Quick Copy, Reproduction, and Blueprinting Services",
+                    "score": 0.75,
+                    "comment": "Cũng bao hàm một số dịch vụ hỗ trợ sao chép, đánh máy và chuẩn bị tài liệu liên quan đến in ấn nhẹ."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1820",
+            "vsic_name": "Sao chép bản ghi các loại",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "7338",
+                    "mcc_name": "Quick Copy, Reproduction, and Blueprinting Services",
+                    "score": 0.85,
+                    "comment": "Đây là mã MCC gần nhất bao hàm từ khoá 'Reproduction' (sao chép), phù hợp với việc nhân bản và sao chép các tài liệu, bản ghi."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "7829",
+                    "mcc_name": "Motion Picture and Video Tape Production and Distribution",
+                    "score": 0.75,
+                    "comment": "Phù hợp với các cơ sở thực hiện việc sao chép băng đĩa từ, video và bản ghi đa phương tiện dạng số."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "2741",
+                    "mcc_name": "Miscellaneous Publishing and Printing",
+                    "score": 0.65,
+                    "comment": "Nếu việc sao chép bản ghi liên quan tới các ấn phẩm phần mềm/âm thanh đi kèm trong mảng xuất bản, mã này có thể được áp dụng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1910",
+            "vsic_name": "Sản xuất than cốc",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5983",
+                    "mcc_name": "Fuel Dealers – Coal, Fuel Oil, Liquefied Petroleum, Wood",
+                    "score": 0.85,
+                    "comment": "Phù hợp nhất đối với các nhà cung cấp/phân phối, sản xuất than đá, than cốc (Coal/Coke) trong danh sách MCC."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5172",
+                    "mcc_name": "Petroleum and Petroleum Products",
+                    "score": 0.70,
+                    "comment": "Sản xuất than cốc thường gắn liền với nhóm công nghiệp khai thác, chế biến nhiên liệu hóa thạch, dầu mỏ và các sản phẩm tương tự (bán buôn)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5051",
+                    "mcc_name": "Metals Service Centers and Offices",
+                    "score": 0.60,
+                    "comment": "Than cốc chủ yếu được sử dụng làm nguyên liệu cho quá trình luyện kim, một số cơ sở phân phối kim loại có tích hợp mảng nhiên liệu luyện kim này."
+                }
+            ]
+        },
+        {
+            "vsic_code": "1920",
+            "vsic_name": "Sản xuất sản phẩm dầu mỏ tinh chế; sản xuất sản phẩm nhiên liệu hóa thạch",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5172",
+                    "mcc_name": "Petroleum and Petroleum Products",
+                    "score": 0.95,
+                    "comment": "Mã MCC này là chính xác nhất, mô tả các cơ sở kinh doanh, sản xuất và phân phối (bán buôn) các sản phẩm dầu mỏ và hóa dầu."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5983",
+                    "mcc_name": "Fuel Dealers – Coal, Fuel Oil, Liquefied Petroleum, Wood",
+                    "score": 0.85,
+                    "comment": "Phù hợp cho các doanh nghiệp buôn bán nhiên liệu, cung cấp các sản phẩm dầu tinh chế (Fuel oil) hoặc khí hóa lỏng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5541",
+                    "mcc_name": "Service Stations (with or without ancillary services)",
+                    "score": 0.70,
+                    "comment": "Nếu cơ sở sản xuất có hoạt động phân phối bán lẻ xăng dầu và nhiên liệu trực tiếp tới người tiêu dùng, đây là một mã MCC thứ cấp phù hợp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2011",
+            "vsic_name": "Sản xuất hóa chất cơ bản",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.95,
+                    "comment": "Phù hợp nhất vì mã MCC 5169 bao gồm việc phân phối/sản xuất các sản phẩm hóa chất chung, hóa chất cơ bản, khí công nghiệp và chất nhuộm màu."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.80,
+                    "comment": "Bao gồm các vật tư, nguyên vật liệu công nghiệp mà trong đó có thể bao hàm một phần hóa chất công nghiệp vô cơ/hữu cơ."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "2842",
+                    "mcc_name": "Specialty Cleaning, Polishing and Sanitation Preparations",
+                    "score": 0.70,
+                    "comment": "Có sự tương đồng một phần ở khía cạnh sản xuất và chế biến các chế phẩm hóa học chuyên dụng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2012",
+            "vsic_name": "Sản xuất phân bón và hợp chất ni tơ",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.90,
+                    "comment": "Phân bón và các hợp chất nitơ là các sản phẩm thuộc phân nhóm hóa chất nông nghiệp chuyên dụng."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.85,
+                    "comment": "Mã này cung cấp các cửa hàng vật tư làm vườn, nơi tiêu thụ trực tiếp các sản phẩm phân bón."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.75,
+                    "comment": "Các hợp tác xã nông nghiệp (MCC 0763) cung cấp dịch vụ quản lý và sử dụng các sản phẩm hỗ trợ nông nghiệp như phân bón."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2013",
+            "vsic_name": "Sản xuất plastic và cao su tổng hợp dạng nguyên sinh",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.90,
+                    "comment": "Nhựa và cao su tổng hợp nguyên sinh (polymers) về bản chất được phân loại trong nhóm sản phẩm hóa học công nghiệp/hóa dầu."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.80,
+                    "comment": "Nhựa (plastic) và cao su nguyên sinh thường được cung cấp cho các nhà máy dưới dạng nguyên liệu công nghiệp (Industrial Supplies)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods (Not Elsewhere Classified)",
+                    "score": 0.65,
+                    "comment": "MCC dự phòng cho việc buôn bán các loại hàng hóa tiêu hao không được phân loại rõ ràng, bao gồm một số vật liệu nhựa và cao su thô."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2021",
+            "vsic_name": "Sản xuất thuốc trừ sâu và sản phẩm hóa chất khác dùng trong nông nghiệp",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.95,
+                    "comment": "Mã phù hợp nhất cho các sản phẩm hóa chất công nghiệp, bao gồm cả hóa chất dùng cho lĩnh vực nông nghiệp (thuốc trừ sâu)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "0763",
+                    "mcc_name": "Agricultural Co-operatives",
+                    "score": 0.85,
+                    "comment": "Mã này đề cập đến các hợp tác xã hỗ trợ kiểm soát bệnh dịch, côn trùng và cỏ dại (những công việc dùng đến thuốc trừ sâu)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5261",
+                    "mcc_name": "Nurseries and Lawn and Garden Supply Stores",
+                    "score": 0.80,
+                    "comment": "Các cửa hàng vật tư làm vườn có bán lẻ và bán buôn các sản phẩm thuốc trừ sâu và hóa chất hỗ trợ nông nghiệp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2023",
+            "vsic_name": "Sản xuất mỹ phẩm, nước hoa, xà phòng, chất tẩy rửa, làm bóng và chế phẩm vệ sinh",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "2842",
+                    "mcc_name": "Specialty Cleaning, Polishing and Sanitation Preparations",
+                    "score": 0.95,
+                    "comment": "Mã MCC này bao gồm các doanh nghiệp chuyên sản xuất/bán buôn các chất tẩy rửa, làm bóng và chế phẩm vệ sinh, khớp hoàn toàn với các title thuộc nhóm 20232."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5977",
+                    "mcc_name": "Cosmetic Stores",
+                    "score": 0.85,
+                    "comment": "Mặc dù là mã bán lẻ (Retail), nhưng nó hoàn toàn tương ứng với sản phẩm đầu ra của nhóm 20231 (Sản xuất mỹ phẩm, nước hoa)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5122",
+                    "mcc_name": "Drugs, Drug Proprietaries, and Druggist's Sundries",
+                    "score": 0.70,
+                    "comment": "Mã bán buôn B2B này thường bao gồm các mặt hàng dược phẩm, vật dụng y tế và bao hàm cả mỹ phẩm, sản phẩm vệ sinh cá nhân."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2029",
+            "vsic_name": "Sản xuất sản phẩm hóa chất khác chưa được phân vào đâu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.98,
+                    "comment": "Khớp chính xác cả về mặt ý nghĩa ('hóa chất khác chưa được phân vào đâu') và hình thức phân loại (Not Elsewhere Classified)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "2842",
+                    "mcc_name": "Specialty Cleaning, Polishing and Sanitation Preparations",
+                    "score": 0.75,
+                    "comment": "Là một mã hóa chất chuyên dụng cho tẩy rửa, có thể giao thoa với một số sản phẩm hóa chất khác."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.65,
+                    "comment": "Sản phẩm hóa chất không phân loại cũng thường được coi là một phần của vật tư công nghiệp nói chung."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2030",
+            "vsic_name": "Sản xuất sợi nhân tạo",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5131",
+                    "mcc_name": "Piece Goods, Notions, and Other Dry Goods",
+                    "score": 0.85,
+                    "comment": "Mã này liên quan đến ngành thương mại, bán buôn các loại vải, sợi và phụ liệu may mặc, phù hợp với đầu ra của ngành dệt sợi nhân tạo."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.80,
+                    "comment": "Sợi nhân tạo (như polyester, nylon) có bản chất là các sản phẩm hóa dầu và hóa chất công nghiệp."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods (Not Elsewhere Classified)",
+                    "score": 0.60,
+                    "comment": "Mã dự phòng trong trường hợp sợi công nghiệp được tính như một loại hàng hóa lâu bền chuyên dụng."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2100",
+            "vsic_name": "Sản xuất thuốc, hóa dược và dược liệu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5122",
+                    "mcc_name": "Drugs, Drug Proprietaries, and Druggist's Sundries",
+                    "score": 0.95,
+                    "comment": "Khớp chính xác với mô tả dành cho nhà phân phối, bán buôn dược phẩm, hóa dược y tế và các chế phẩm độc quyền (B2B)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5912",
+                    "mcc_name": "Drug Stores and Pharmacies",
+                    "score": 0.85,
+                    "comment": "Mặc dù chủ yếu là điểm bán lẻ, các công ty sản xuất phân phối trực tiếp thuốc cũng thường áp dụng mã này."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5047",
+                    "mcc_name": "Medical, Dental, Ophthalmic, and Hospital Equipment and Supplies",
+                    "score": 0.70,
+                    "comment": "Áp dụng trong trường hợp doanh nghiệp sản xuất thêm các dụng cụ, vật tư tiêu hao y tế đi kèm với dược liệu."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2219",
+            "vsic_name": "Sản xuất sản phẩm khác từ cao su",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.85,
+                    "comment": "Các sản phẩm cao su (như ron, ống, đệm cao su) thường được sử dụng và phân phối như một dạng vật tư công nghiệp (B2B)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods, Not Elsewhere Classified",
+                    "score": 0.75,
+                    "comment": "Đại diện cho việc bán buôn các sản phẩm cao su thành phẩm có tính chất lâu bền."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods, Not Elsewhere Classified",
+                    "score": 0.7,
+                    "comment": "Đại diện cho việc phân phối bán buôn các mặt hàng cao su tiêu dùng hoặc tiêu hao."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2220",
+            "vsic_name": "Sản xuất sản phẩm từ plastic",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5199",
+                    "mcc_name": "Nondurable Goods, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Phù hợp với nhóm bao bì plastic (mã con 22201) vì bao bì là mặt hàng tiêu hao, không lâu bền."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods, Not Elsewhere Classified",
+                    "score": 0.8,
+                    "comment": "Phù hợp với nhóm sản phẩm khác từ plastic (mã con 22209) nếu đó là các vật dụng nhựa lâu bền."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5169",
+                    "mcc_name": "Chemicals and Allied Products (Not Elsewhere Classified)",
+                    "score": 0.75,
+                    "comment": "Sản xuất nhựa plastic thường liên quan trực tiếp đến ngành công nghiệp hóa chất và vật liệu tổng hợp."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2310",
+            "vsic_name": "Sản xuất thủy tinh và sản phẩm từ thủy tinh",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5231",
+                    "mcc_name": "Glass, Paint, and Wallpaper Stores",
+                    "score": 0.95,
+                    "comment": "Mã MCC này trực tiếp bao gồm các cơ sở chuyên kinh doanh 'Glass' (thủy tinh/kính) thành phẩm."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Phù hợp với nhóm 'Thủy tinh phẳng' (mã con 23101) vì kính phẳng chủ yếu được sử dụng làm vật liệu xây dựng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5099",
+                    "mcc_name": "Durable Goods, Not Elsewhere Classified",
+                    "score": 0.75,
+                    "comment": "Phù hợp với nhóm phân phối bán buôn thủy tinh rỗng, sợi thủy tinh và các sản phẩm thủy tinh lâu bền khác."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2391",
+            "vsic_name": "Sản xuất sản phẩm chịu lửa",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials, Not Elsewhere Classified",
+                    "score": 0.85,
+                    "comment": "Các sản phẩm chịu lửa (ví dụ như gạch chịu lửa, vữa chịu lửa) thường được xếp vào nhóm bán buôn vật liệu xây dựng đặc thù."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.8,
+                    "comment": "Phù hợp nếu đơn vị bán lẻ các sản phẩm vật liệu chịu lửa phục vụ các công trình xây dựng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.75,
+                    "comment": "Một số sản phẩm chịu lửa được phân phối như vật tư công nghiệp cho các lò luyện kim, lò nung."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2392",
+            "vsic_name": "Sản xuất vật liệu xây dựng từ đất sét",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials, Not Elsewhere Classified",
+                    "score": 0.9,
+                    "comment": "Sản phẩm gạch, ngói từ đất sét là vật liệu xây dựng cơ bản, phù hợp nhất với nhóm bán buôn vật liệu xây dựng (B2B)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.85,
+                    "comment": "Mã này mô tả chính xác các cửa hàng bán lẻ vật liệu xây dựng, bao gồm vật liệu từ đất sét."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1740",
+                    "mcc_name": "Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors",
+                    "score": 0.75,
+                    "comment": "Mã này liên quan đến các nhà thầu thi công xây gạch, ngói, đá, thường gắn liền với các đơn vị trực tiếp sản xuất và nhận thi công vật liệu đất sét."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2393",
+            "vsic_name": "Sản xuất sản phẩm gốm sứ khác",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "1740",
+                    "mcc_name": "Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors",
+                    "score": 0.8,
+                    "comment": "Tile Setting liên quan mật thiết đến việc sử dụng các sản phẩm gốm sứ xây dựng/ốp lát."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.7,
+                    "comment": "Các điểm bán lẻ/bán buôn vật liệu xây dựng phân phối sản phẩm gốm sứ công nghiệp hoặc dân dụng."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1799",
+                    "mcc_name": "Special Trade Contractors (Not Elsewhere Classified)",
+                    "score": 0.6,
+                    "comment": "Nhà thầu chuyên biệt cho những lĩnh vực sử dụng vật liệu gốm sứ phi truyền thống."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2394",
+            "vsic_name": "Sản xuất xi măng, vôi và thạch cao",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "1771",
+                    "mcc_name": "Concrete Work Contractors",
+                    "score": 0.85,
+                    "comment": "Liên quan trực tiếp đến xi măng (cement work) theo mô tả của nhóm ngành thi công bê tông."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "1740",
+                    "mcc_name": "Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors",
+                    "score": 0.8,
+                    "comment": "Mã này bao phủ mảng Plastering (thạch cao), trực tiếp tương thích với sản xuất thạch cao."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1520",
+                    "mcc_name": "General Contractors – Residential and Commercial",
+                    "score": 0.65,
+                    "comment": "Nhà thầu tổng hợp luôn là đơn vị sử dụng và kinh doanh đầu cuối các vật tư xi măng, vôi."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2395",
+            "vsic_name": "Sản xuất bê tông và các sản phẩm từ bê tông, xi măng và thạch cao",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "1771",
+                    "mcc_name": "Concrete Work Contractors",
+                    "score": 0.95,
+                    "comment": "Độ tương đồng cực cao vì mã MCC này chuyên cho Concrete (bê tông) và Cement (xi măng)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "1740",
+                    "mcc_name": "Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors",
+                    "score": 0.75,
+                    "comment": "Phù hợp cho nhánh sản xuất và ứng dụng thạch cao (Plastering)."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5211",
+                    "mcc_name": "Lumber and Building Materials Stores",
+                    "score": 0.6,
+                    "comment": "Điểm kinh doanh vật liệu xây dựng phân phối các sản phẩm đúc sẵn từ bê tông."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2396",
+            "vsic_name": "Cắt, tạo dáng và hoàn thiện đá",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "1740",
+                    "mcc_name": "Masonry, Stonework, Tile Setting, Plastering and Insulation Contractors",
+                    "score": 0.95,
+                    "comment": "Hoàn toàn trùng khớp với Stonework (tạo dáng, thi công và chế tác đá)."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "1799",
+                    "mcc_name": "Special Trade Contractors (Not Elsewhere Classified)",
+                    "score": 0.7,
+                    "comment": "Ứng dụng cho các xưởng chế tác đá chuyên biệt hoặc trang trí tiểu cảnh không phân loại."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "1520",
+                    "mcc_name": "General Contractors – Residential and Commercial",
+                    "score": 0.5,
+                    "comment": "Nhà thầu xây dựng tổng thể bao gồm các hạng mục ốp lát và hoàn thiện đá."
+                }
+            ]
+        },
+        {
+            "vsic_code": "2399",
+            "vsic_name": "Sản xuất sản phẩm từ chất khoáng phi kim loại khác chưa được phân vào đâu",
+            "mcc_candidates": [
+                {
+                    "rank": 1,
+                    "mcc_code": "1799",
+                    "mcc_name": "Special Trade Contractors (Not Elsewhere Classified)",
+                    "score": 0.8,
+                    "comment": "Phù hợp với tính chất 'chưa được phân vào đâu' (Not Elsewhere Classified) cho các mảng thương mại chuyên biệt."
+                },
+                {
+                    "rank": 2,
+                    "mcc_code": "5039",
+                    "mcc_name": "Construction Materials, Not Elsewhere Classified",
+                    "score": 0.75,
+                    "comment": "Mã MCC này đại diện cho thương mại bán buôn vật liệu xây dựng/khoáng phi kim loại không xác định."
+                },
+                {
+                    "rank": 3,
+                    "mcc_code": "5085",
+                    "mcc_name": "Industrial Supplies (Not Elsewhere Classified)",
+                    "score": 0.65,
+                    "comment": "Các chất khoáng phi kim loại sử dụng trong công nghiệp với vai trò vật tư phụ trợ."
+                }
+            ]
+        }
+    ]
+}

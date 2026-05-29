@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "4229",
+      "title": "Xây dựng công trình công ích khác",
+      "children_level5": [
+        {
+          "code": "42290",
+          "title": "Xây dựng công trình công ích khác"
+        }
+      ]
+    },
+    {
+      "code": "4291",
+      "title": "Xây dựng công trình thủy",
+      "children_level5": [
+        {
+          "code": "42910",
+          "title": "Xây dựng công trình thủy"
+        }
+      ]
+    },
+    {
+      "code": "4292",
+      "title": "Xây dựng công trình khai khoáng",
+      "children_level5": [
+        {
+          "code": "42920",
+          "title": "Xây dựng công trình khai khoáng"
+        }
+      ]
+    },
+    {
+      "code": "4293",
+      "title": "Xây dựng công trình chế biến, chế tạo",
+      "children_level5": [
+        {
+          "code": "42930",
+          "title": "Xây dựng công trình chế biến, chế tạo"
+        }
+      ]
+    },
+    {
+      "code": "4299",
+      "title": "Xây dựng công trình kỹ thuật dân dụng khác",
+      "children_level5": [
+        {
+          "code": "42990",
+          "title": "Xây dựng công trình kỹ thuật dân dụng khác"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "8210",
+      "title": "Hoạt động hành chính và hỗ trợ văn phòng",
+      "children_level5": [
+        {
+          "code": "82100",
+          "title": "Hoạt động hành chính và hỗ trợ văn phòng"
+        }
+      ]
+    },
+    {
+      "code": "8220",
+      "title": "Hoạt động dịch vụ liên quan đến các cuộc gọi",
+      "children_level5": [
+        {
+          "code": "82200",
+          "title": "Hoạt động dịch vụ liên quan đến các cuộc gọi"
+        }
+      ]
+    },
+    {
+      "code": "8230",
+      "title": "Tổ chức giới thiệu và xúc tiến thương mại",
+      "children_level5": [
+        {
+          "code": "82300",
+          "title": "Tổ chức giới thiệu và xúc tiến thương mại"
+        }
+      ]
+    },
+    {
+      "code": "8240",
+      "title": "Hoạt động dịch vụ trung gian cho các hoạt động dịch vụ hỗ trợ kinh doanh chưa được phân vào đâu (trừ trung gian tài chính)",
+      "children_level5": [
+        {
+          "code": "82400",
+          "title": "Hoạt động dịch vụ trung gian cho các hoạt động dịch vụ hỗ trợ kinh doanh chưa được phân vào đâu (trừ trung gian tài chính)"
+        }
+      ]
+    },
+    {
+      "code": "8291",
+      "title": "Hoạt động dịch vụ hỗ trợ thanh toán, tín dụng",
+      "children_level5": [
+        {
+          "code": "82910",
+          "title": "Hoạt động dịch vụ hỗ trợ thanh toán, tín dụng"
+        }
+      ]
+    }
+  ]
+}

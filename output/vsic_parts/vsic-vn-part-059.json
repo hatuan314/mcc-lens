@@ -1,0 +1,76 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "5022",
+      "title": "Vận tải hàng hóa đường thủy nội địa",
+      "children_level5": [
+        {
+          "code": "50221",
+          "title": "Vận tải hàng hóa đường thủy nội địa bằng phương tiện cơ giới"
+        },
+        {
+          "code": "50222",
+          "title": "Vận tải hàng hóa đường thủy nội địa bằng phương tiện thô sơ"
+        }
+      ]
+    },
+    {
+      "code": "5110",
+      "title": "Vận tải hành khách hàng không",
+      "children_level5": [
+        {
+          "code": "51101",
+          "title": "Vận tải hành khách hàng không theo tuyến và lịch trình cố định"
+        },
+        {
+          "code": "51109",
+          "title": "Vận tải hành khách hàng không loại khác"
+        }
+      ]
+    },
+    {
+      "code": "5120",
+      "title": "Vận tải hàng hóa hàng không",
+      "children_level5": [
+        {
+          "code": "51201",
+          "title": "Vận tải hàng hóa hàng không theo tuyến và lịch trình cố định"
+        },
+        {
+          "code": "51209",
+          "title": "Vận tải hàng hóa hàng không loại khác"
+        }
+      ]
+    },
+    {
+      "code": "5210",
+      "title": "Kho bãi và lưu giữ hàng hóa",
+      "children_level5": [
+        {
+          "code": "52101",
+          "title": "Kho bãi và lưu giữ hàng hóa trong kho ngoại quan"
+        },
+        {
+          "code": "52102",
+          "title": "Kho bãi và lưu giữ hàng hóa trong kho đông lạnh (trừ kho ngoại quan)"
+        },
+        {
+          "code": "52109",
+          "title": "Kho bãi và lưu giữ hàng hóa trong kho loại khác"
+        }
+      ]
+    },
+    {
+      "code": "5221",
+      "title": "Hoạt động dịch vụ hỗ trợ trực tiếp cho vận tải đường sắt",
+      "children_level5": [
+        {
+          "code": "52210",
+          "title": "Hoạt động dịch vụ hỗ trợ trực tiếp cho vận tải đường sắt"
+        }
+      ]
+    }
+  ]
+}

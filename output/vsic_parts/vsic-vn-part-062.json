@@ -1,0 +1,80 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "5510",
+      "title": "Khách sạn và dịch vụ lưu trú tương tự",
+      "children_level5": [
+        {
+          "code": "55100",
+          "title": "Khách sạn và dịch vụ lưu trú tương tự"
+        }
+      ]
+    },
+    {
+      "code": "5520",
+      "title": "Dịch vụ lưu trú ngắn ngày khác",
+      "children_level5": [
+        {
+          "code": "55201",
+          "title": "Biệt thự hoặc căn hộ kinh doanh dịch vụ lưu trú ngắn ngày"
+        },
+        {
+          "code": "55202",
+          "title": "Nhà khách, nhà nghỉ kinh doanh dịch vụ lưu trú ngắn ngày"
+        },
+        {
+          "code": "55203",
+          "title": "Nhà trọ, phòng trọ và các cơ sở lưu trú ngắn ngày tương tự"
+        }
+      ]
+    },
+    {
+      "code": "5530",
+      "title": "Hoạt động dịch vụ trung gian cho dịch vụ lưu trú",
+      "children_level5": [
+        {
+          "code": "55300",
+          "title": "Hoạt động dịch vụ trung gian cho dịch vụ lưu trú"
+        }
+      ]
+    },
+    {
+      "code": "5590",
+      "title": "Cơ sở lưu trú khác",
+      "children_level5": [
+        {
+          "code": "55901",
+          "title": "Ký túc xá học sinh, sinh viên"
+        },
+        {
+          "code": "55902",
+          "title": "Chỗ nghỉ trọ trên xe lưu động, lều quán, trại dùng để nghỉ tạm"
+        },
+        {
+          "code": "55909",
+          "title": "Cơ sở lưu trú khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "5610",
+      "title": "Nhà hàng và các dịch vụ ăn uống phục vụ lưu động",
+      "children_level5": [
+        {
+          "code": "56101",
+          "title": "Nhà hàng, quán ăn, hàng ăn uống (trừ cửa hàng ăn uống thuộc chuỗi cửa hàng ăn nhanh)"
+        },
+        {
+          "code": "56102",
+          "title": "Cửa hàng ăn uống thuộc chuỗi cửa hàng ăn nhanh"
+        },
+        {
+          "code": "56109",
+          "title": "Dịch vụ ăn uống phục vụ lưu động khác"
+        }
+      ]
+    }
+  ]
+}

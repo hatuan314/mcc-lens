@@ -1,0 +1,64 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "6530",
+      "title": "Hoạt động quỹ hưu trí",
+      "children_level5": [
+        {
+          "code": "65300",
+          "title": "Hoạt động quỹ hưu trí"
+        }
+      ]
+    },
+    {
+      "code": "6611",
+      "title": "Quản lý thị trường tài chính",
+      "children_level5": [
+        {
+          "code": "66110",
+          "title": "Quản lý thị trường tài chính"
+        }
+      ]
+    },
+    {
+      "code": "6612",
+      "title": "Môi giới hợp đồng hàng hóa và chứng khoán",
+      "children_level5": [
+        {
+          "code": "66121",
+          "title": "Môi giới hợp đồng hàng hóa"
+        },
+        {
+          "code": "66122",
+          "title": "Môi giới chứng khoán"
+        },
+        {
+          "code": "66129",
+          "title": "Môi giới khác"
+        }
+      ]
+    },
+    {
+      "code": "6619",
+      "title": "Hoạt động hỗ trợ dịch vụ tài chính chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "66190",
+          "title": "Hoạt động hỗ trợ dịch vụ tài chính chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "6621",
+      "title": "Đánh giá rủi ro và thiệt hại",
+      "children_level5": [
+        {
+          "code": "66210",
+          "title": "Đánh giá rủi ro và thiệt hại"
+        }
+      ]
+    }
+  ]
+}

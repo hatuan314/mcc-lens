@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2593",
+      "title": "Sản xuất dao kéo, dụng cụ cầm tay và đồ kim loại thông dụng",
+      "children_level5": [
+        {
+          "code": "25930",
+          "title": "Sản xuất dao kéo, dụng cụ cầm tay và đồ kim loại thông dụng"
+        }
+      ]
+    },
+    {
+      "code": "2599",
+      "title": "Sản xuất sản phẩm khác bằng kim loại chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "25991",
+          "title": "Sản xuất đồ dùng bằng kim loại cho nhà bếp, nhà vệ sinh và nhà ăn"
+        },
+        {
+          "code": "25999",
+          "title": "Sản xuất sản phẩm khác còn lại bằng kim loại chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "2611",
+      "title": "Sản xuất pin mặt trời, tấm pin mặt trời và bộ biến tần quang điện",
+      "children_level5": [
+        {
+          "code": "26110",
+          "title": "Sản xuất pin mặt trời, tấm pin mặt trời và bộ biến tần quang điện"
+        }
+      ]
+    },
+    {
+      "code": "2619",
+      "title": "Sản xuất linh kiện điện tử khác",
+      "children_level5": [
+        {
+          "code": "26190",
+          "title": "Sản xuất linh kiện điện tử khác"
+        }
+      ]
+    },
+    {
+      "code": "2620",
+      "title": "Sản xuất máy tính và thiết bị ngoại vi của máy tính",
+      "children_level5": [
+        {
+          "code": "26200",
+          "title": "Sản xuất máy tính và thiết bị ngoại vi của máy tính"
+        }
+      ]
+    }
+  ]
+}

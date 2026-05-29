@@ -1,0 +1,80 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2011",
+      "title": "Sản xuất hóa chất cơ bản",
+      "children_level5": [
+        {
+          "code": "20111",
+          "title": "Sản xuất khí công nghiệp"
+        },
+        {
+          "code": "20112",
+          "title": "Sản xuất chất nhuộm và chất màu"
+        },
+        {
+          "code": "20113",
+          "title": "Sản xuất hóa chất vô cơ cơ bản khác"
+        },
+        {
+          "code": "20114",
+          "title": "Sản xuất hóa chất hữu cơ cơ bản khác"
+        },
+        {
+          "code": "20119",
+          "title": "Sản xuất hóa chất cơ bản khác"
+        }
+      ]
+    },
+    {
+      "code": "2012",
+      "title": "Sản xuất phân bón và hợp chất ni tơ",
+      "children_level5": [
+        {
+          "code": "20120",
+          "title": "Sản xuất phân bón và hợp chất ni tơ"
+        }
+      ]
+    },
+    {
+      "code": "2013",
+      "title": "Sản xuất plastic và cao su tổng hợp dạng nguyên sinh",
+      "children_level5": [
+        {
+          "code": "20131",
+          "title": "Sản xuất plastic nguyên sinh"
+        },
+        {
+          "code": "20132",
+          "title": "Sản xuất cao su tổng hợp dạng nguyên sinh"
+        }
+      ]
+    },
+    {
+      "code": "2021",
+      "title": "Sản xuất thuốc trừ sâu và sản phẩm hóa chất khác dùng trong nông nghiệp",
+      "children_level5": [
+        {
+          "code": "20210",
+          "title": "Sản xuất thuốc trừ sâu và sản phẩm hóa chất khác dùng trong nông nghiệp"
+        }
+      ]
+    },
+    {
+      "code": "2022",
+      "title": "Sản xuất sơn, véc ni và các chất sơn, quét tương tự; sản xuất mực in và ma tít",
+      "children_level5": [
+        {
+          "code": "20221",
+          "title": "Sản xuất sơn, véc ni và các chất sơn, quét tương tự, ma tít"
+        },
+        {
+          "code": "20222",
+          "title": "Sản xuất mực in"
+        }
+      ]
+    }
+  ]
+}

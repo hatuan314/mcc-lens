@@ -1,0 +1,96 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "4659",
+      "title": "Bán buôn máy móc, thiết bị và phụ tùng máy khác",
+      "children_level5": [
+        {
+          "code": "46591",
+          "title": "Bán buôn máy móc, thiết bị và phụ tùng máy khai khoáng, xây dựng"
+        },
+        {
+          "code": "46592",
+          "title": "Bán buôn máy móc, thiết bị điện, vật liệu điện (máy phát điện, động cơ điện, dây điện và thiết bị khác dùng trong mạch điện)"
+        },
+        {
+          "code": "46593",
+          "title": "Bán buôn máy móc, thiết bị và phụ tùng máy dệt, may, da giày"
+        },
+        {
+          "code": "46594",
+          "title": "Bán buôn máy móc, thiết bị và phụ tùng máy văn phòng (trừ máy tính và thiết bị ngoại vi)"
+        },
+        {
+          "code": "46595",
+          "title": "Bán buôn máy móc, thiết bị y tế"
+        },
+        {
+          "code": "46599",
+          "title": "Bán buôn máy móc, thiết bị và phụ tùng máy khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "4661",
+      "title": "Bán buôn ô tô và xe có động cơ khác",
+      "children_level5": [
+        {
+          "code": "46611",
+          "title": "Bán buôn ô tô con (loại 9 chỗ ngồi trở xuống)"
+        },
+        {
+          "code": "46619",
+          "title": "Bán buôn ô tô (trừ ô tô con loại 9 chỗ ngồi trở xuống) và xe có động cơ khác"
+        }
+      ]
+    },
+    {
+      "code": "4662",
+      "title": "Bán buôn phụ tùng và các bộ phận phụ trợ của ô tô và xe có động cơ khác",
+      "children_level5": [
+        {
+          "code": "46620",
+          "title": "Bán buôn phụ tùng và các bộ phận phụ trợ của ô tô và xe có động cơ khác"
+        }
+      ]
+    },
+    {
+      "code": "4663",
+      "title": "Bán buôn mô tô, xe máy, phụ tùng và các bộ phận phụ trợ của mô tô, xe máy",
+      "children_level5": [
+        {
+          "code": "46631",
+          "title": "Bán buôn mô tô, xe máy"
+        },
+        {
+          "code": "46632",
+          "title": "Bán buôn phụ tùng và các bộ phận phụ trợ của mô tô, xe máy"
+        }
+      ]
+    },
+    {
+      "code": "4671",
+      "title": "Bán buôn nhiên liệu rắn, lỏng, khí và các sản phẩm liên quan",
+      "children_level5": [
+        {
+          "code": "46711",
+          "title": "Bán buôn than đá và nhiên liệu rắn khác"
+        },
+        {
+          "code": "46712",
+          "title": "Bán buôn dầu thô"
+        },
+        {
+          "code": "46713",
+          "title": "Bán buôn xăng dầu và các sản phẩm liên quan"
+        },
+        {
+          "code": "46714",
+          "title": "Bán buôn khí đốt và các sản phẩm liên quan"
+        }
+      ]
+    }
+  ]
+}

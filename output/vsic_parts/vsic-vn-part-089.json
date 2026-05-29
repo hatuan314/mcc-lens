@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "8691",
+      "title": "Hoạt động dịch vụ trung gian cho các dịch vụ y tế, nha khoa và dịch vụ y tế khác",
+      "children_level5": [
+        {
+          "code": "86910",
+          "title": "Hoạt động dịch vụ trung gian cho các dịch vụ y tế, nha khoa và dịch vụ y tế khác"
+        }
+      ]
+    },
+    {
+      "code": "8692",
+      "title": "Hoạt động y tế dự phòng",
+      "children_level5": [
+        {
+          "code": "86920",
+          "title": "Hoạt động y tế dự phòng"
+        }
+      ]
+    },
+    {
+      "code": "8693",
+      "title": "Hoạt động của hệ thống cơ sở chỉnh hình, phục hồi chức năng",
+      "children_level5": [
+        {
+          "code": "86930",
+          "title": "Hoạt động của hệ thống cơ sở chỉnh hình, phục hồi chức năng"
+        }
+      ]
+    },
+    {
+      "code": "8699",
+      "title": "Hoạt động y tế khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "86990",
+          "title": "Hoạt động y tế khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "8710",
+      "title": "Hoạt động của các cơ sở nuôi dưỡng, điều dưỡng",
+      "children_level5": [
+        {
+          "code": "87101",
+          "title": "Hoạt động của các cơ sở nuôi dưỡng, điều dưỡng thương bệnh binh"
+        },
+        {
+          "code": "87109",
+          "title": "Hoạt động của các cơ sở nuôi dưỡng, điều dưỡng các đối tượng khác"
+        }
+      ]
+    }
+  ]
+}

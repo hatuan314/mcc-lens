@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "6499",
+      "title": "Hoạt động dịch vụ tài chính khác chưa được phân vào đâu (trừ bảo hiểm và hoạt động quỹ hưu trí)",
+      "children_level5": [
+        {
+          "code": "64990",
+          "title": "Hoạt động dịch vụ tài chính khác chưa được phân vào đâu (trừ bảo hiểm và hoạt động quỹ hưu trí)"
+        }
+      ]
+    },
+    {
+      "code": "6511",
+      "title": "Bảo hiểm nhân thọ",
+      "children_level5": [
+        {
+          "code": "65110",
+          "title": "Bảo hiểm nhân thọ"
+        }
+      ]
+    },
+    {
+      "code": "6512",
+      "title": "Bảo hiểm phi nhân thọ",
+      "children_level5": [
+        {
+          "code": "65120",
+          "title": "Bảo hiểm phi nhân thọ"
+        }
+      ]
+    },
+    {
+      "code": "6513",
+      "title": "Bảo hiểm sức khỏe",
+      "children_level5": [
+        {
+          "code": "65130",
+          "title": "Bảo hiểm sức khỏe"
+        }
+      ]
+    },
+    {
+      "code": "6520",
+      "title": "Tái bảo hiểm",
+      "children_level5": [
+        {
+          "code": "65200",
+          "title": "Tái bảo hiểm"
+        }
+      ]
+    }
+  ]
+}

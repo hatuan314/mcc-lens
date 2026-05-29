@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1399",
+      "title": "Sản xuất các loại hàng dệt khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "13990",
+          "title": "Sản xuất các loại hàng dệt khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "1410",
+      "title": "Sản xuất trang phục (trừ trang phục từ da lông thú)",
+      "children_level5": [
+        {
+          "code": "14100",
+          "title": "Sản xuất trang phục (trừ trang phục từ da lông thú)"
+        }
+      ]
+    },
+    {
+      "code": "1420",
+      "title": "Sản xuất sản phẩm từ da lông thú",
+      "children_level5": [
+        {
+          "code": "14200",
+          "title": "Sản xuất sản phẩm từ da lông thú"
+        }
+      ]
+    },
+    {
+      "code": "1430",
+      "title": "Sản xuất trang phục đan móc",
+      "children_level5": [
+        {
+          "code": "14300",
+          "title": "Sản xuất trang phục đan móc"
+        }
+      ]
+    },
+    {
+      "code": "1511",
+      "title": "Thuộc, sơ chế da; sơ chế và nhuộm da lông thú",
+      "children_level5": [
+        {
+          "code": "15110",
+          "title": "Thuộc, sơ chế da; sơ chế và nhuộm da lông thú"
+        }
+      ]
+    }
+  ]
+}

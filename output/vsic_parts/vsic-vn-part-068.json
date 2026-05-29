@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "6290",
+      "title": "Hoạt động dịch vụ máy tính và công nghệ thông tin khác",
+      "children_level5": [
+        {
+          "code": "62900",
+          "title": "Hoạt động dịch vụ máy tính và công nghệ thông tin khác"
+        }
+      ]
+    },
+    {
+      "code": "6310",
+      "title": "Cơ sở hạ tầng công nghệ thông tin, xử lý dữ liệu, lưu trữ và các hoạt động liên quan",
+      "children_level5": [
+        {
+          "code": "63100",
+          "title": "Cơ sở hạ tầng công nghệ thông tin, xử lý dữ liệu, lưu trữ và các hoạt động liên quan"
+        }
+      ]
+    },
+    {
+      "code": "6390",
+      "title": "Hoạt động cổng tìm kiếm web và các dịch vụ thông tin khác",
+      "children_level5": [
+        {
+          "code": "63901",
+          "title": "Hoạt động cổng tìm kiếm web"
+        },
+        {
+          "code": "63909",
+          "title": "Dịch vụ thông tin khác"
+        }
+      ]
+    },
+    {
+      "code": "6411",
+      "title": "Hoạt động Ngân hàng trung ương",
+      "children_level5": [
+        {
+          "code": "64110",
+          "title": "Hoạt động Ngân hàng trung ương"
+        }
+      ]
+    },
+    {
+      "code": "6419",
+      "title": "Hoạt động trung gian tiền tệ khác",
+      "children_level5": [
+        {
+          "code": "64190",
+          "title": "Hoạt động trung gian tiền tệ khác"
+        }
+      ]
+    }
+  ]
+}

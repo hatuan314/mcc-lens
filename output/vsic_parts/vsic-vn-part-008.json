@@ -1,0 +1,80 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "311",
+      "title": "Khai thác thủy sản biển",
+      "children_level5": [
+        {
+          "code": "3110",
+          "title": "Khai thác thủy sản biển"
+        }
+      ]
+    },
+    {
+      "code": "312",
+      "title": "Khai thác thủy sản nội địa",
+      "children_level5": [
+        {
+          "code": "3120",
+          "title": "Khai thác thủy sản nội địa"
+        }
+      ]
+    },
+    {
+      "code": "321",
+      "title": "Nuôi trồng thủy sản biển",
+      "children_level5": [
+        {
+          "code": "3211",
+          "title": "Nuôi cá"
+        },
+        {
+          "code": "3212",
+          "title": "Nuôi tôm"
+        },
+        {
+          "code": "3213",
+          "title": "Nuôi thủy sản khác"
+        },
+        {
+          "code": "3214",
+          "title": "Sản xuất giống thủy sản biển"
+        }
+      ]
+    },
+    {
+      "code": "322",
+      "title": "Nuôi trồng thủy sản nội địa",
+      "children_level5": [
+        {
+          "code": "3221",
+          "title": "Nuôi cá"
+        },
+        {
+          "code": "3222",
+          "title": "Nuôi tôm"
+        },
+        {
+          "code": "3223",
+          "title": "Nuôi thủy sản khác"
+        },
+        {
+          "code": "3224",
+          "title": "Sản xuất giống thủy sản nội địa"
+        }
+      ]
+    },
+    {
+      "code": "331",
+      "title": "Hoạt động dịch vụ hỗ trợ khai thác thủy sản",
+      "children_level5": [
+        {
+          "code": "3310",
+          "title": "Hoạt động dịch vụ hỗ trợ khai thác thủy sản"
+        }
+      ]
+    }
+  ]
+}

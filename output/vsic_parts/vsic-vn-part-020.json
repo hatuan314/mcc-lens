@@ -1,0 +1,64 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1623",
+      "title": "Sản xuất bao bì bằng gỗ",
+      "children_level5": [
+        {
+          "code": "16230",
+          "title": "Sản xuất bao bì bằng gỗ"
+        }
+      ]
+    },
+    {
+      "code": "1629",
+      "title": "Sản xuất sản phẩm khác từ gỗ; sản xuất sản phẩm từ tre, nứa, rơm, rạ và vật liệu tết bện",
+      "children_level5": [
+        {
+          "code": "16291",
+          "title": "Sản xuất sản phẩm khác từ gỗ"
+        },
+        {
+          "code": "16292",
+          "title": "Sản xuất sản phẩm từ lâm sản (trừ gỗ), cói và vật liệu tết bện"
+        }
+      ]
+    },
+    {
+      "code": "1701",
+      "title": "Sản xuất bột giấy, giấy và bìa",
+      "children_level5": [
+        {
+          "code": "17010",
+          "title": "Sản xuất bột giấy, giấy và bìa"
+        }
+      ]
+    },
+    {
+      "code": "1702",
+      "title": "Sản xuất giấy nhăn, bìa nhăn, bao bì từ giấy và bìa",
+      "children_level5": [
+        {
+          "code": "17021",
+          "title": "Sản xuất bao bì bằng giấy, bìa"
+        },
+        {
+          "code": "17022",
+          "title": "Sản xuất giấy nhăn và bìa nhăn"
+        }
+      ]
+    },
+    {
+      "code": "1709",
+      "title": "Sản xuất các sản phẩm khác từ giấy và bìa chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "17090",
+          "title": "Sản xuất các sản phẩm khác từ giấy và bìa chưa được phân vào đâu"
+        }
+      ]
+    }
+  ]
+}

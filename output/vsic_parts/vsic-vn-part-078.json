@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "7499",
+      "title": "Hoạt động chuyên môn, khoa học và công nghệ khác còn lại chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "74990",
+          "title": "Hoạt động chuyên môn, khoa học và công nghệ khác còn lại chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "7500",
+      "title": "Hoạt động thú y",
+      "children_level5": [
+        {
+          "code": "75000",
+          "title": "Hoạt động thú y"
+        }
+      ]
+    },
+    {
+      "code": "7710",
+      "title": "Cho thuê xe có động cơ",
+      "children_level5": [
+        {
+          "code": "77101",
+          "title": "Cho thuê ô tô"
+        },
+        {
+          "code": "77109",
+          "title": "Cho thuê xe có động cơ khác"
+        }
+      ]
+    },
+    {
+      "code": "7721",
+      "title": "Cho thuê thiết bị thể thao, vui chơi giải trí",
+      "children_level5": [
+        {
+          "code": "77210",
+          "title": "Cho thuê thiết bị thể thao, vui chơi giải trí"
+        }
+      ]
+    },
+    {
+      "code": "7729",
+      "title": "Cho thuê đồ dùng cá nhân và gia đình khác",
+      "children_level5": [
+        {
+          "code": "77290",
+          "title": "Cho thuê đồ dùng cá nhân và gia đình khác"
+        }
+      ]
+    }
+  ]
+}

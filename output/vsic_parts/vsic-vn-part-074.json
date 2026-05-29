@@ -1,0 +1,88 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "6829",
+      "title": "Hoạt động bất động sản khác trên cơ sở phí hoặc hợp đồng",
+      "children_level5": [
+        {
+          "code": "68291",
+          "title": "Hoạt động tư vấn và quản lý nhà ở và quyền sử dụng đất ở"
+        },
+        {
+          "code": "68292",
+          "title": "Hoạt động tư vấn và quản lý nhà và quyền sử dụng đất không để ở"
+        },
+        {
+          "code": "68293",
+          "title": "Hoạt động đấu giá bất động sản, đấu giá quyền sử dụng bất động sản"
+        },
+        {
+          "code": "68299",
+          "title": "Hoạt động bất động sản khác chưa được phân vào đâu trên cơ sở phí hoặc hợp đồng"
+        }
+      ]
+    },
+    {
+      "code": "6910",
+      "title": "Hoạt động pháp luật",
+      "children_level5": [
+        {
+          "code": "69101",
+          "title": "Hoạt động đại diện, tư vấn pháp luật"
+        },
+        {
+          "code": "69102",
+          "title": "Hướng dẫn chung và tư vấn, chuẩn bị các tài liệu pháp lý"
+        },
+        {
+          "code": "69109",
+          "title": "Hoạt động pháp luật khác"
+        }
+      ]
+    },
+    {
+      "code": "6920",
+      "title": "Hoạt động liên quan đến kế toán, kiểm toán và tư vấn về thuế",
+      "children_level5": [
+        {
+          "code": "69201",
+          "title": "Hoạt động liên quan đến kế toán"
+        },
+        {
+          "code": "69202",
+          "title": "Hoạt động liên quan đến kiểm toán"
+        },
+        {
+          "code": "69203",
+          "title": "Hoạt động liên quan đến tư vấn về thuế"
+        },
+        {
+          "code": "69209",
+          "title": "Hoạt động liên quan đến kế toán, kiểm toán và tư vấn về thuế khác"
+        }
+      ]
+    },
+    {
+      "code": "7010",
+      "title": "Hoạt động của trụ sở văn phòng",
+      "children_level5": [
+        {
+          "code": "70100",
+          "title": "Hoạt động của trụ sở văn phòng"
+        }
+      ]
+    },
+    {
+      "code": "7020",
+      "title": "Hoạt động tư vấn quản lý kinh doanh và hoạt động tư vấn quản lý khác",
+      "children_level5": [
+        {
+          "code": "70200",
+          "title": "Hoạt động tư vấn quản lý kinh doanh và hoạt động tư vấn quản lý khác"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1811",
+      "title": "In ấn",
+      "children_level5": [
+        {
+          "code": "18110",
+          "title": "In ấn"
+        }
+      ]
+    },
+    {
+      "code": "1812",
+      "title": "Dịch vụ liên quan đến in",
+      "children_level5": [
+        {
+          "code": "18120",
+          "title": "Dịch vụ liên quan đến in"
+        }
+      ]
+    },
+    {
+      "code": "1820",
+      "title": "Sao chép bản ghi các loại",
+      "children_level5": [
+        {
+          "code": "18200",
+          "title": "Sao chép bản ghi các loại"
+        }
+      ]
+    },
+    {
+      "code": "1910",
+      "title": "Sản xuất than cốc",
+      "children_level5": [
+        {
+          "code": "19100",
+          "title": "Sản xuất than cốc"
+        }
+      ]
+    },
+    {
+      "code": "1920",
+      "title": "Sản xuất sản phẩm dầu mỏ tinh chế; sản xuất sản phẩm nhiên liệu hóa thạch",
+      "children_level5": [
+        {
+          "code": "19200",
+          "title": "Sản xuất sản phẩm dầu mỏ tinh chế; sản xuất sản phẩm nhiên liệu hóa thạch"
+        }
+      ]
+    }
+  ]
+}

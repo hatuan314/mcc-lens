@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "5231",
+      "title": "Hoạt động dịch vụ trung gian cho vận tải hàng hóa",
+      "children_level5": [
+        {
+          "code": "52310",
+          "title": "Hoạt động dịch vụ trung gian cho vận tải hàng hóa"
+        }
+      ]
+    },
+    {
+      "code": "5232",
+      "title": "Hoạt động dịch vụ trung gian cho vận tải hành khách",
+      "children_level5": [
+        {
+          "code": "52320",
+          "title": "Hoạt động dịch vụ trung gian cho vận tải hành khách"
+        }
+      ]
+    },
+    {
+      "code": "5310",
+      "title": "Bưu chính",
+      "children_level5": [
+        {
+          "code": "53100",
+          "title": "Bưu chính"
+        }
+      ]
+    },
+    {
+      "code": "5320",
+      "title": "Chuyển phát",
+      "children_level5": [
+        {
+          "code": "53200",
+          "title": "Chuyển phát"
+        }
+      ]
+    },
+    {
+      "code": "5330",
+      "title": "Hoạt động dịch vụ trung gian cho hoạt động bưu chính và chuyển phát",
+      "children_level5": [
+        {
+          "code": "53300",
+          "title": "Hoạt động dịch vụ trung gian cho hoạt động bưu chính và chuyển phát"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "5812",
+      "title": "Xuất bản báo",
+      "children_level5": [
+        {
+          "code": "58120",
+          "title": "Xuất bản báo"
+        }
+      ]
+    },
+    {
+      "code": "5813",
+      "title": "Xuất bản tạp chí và các ấn phẩm định kỳ",
+      "children_level5": [
+        {
+          "code": "58130",
+          "title": "Xuất bản tạp chí và các ấn phẩm định kỳ"
+        }
+      ]
+    },
+    {
+      "code": "5819",
+      "title": "Hoạt động xuất bản khác",
+      "children_level5": [
+        {
+          "code": "58190",
+          "title": "Hoạt động xuất bản khác"
+        }
+      ]
+    },
+    {
+      "code": "5821",
+      "title": "Xuất bản trò chơi điện tử",
+      "children_level5": [
+        {
+          "code": "58210",
+          "title": "Xuất bản trò chơi điện tử"
+        }
+      ]
+    },
+    {
+      "code": "5829",
+      "title": "Xuất bản phần mềm khác",
+      "children_level5": [
+        {
+          "code": "58291",
+          "title": "Xuất bản phần mềm hệ thống"
+        },
+        {
+          "code": "58292",
+          "title": "Xuất bản phần mềm ứng dụng"
+        },
+        {
+          "code": "58299",
+          "title": "Xuất bản phần mềm khác chưa được phân vào đâu"
+        }
+      ]
+    }
+  ]
+}

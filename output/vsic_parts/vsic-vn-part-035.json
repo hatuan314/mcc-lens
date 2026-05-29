@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2829",
+      "title": "Sản xuất máy chuyên dụng khác",
+      "children_level5": [
+        {
+          "code": "28291",
+          "title": "Sản xuất máy sản xuất vật liệu xây dựng"
+        },
+        {
+          "code": "28299",
+          "title": "Sản xuất máy chuyên dụng khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "2910",
+      "title": "Sản xuất ô tô và xe có động cơ khác",
+      "children_level5": [
+        {
+          "code": "29100",
+          "title": "Sản xuất ô tô và xe có động cơ khác"
+        }
+      ]
+    },
+    {
+      "code": "2920",
+      "title": "Sản xuất thân xe ô tô và xe có động cơ khác, rơ moóc và bán rơ moóc",
+      "children_level5": [
+        {
+          "code": "29200",
+          "title": "Sản xuất thân xe ô tô và xe có động cơ khác, rơ moóc và bán rơ moóc"
+        }
+      ]
+    },
+    {
+      "code": "2930",
+      "title": "Sản xuất phụ tùng và bộ phận phụ trợ cho xe ô tô và xe có động cơ khác",
+      "children_level5": [
+        {
+          "code": "29300",
+          "title": "Sản xuất phụ tùng và bộ phận phụ trợ cho xe ô tô và xe có động cơ khác"
+        }
+      ]
+    },
+    {
+      "code": "3011",
+      "title": "Đóng tàu và cấu kiện nổi",
+      "children_level5": [
+        {
+          "code": "30110",
+          "title": "Đóng tàu và cấu kiện nổi"
+        }
+      ]
+    }
+  ]
+}

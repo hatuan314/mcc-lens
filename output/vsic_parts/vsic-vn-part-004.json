@@ -1,0 +1,72 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "127",
+      "title": "Trồng cây chè",
+      "children_level5": [
+        {
+          "code": "1270",
+          "title": "Trồng cây chè"
+        }
+      ]
+    },
+    {
+      "code": "128",
+      "title": "Trồng cây gia vị, cây dược liệu, cây hương liệu lâu năm",
+      "children_level5": [
+        {
+          "code": "1281",
+          "title": "Trồng cây gia vị lâu năm"
+        },
+        {
+          "code": "1282",
+          "title": "Trồng cây dược liệu, hương liệu lâu năm"
+        }
+      ]
+    },
+    {
+      "code": "129",
+      "title": "Trồng cây lâu năm khác",
+      "children_level5": [
+        {
+          "code": "1291",
+          "title": "Trồng cây cảnh lâu năm"
+        },
+        {
+          "code": "1299",
+          "title": "Trồng cây lâu năm khác còn lại"
+        }
+      ]
+    },
+    {
+      "code": "130",
+      "title": "Nhân và chăm sóc cây giống nông nghiệp",
+      "children_level5": [
+        {
+          "code": "1301",
+          "title": "Nhân và chăm sóc cây giống hàng năm"
+        },
+        {
+          "code": "1302",
+          "title": "Nhân và chăm sóc cây giống lâu năm"
+        }
+      ]
+    },
+    {
+      "code": "141",
+      "title": "Chăn nuôi trâu, bò và sản xuất giống trâu, bò",
+      "children_level5": [
+        {
+          "code": "1411",
+          "title": "Sản xuất giống trâu, bò"
+        },
+        {
+          "code": "1412",
+          "title": "Chăn nuôi trâu, bò"
+        }
+      ]
+    }
+  ]
+}

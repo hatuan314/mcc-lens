@@ -1,0 +1,64 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "8559",
+      "title": "Giáo dục khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "85590",
+          "title": "Giáo dục khác chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "8561",
+      "title": "Hoạt động dịch vụ trung gian cho các khóa học và gia sư",
+      "children_level5": [
+        {
+          "code": "85610",
+          "title": "Hoạt động dịch vụ trung gian cho các khóa học và gia sư"
+        }
+      ]
+    },
+    {
+      "code": "8569",
+      "title": "Hoạt động hỗ trợ giáo dục khác",
+      "children_level5": [
+        {
+          "code": "85690",
+          "title": "Hoạt động hỗ trợ giáo dục khác"
+        }
+      ]
+    },
+    {
+      "code": "8610",
+      "title": "Hoạt động của các bệnh viện, trạm y tế",
+      "children_level5": [
+        {
+          "code": "86101",
+          "title": "Hoạt động của các bệnh viện"
+        },
+        {
+          "code": "86102",
+          "title": "Hoạt động của các trạm y tế"
+        }
+      ]
+    },
+    {
+      "code": "8620",
+      "title": "Hoạt động của các phòng khám đa khoa, chuyên khoa và nha khoa",
+      "children_level5": [
+        {
+          "code": "86201",
+          "title": "Hoạt động của các phòng khám đa khoa, chuyên khoa"
+        },
+        {
+          "code": "86202",
+          "title": "Hoạt động của các phòng khám nha khoa"
+        }
+      ]
+    }
+  ]
+}

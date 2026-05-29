@@ -1,0 +1,92 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "116",
+      "title": "Trồng cây lấy sợi",
+      "children_level5": [
+        {
+          "code": "1160",
+          "title": "Trồng cây lấy sợi"
+        }
+      ]
+    },
+    {
+      "code": "117",
+      "title": "Trồng cây có hạt chứa dầu",
+      "children_level5": [
+        {
+          "code": "1170",
+          "title": "Trồng cây có hạt chứa dầu"
+        }
+      ]
+    },
+    {
+      "code": "118",
+      "title": "Trồng rau, đậu các loại và trồng hoa",
+      "children_level5": [
+        {
+          "code": "1181",
+          "title": "Trồng rau các loại"
+        },
+        {
+          "code": "1182",
+          "title": "Trồng đậu các loại"
+        },
+        {
+          "code": "1183",
+          "title": "Trồng hoa hàng năm"
+        }
+      ]
+    },
+    {
+      "code": "119",
+      "title": "Trồng cây hàng năm khác",
+      "children_level5": [
+        {
+          "code": "1191",
+          "title": "Trồng cây gia vị hàng năm"
+        },
+        {
+          "code": "1192",
+          "title": "Trồng cây dược liệu, hương liệu hàng năm"
+        },
+        {
+          "code": "1199",
+          "title": "Trồng cây hàng năm khác còn lại"
+        }
+      ]
+    },
+    {
+      "code": "121",
+      "title": "Trồng cây ăn quả",
+      "children_level5": [
+        {
+          "code": "1211",
+          "title": "Trồng nho"
+        },
+        {
+          "code": "1212",
+          "title": "Trồng cây ăn quả vùng nhiệt đới và cận nhiệt đới"
+        },
+        {
+          "code": "1213",
+          "title": "Trồng cam, quýt và các loại quả có múi khác"
+        },
+        {
+          "code": "1214",
+          "title": "Trồng táo, mận và các loại quả có hạt như táo"
+        },
+        {
+          "code": "1215",
+          "title": "Trồng nhãn, vải, chôm chôm"
+        },
+        {
+          "code": "1219",
+          "title": "Trồng cây ăn quả khác"
+        }
+      ]
+    }
+  ]
+}

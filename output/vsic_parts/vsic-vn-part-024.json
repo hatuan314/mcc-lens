@@ -1,0 +1,72 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2219",
+      "title": "Sản xuất sản phẩm khác từ cao su",
+      "children_level5": [
+        {
+          "code": "22190",
+          "title": "Sản xuất sản phẩm khác từ cao su"
+        }
+      ]
+    },
+    {
+      "code": "2220",
+      "title": "Sản xuất sản phẩm từ plastic",
+      "children_level5": [
+        {
+          "code": "22201",
+          "title": "Sản xuất bao bì từ plastic"
+        },
+        {
+          "code": "22209",
+          "title": "Sản xuất sản phẩm khác từ plastic"
+        }
+      ]
+    },
+    {
+      "code": "2310",
+      "title": "Sản xuất thủy tinh và sản phẩm từ thủy tinh",
+      "children_level5": [
+        {
+          "code": "23101",
+          "title": "Sản xuất thủy tinh phẳng và sản phẩm từ thủy tinh phẳng"
+        },
+        {
+          "code": "23102",
+          "title": "Sản xuất thủy tinh rỗng và sản phẩm từ thủy tinh rỗng"
+        },
+        {
+          "code": "23103",
+          "title": "Sản xuất sợi thủy tinh và sản phẩm từ sợi thủy tinh"
+        },
+        {
+          "code": "23109",
+          "title": "Sản xuất thủy tinh khác và các sản phẩm từ thủy tinh"
+        }
+      ]
+    },
+    {
+      "code": "2391",
+      "title": "Sản xuất sản phẩm chịu lửa",
+      "children_level5": [
+        {
+          "code": "23910",
+          "title": "Sản xuất sản phẩm chịu lửa"
+        }
+      ]
+    },
+    {
+      "code": "2392",
+      "title": "Sản xuất vật liệu xây dựng từ đất sét",
+      "children_level5": [
+        {
+          "code": "23920",
+          "title": "Sản xuất vật liệu xây dựng từ đất sét"
+        }
+      ]
+    }
+  ]
+}

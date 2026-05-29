@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1050",
+      "title": "Chế biến sữa và các sản phẩm từ sữa",
+      "children_level5": [
+        {
+          "code": "10500",
+          "title": "Chế biến sữa và các sản phẩm từ sữa"
+        }
+      ]
+    },
+    {
+      "code": "1061",
+      "title": "Xay xát và sản xuất bột thô",
+      "children_level5": [
+        {
+          "code": "10611",
+          "title": "Xay xát"
+        },
+        {
+          "code": "10612",
+          "title": "Sản xuất bột thô"
+        }
+      ]
+    },
+    {
+      "code": "1062",
+      "title": "Sản xuất tinh bột và các sản phẩm từ tinh bột",
+      "children_level5": [
+        {
+          "code": "10620",
+          "title": "Sản xuất tinh bột và các sản phẩm từ tinh bột"
+        }
+      ]
+    },
+    {
+      "code": "1071",
+      "title": "Sản xuất các loại bánh từ bột",
+      "children_level5": [
+        {
+          "code": "10710",
+          "title": "Sản xuất các loại bánh từ bột"
+        }
+      ]
+    },
+    {
+      "code": "1072",
+      "title": "Sản xuất đường",
+      "children_level5": [
+        {
+          "code": "10720",
+          "title": "Sản xuất đường"
+        }
+      ]
+    }
+  ]
+}

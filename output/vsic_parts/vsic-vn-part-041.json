@@ -1,0 +1,88 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "3512",
+      "title": "Sản xuất điện từ nguồn năng lượng tái tạo",
+      "children_level5": [
+        {
+          "code": "35121",
+          "title": "Thủy điện"
+        },
+        {
+          "code": "35122",
+          "title": "Điện gió"
+        },
+        {
+          "code": "35123",
+          "title": "Điện mặt trời"
+        },
+        {
+          "code": "35124",
+          "title": "Điện sinh khối"
+        },
+        {
+          "code": "35125",
+          "title": "Sản xuất điện hydro từ nguồn năng lượng tái tạo"
+        },
+        {
+          "code": "35129",
+          "title": "Sản xuất điện từ nguồn năng lượng tái tạo khác"
+        }
+      ]
+    },
+    {
+      "code": "3513",
+      "title": "Truyền tải và phân phối điện",
+      "children_level5": [
+        {
+          "code": "35131",
+          "title": "Truyền tải điện"
+        },
+        {
+          "code": "35132",
+          "title": "Phân phối điện"
+        }
+      ]
+    },
+    {
+      "code": "3520",
+      "title": "Sản xuất khí đốt, phân phối nhiên liệu khí bằng đường ống",
+      "children_level5": [
+        {
+          "code": "35201",
+          "title": "Sản xuất khí đốt"
+        },
+        {
+          "code": "35202",
+          "title": "Phân phối nhiên liệu khí bằng đường ống"
+        }
+      ]
+    },
+    {
+      "code": "3530",
+      "title": "Sản xuất, phân phối hơi nước, nước nóng, điều hoà không khí và sản xuất nước đá",
+      "children_level5": [
+        {
+          "code": "35301",
+          "title": "Sản xuất, phân phối hơi nước, nước nóng và điều hoà không khí"
+        },
+        {
+          "code": "35302",
+          "title": "Sản xuất nước đá"
+        }
+      ]
+    },
+    {
+      "code": "3540",
+      "title": "Hoạt động trung gian hoặc đại lý điện, khí đốt",
+      "children_level5": [
+        {
+          "code": "35400",
+          "title": "Hoạt động trung gian hoặc đại lý điện, khí đốt"
+        }
+      ]
+    }
+  ]
+}

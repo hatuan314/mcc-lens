@@ -39,7 +39,7 @@ def parse_arguments() -> argparse.Namespace:
         "--chunk-size",
         "-c",
         type=int,
-        default=20,
+        default=5,
         help="Number of elements per smaller JSON file.",
     )
     return parser.parse_args()

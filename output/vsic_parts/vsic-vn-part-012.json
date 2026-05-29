@@ -1,0 +1,84 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "990",
+      "title": "Hoạt động dịch vụ hỗ trợ khai khoáng khác",
+      "children_level5": [
+        {
+          "code": "9900",
+          "title": "Hoạt động dịch vụ hỗ trợ khai khoáng khác"
+        }
+      ]
+    },
+    {
+      "code": "1010",
+      "title": "Chế biến, bảo quản thịt và các sản phẩm từ thịt",
+      "children_level5": [
+        {
+          "code": "10101",
+          "title": "Giết mổ gia súc, gia cầm"
+        },
+        {
+          "code": "10102",
+          "title": "Chế biến và bảo quản thịt"
+        },
+        {
+          "code": "10109",
+          "title": "Chế biến và bảo quản các sản phẩm từ thịt"
+        }
+      ]
+    },
+    {
+      "code": "1020",
+      "title": "Chế biến, bảo quản thủy sản và các sản phẩm từ thủy sản",
+      "children_level5": [
+        {
+          "code": "10201",
+          "title": "Chế biến và bảo quản thủy sản đông lạnh"
+        },
+        {
+          "code": "10202",
+          "title": "Chế biến và bảo quản thủy sản khô"
+        },
+        {
+          "code": "10203",
+          "title": "Chế biến và bảo quản nước mắm"
+        },
+        {
+          "code": "10209",
+          "title": "Chế biến và bảo quản các sản phẩm khác từ thủy sản"
+        }
+      ]
+    },
+    {
+      "code": "1030",
+      "title": "Chế biến và bảo quản rau quả",
+      "children_level5": [
+        {
+          "code": "10301",
+          "title": "Sản xuất nước ép từ rau quả"
+        },
+        {
+          "code": "10309",
+          "title": "Chế biến và bảo quản rau quả khác"
+        }
+      ]
+    },
+    {
+      "code": "1040",
+      "title": "Sản xuất dầu, mỡ động, thực vật",
+      "children_level5": [
+        {
+          "code": "10401",
+          "title": "Sản xuất dầu, mỡ động vật"
+        },
+        {
+          "code": "10402",
+          "title": "Sản xuất dầu, bơ thực vật"
+        }
+      ]
+    }
+  ]
+}

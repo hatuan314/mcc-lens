@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "3012",
+      "title": "Đóng thuyền, xuồng thể thao và giải trí",
+      "children_level5": [
+        {
+          "code": "30120",
+          "title": "Đóng thuyền, xuồng thể thao và giải trí"
+        }
+      ]
+    },
+    {
+      "code": "3020",
+      "title": "Sản xuất đầu máy xe lửa, xe điện, toa xe và phương tiện, thiết bị chuyên dùng trên đường ray",
+      "children_level5": [
+        {
+          "code": "30200",
+          "title": "Sản xuất đầu máy xe lửa, xe điện, toa xe và phương tiện, thiết bị chuyên dùng trên đường ray"
+        }
+      ]
+    },
+    {
+      "code": "3030",
+      "title": "Sản xuất máy bay, tàu vũ trụ và máy móc liên quan",
+      "children_level5": [
+        {
+          "code": "30300",
+          "title": "Sản xuất máy bay, tàu vũ trụ và máy móc liên quan"
+        }
+      ]
+    },
+    {
+      "code": "3040",
+      "title": "Sản xuất xe cơ giới chiến đấu dùng trong quân đội",
+      "children_level5": [
+        {
+          "code": "30400",
+          "title": "Sản xuất xe cơ giới chiến đấu dùng trong quân đội"
+        }
+      ]
+    },
+    {
+      "code": "3091",
+      "title": "Sản xuất mô tô, xe máy",
+      "children_level5": [
+        {
+          "code": "30910",
+          "title": "Sản xuất mô tô, xe máy"
+        }
+      ]
+    }
+  ]
+}

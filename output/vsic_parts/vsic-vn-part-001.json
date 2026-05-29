@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "111",
+      "title": "Trồng lúa",
+      "children_level5": [
+        {
+          "code": "1110",
+          "title": "Trồng lúa"
+        }
+      ]
+    },
+    {
+      "code": "112",
+      "title": "Trồng ngô và cây lương thực có hạt khác",
+      "children_level5": [
+        {
+          "code": "1120",
+          "title": "Trồng ngô và cây lương thực có hạt khác"
+        }
+      ]
+    },
+    {
+      "code": "113",
+      "title": "Trồng cây lấy củ có chất bột",
+      "children_level5": [
+        {
+          "code": "1130",
+          "title": "Trồng cây lấy củ có chất bột"
+        }
+      ]
+    },
+    {
+      "code": "114",
+      "title": "Trồng cây mía",
+      "children_level5": [
+        {
+          "code": "1140",
+          "title": "Trồng cây mía"
+        }
+      ]
+    },
+    {
+      "code": "115",
+      "title": "Trồng cây thuốc lá, thuốc lào",
+      "children_level5": [
+        {
+          "code": "1150",
+          "title": "Trồng cây thuốc lá, thuốc lào"
+        }
+      ]
+    }
+  ]
+}

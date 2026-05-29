@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "122",
+      "title": "Trồng cây lấy quả chứa dầu",
+      "children_level5": [
+        {
+          "code": "1220",
+          "title": "Trồng cây lấy quả chứa dầu"
+        }
+      ]
+    },
+    {
+      "code": "123",
+      "title": "Trồng cây điều",
+      "children_level5": [
+        {
+          "code": "1230",
+          "title": "Trồng cây điều"
+        }
+      ]
+    },
+    {
+      "code": "124",
+      "title": "Trồng cây hồ tiêu",
+      "children_level5": [
+        {
+          "code": "1240",
+          "title": "Trồng cây hồ tiêu"
+        }
+      ]
+    },
+    {
+      "code": "125",
+      "title": "Trồng cây cao su",
+      "children_level5": [
+        {
+          "code": "1250",
+          "title": "Trồng cây cao su"
+        }
+      ]
+    },
+    {
+      "code": "126",
+      "title": "Trồng cây cà phê",
+      "children_level5": [
+        {
+          "code": "1260",
+          "title": "Trồng cây cà phê"
+        }
+      ]
+    }
+  ]
+}

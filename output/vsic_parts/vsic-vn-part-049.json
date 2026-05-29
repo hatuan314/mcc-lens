@@ -1,0 +1,96 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "4642",
+      "title": "Bán buôn giường, tủ, bàn ghế và đồ nội thất tương tự trong gia đình, văn phòng, cửa hàng; thảm, đệm và thiết bị chiếu sáng",
+      "children_level5": [
+        {
+          "code": "46421",
+          "title": "Bán buôn giường, tủ, bàn ghế và đồ nội thất tương tự trong gia đình, văn phòng, cửa hàng"
+        },
+        {
+          "code": "46422",
+          "title": "Bán buôn thảm, đệm"
+        },
+        {
+          "code": "46423",
+          "title": "Bán buôn thiết bị chiếu sáng"
+        }
+      ]
+    },
+    {
+      "code": "4649",
+      "title": "Bán buôn đồ dùng khác cho gia đình",
+      "children_level5": [
+        {
+          "code": "46491",
+          "title": "Bán buôn vali, cặp, túi, ví, hàng da và giả da khác"
+        },
+        {
+          "code": "46492",
+          "title": "Bán buôn dược phẩm và dụng cụ y tế"
+        },
+        {
+          "code": "46493",
+          "title": "Bán buôn nước hoa, hàng mỹ phẩm và chế phẩm vệ sinh"
+        },
+        {
+          "code": "46494",
+          "title": "Bán buôn hàng gốm, sứ, thủy tinh"
+        },
+        {
+          "code": "46495",
+          "title": "Bán buôn đồ điện gia dụng"
+        },
+        {
+          "code": "46496",
+          "title": "Bán buôn giá sách, kệ và đồ nội thất tương tự"
+        },
+        {
+          "code": "46497",
+          "title": "Bán buôn sách, báo, tạp chí, văn phòng phẩm"
+        },
+        {
+          "code": "46498",
+          "title": "Bán buôn dụng cụ thể dục, thể thao"
+        },
+        {
+          "code": "46499",
+          "title": "Bán buôn đồ dùng khác cho gia đình chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "4651",
+      "title": "Bán buôn máy tính, thiết bị ngoại vi và phần mềm",
+      "children_level5": [
+        {
+          "code": "46510",
+          "title": "Bán buôn máy tính, thiết bị ngoại vi và phần mềm"
+        }
+      ]
+    },
+    {
+      "code": "4652",
+      "title": "Bán buôn thiết bị và linh kiện điện tử, viễn thông",
+      "children_level5": [
+        {
+          "code": "46520",
+          "title": "Bán buôn thiết bị và linh kiện điện tử, viễn thông"
+        }
+      ]
+    },
+    {
+      "code": "4653",
+      "title": "Bán buôn máy móc, thiết bị và phụ tùng máy nông nghiệp",
+      "children_level5": [
+        {
+          "code": "46530",
+          "title": "Bán buôn máy móc, thiết bị và phụ tùng máy nông nghiệp"
+        }
+      ]
+    }
+  ]
+}

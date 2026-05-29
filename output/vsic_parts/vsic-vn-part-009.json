@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "332",
+      "title": "Hoạt động dịch vụ hỗ trợ nuôi trồng thủy sản",
+      "children_level5": [
+        {
+          "code": "3320",
+          "title": "Hoạt động dịch vụ hỗ trợ nuôi trồng thủy sản"
+        }
+      ]
+    },
+    {
+      "code": "510",
+      "title": "Khai thác và thu gom than cứng",
+      "children_level5": [
+        {
+          "code": "5100",
+          "title": "Khai thác và thu gom than cứng"
+        }
+      ]
+    },
+    {
+      "code": "520",
+      "title": "Khai thác và thu gom than non",
+      "children_level5": [
+        {
+          "code": "5200",
+          "title": "Khai thác và thu gom than non"
+        }
+      ]
+    },
+    {
+      "code": "610",
+      "title": "Khai thác dầu thô",
+      "children_level5": [
+        {
+          "code": "6100",
+          "title": "Khai thác dầu thô"
+        }
+      ]
+    },
+    {
+      "code": "620",
+      "title": "Khai thác khí đốt tự nhiên",
+      "children_level5": [
+        {
+          "code": "6200",
+          "title": "Khai thác khí đốt tự nhiên"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2816",
+      "title": "Sản xuất các thiết bị nâng, hạ và bốc xếp",
+      "children_level5": [
+        {
+          "code": "28160",
+          "title": "Sản xuất các thiết bị nâng, hạ và bốc xếp"
+        }
+      ]
+    },
+    {
+      "code": "2817",
+      "title": "Sản xuất máy móc và thiết bị văn phòng (trừ máy tính và thiết bị ngoại vi của máy tính)",
+      "children_level5": [
+        {
+          "code": "28170",
+          "title": "Sản xuất máy móc và thiết bị văn phòng (trừ máy tính và thiết bị ngoại vi của máy tính)"
+        }
+      ]
+    },
+    {
+      "code": "2818",
+      "title": "Sản xuất dụng cụ cầm tay chạy bằng mô tơ hoặc khí nén",
+      "children_level5": [
+        {
+          "code": "28180",
+          "title": "Sản xuất dụng cụ cầm tay chạy bằng mô tơ hoặc khí nén"
+        }
+      ]
+    },
+    {
+      "code": "2819",
+      "title": "Sản xuất máy thông dụng khác",
+      "children_level5": [
+        {
+          "code": "28190",
+          "title": "Sản xuất máy thông dụng khác"
+        }
+      ]
+    },
+    {
+      "code": "2821",
+      "title": "Sản xuất máy nông nghiệp và lâm nghiệp",
+      "children_level5": [
+        {
+          "code": "28210",
+          "title": "Sản xuất máy nông nghiệp và lâm nghiệp"
+        }
+      ]
+    }
+  ]
+}

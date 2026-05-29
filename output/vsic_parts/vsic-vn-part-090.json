@@ -1,0 +1,80 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "8720",
+      "title": "Hoạt động chăm sóc sức khoẻ người khuyết tật trí tuệ, thần kinh, tâm thần và người nghiện",
+      "children_level5": [
+        {
+          "code": "87201",
+          "title": "Hoạt động chăm sóc sức khoẻ người khuyết tật trí tuệ, thần kinh, tâm thần"
+        },
+        {
+          "code": "87202",
+          "title": "Hoạt động chăm sóc sức khoẻ, cai nghiện phục hồi người nghiện"
+        }
+      ]
+    },
+    {
+      "code": "8730",
+      "title": "Hoạt động chăm sóc sức khoẻ người có công, người già và người khuyết tật không có khả năng tự chăm sóc",
+      "children_level5": [
+        {
+          "code": "87301",
+          "title": "Hoạt động chăm sóc sức khoẻ người có công (trừ thương bệnh binh)"
+        },
+        {
+          "code": "87302",
+          "title": "Hoạt động chăm sóc sức khoẻ người già"
+        },
+        {
+          "code": "87303",
+          "title": "Hoạt động chăm sóc sức khoẻ người khuyết tật"
+        }
+      ]
+    },
+    {
+      "code": "8791",
+      "title": "Hoạt động dịch vụ trung gian cho các hoạt động chăm sóc tập trung",
+      "children_level5": [
+        {
+          "code": "87910",
+          "title": "Hoạt động dịch vụ trung gian cho các hoạt động chăm sóc tập trung"
+        }
+      ]
+    },
+    {
+      "code": "8799",
+      "title": "Hoạt động chăm sóc tập trung khác chưa được phân vào đâu",
+      "children_level5": [
+        {
+          "code": "87991",
+          "title": "Hoạt động chữa bệnh, phục hồi nhân phẩm cho đối tượng mại dâm"
+        },
+        {
+          "code": "87999",
+          "title": "Hoạt động chăm sóc tập trung khác còn lại chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "8810",
+      "title": "Hoạt động trợ giúp xã hội không tập trung đối với người có công, thương bệnh binh, người già và người khuyết tật",
+      "children_level5": [
+        {
+          "code": "88101",
+          "title": "Hoạt động trợ giúp xã hội không tập trung đối với người có công (trừ thương bệnh binh)"
+        },
+        {
+          "code": "88102",
+          "title": "Hoạt động trợ giúp xã hội không tập trung đối với thương bệnh binh"
+        },
+        {
+          "code": "88103",
+          "title": "Hoạt động trợ giúp xã hội không tập trung đối với người già và người khuyết tật"
+        }
+      ]
+    }
+  ]
+}

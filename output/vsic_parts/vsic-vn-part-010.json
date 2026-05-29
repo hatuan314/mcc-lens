@@ -1,0 +1,72 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "710",
+      "title": "Khai thác quặng sắt",
+      "children_level5": [
+        {
+          "code": "7100",
+          "title": "Khai thác quặng sắt"
+        }
+      ]
+    },
+    {
+      "code": "721",
+      "title": "Khai thác quặng uranium và quặng thorium",
+      "children_level5": [
+        {
+          "code": "7210",
+          "title": "Khai thác quặng uranium và quặng thorium"
+        }
+      ]
+    },
+    {
+      "code": "729",
+      "title": "Khai thác quặng kim loại khác không chứa sắt",
+      "children_level5": [
+        {
+          "code": "7291",
+          "title": "Khai thác quặng bôxít"
+        },
+        {
+          "code": "7299",
+          "title": "Khai thác quặng kim loại khác không chứa sắt chưa được phân vào đâu"
+        }
+      ]
+    },
+    {
+      "code": "730",
+      "title": "Khai thác quặng kim loại quý hiếm",
+      "children_level5": [
+        {
+          "code": "7300",
+          "title": "Khai thác quặng kim loại quý hiếm"
+        }
+      ]
+    },
+    {
+      "code": "810",
+      "title": "Khai thác đá, cát, sỏi, đất sét",
+      "children_level5": [
+        {
+          "code": "8101",
+          "title": "Khai thác đá"
+        },
+        {
+          "code": "8102",
+          "title": "Khai thác cát"
+        },
+        {
+          "code": "8103",
+          "title": "Khai thác sỏi"
+        },
+        {
+          "code": "8104",
+          "title": "Khai thác đất sét"
+        }
+      ]
+    }
+  ]
+}

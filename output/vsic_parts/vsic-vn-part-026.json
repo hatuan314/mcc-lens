@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "2410",
+      "title": "Sản xuất sắt, thép, gang",
+      "children_level5": [
+        {
+          "code": "24100",
+          "title": "Sản xuất sắt, thép, gang"
+        }
+      ]
+    },
+    {
+      "code": "2420",
+      "title": "Sản xuất kim loại quý và kim loại màu",
+      "children_level5": [
+        {
+          "code": "24201",
+          "title": "Sản xuất kim loại quý"
+        },
+        {
+          "code": "24202",
+          "title": "Sản xuất kim loại màu"
+        }
+      ]
+    },
+    {
+      "code": "2431",
+      "title": "Đúc sắt, thép",
+      "children_level5": [
+        {
+          "code": "24310",
+          "title": "Đúc sắt, thép"
+        }
+      ]
+    },
+    {
+      "code": "2432",
+      "title": "Đúc kim loại màu",
+      "children_level5": [
+        {
+          "code": "24320",
+          "title": "Đúc kim loại màu"
+        }
+      ]
+    },
+    {
+      "code": "2511",
+      "title": "Sản xuất các cấu kiện kim loại",
+      "children_level5": [
+        {
+          "code": "25110",
+          "title": "Sản xuất các cấu kiện kim loại"
+        }
+      ]
+    }
+  ]
+}

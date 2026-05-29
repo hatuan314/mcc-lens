@@ -1,0 +1,56 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "8019",
+      "title": "Dịch vụ bảo đảm an toàn khác",
+      "children_level5": [
+        {
+          "code": "80190",
+          "title": "Dịch vụ bảo đảm an toàn khác"
+        }
+      ]
+    },
+    {
+      "code": "8110",
+      "title": "Dịch vụ hỗ trợ tổng hợp",
+      "children_level5": [
+        {
+          "code": "81100",
+          "title": "Dịch vụ hỗ trợ tổng hợp"
+        }
+      ]
+    },
+    {
+      "code": "8121",
+      "title": "Vệ sinh chung nhà cửa",
+      "children_level5": [
+        {
+          "code": "81210",
+          "title": "Vệ sinh chung nhà cửa"
+        }
+      ]
+    },
+    {
+      "code": "8129",
+      "title": "Dịch vụ vệ sinh khác",
+      "children_level5": [
+        {
+          "code": "81290",
+          "title": "Dịch vụ vệ sinh khác"
+        }
+      ]
+    },
+    {
+      "code": "8130",
+      "title": "Dịch vụ cảnh quan",
+      "children_level5": [
+        {
+          "code": "81300",
+          "title": "Dịch vụ cảnh quan"
+        }
+      ]
+    }
+  ]
+}

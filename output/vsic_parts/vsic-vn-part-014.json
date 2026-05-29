@@ -1,0 +1,64 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1073",
+      "title": "Sản xuất ca cao, sôcôla và bánh kẹo",
+      "children_level5": [
+        {
+          "code": "10730",
+          "title": "Sản xuất ca cao, sôcôla và bánh kẹo"
+        }
+      ]
+    },
+    {
+      "code": "1074",
+      "title": "Sản xuất mì ống, mỳ sợi và sản phẩm tương tự",
+      "children_level5": [
+        {
+          "code": "10740",
+          "title": "Sản xuất mì ống, mỳ sợi và sản phẩm tương tự"
+        }
+      ]
+    },
+    {
+      "code": "1075",
+      "title": "Sản xuất món ăn, thức ăn chế biến sẵn",
+      "children_level5": [
+        {
+          "code": "10751",
+          "title": "Sản xuất món ăn, thức ăn chế biến sẵn từ thịt"
+        },
+        {
+          "code": "10752",
+          "title": "Sản xuất món ăn, thức ăn chế biến sẵn từ thủy sản"
+        },
+        {
+          "code": "10759",
+          "title": "Sản xuất món ăn, thức ăn chế biến sẵn khác"
+        }
+      ]
+    },
+    {
+      "code": "1076",
+      "title": "Sản xuất chè",
+      "children_level5": [
+        {
+          "code": "10760",
+          "title": "Sản xuất chè"
+        }
+      ]
+    },
+    {
+      "code": "1077",
+      "title": "Sản xuất cà phê",
+      "children_level5": [
+        {
+          "code": "10770",
+          "title": "Sản xuất cà phê"
+        }
+      ]
+    }
+  ]
+}

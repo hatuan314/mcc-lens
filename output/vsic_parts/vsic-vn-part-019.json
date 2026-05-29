@@ -1,0 +1,60 @@
+{
+  "source": "assets/vsic-vn/vsic-2025.xlsx",
+  "total_vsic_count": 5,
+  "vsic_list": [
+    {
+      "code": "1512",
+      "title": "Sản xuất vali, túi xách và các loại tương tự, sản xuất yên đệm",
+      "children_level5": [
+        {
+          "code": "15120",
+          "title": "Sản xuất vali, túi xách và các loại tương tự, sản xuất yên đệm"
+        }
+      ]
+    },
+    {
+      "code": "1520",
+      "title": "Sản xuất giày, dép",
+      "children_level5": [
+        {
+          "code": "15200",
+          "title": "Sản xuất giày, dép"
+        }
+      ]
+    },
+    {
+      "code": "1610",
+      "title": "Cưa, xẻ, bào gỗ và bảo quản gỗ",
+      "children_level5": [
+        {
+          "code": "16101",
+          "title": "Cưa, xẻ và bào gỗ"
+        },
+        {
+          "code": "16102",
+          "title": "Bảo quản gỗ"
+        }
+      ]
+    },
+    {
+      "code": "1621",
+      "title": "Sản xuất gỗ dán, gỗ lạng, ván ép và ván mỏng khác",
+      "children_level5": [
+        {
+          "code": "16210",
+          "title": "Sản xuất gỗ dán, gỗ lạng, ván ép và ván mỏng khác"
+        }
+      ]
+    },
+    {
+      "code": "1622",
+      "title": "Sản xuất đồ gỗ xây dựng",
+      "children_level5": [
+        {
+          "code": "16220",
+          "title": "Sản xuất đồ gỗ xây dựng"
+        }
+      ]
+    }
+  ]
+}
