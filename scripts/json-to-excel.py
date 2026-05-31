@@ -3,7 +3,9 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-INPUT_PATH = "output/vsicvn-mcc-mapping-detail.json"
+INPUT_PATH  = "output/vsicvn-mcc-mapping-detail.json"
+VSIC_PATH   = "output/vsic-vn.json"
+MCC_PATH    = "output/mcc-visa.json"
 OUTPUT_PATH = "output/vsicvn-mcc-mapping.xlsx"
 
 # ── Colors ──────────────────────────────────────────────────────────────────
@@ -73,7 +75,7 @@ def build_workbook(data):
 
     # ── Data rows ────────────────────────────────────────────────────────────
     mappings = data["mappings"]
-    for vsic_idx, mapping in enumerate(mappings):
+    for mapping in mappings:
         vsic_code = mapping["vsic_code"]
         vsic_name = mapping["vsic_name"]
         candidates = mapping["mcc_candidates"]
@@ -127,9 +129,53 @@ def build_workbook(data):
     return wb
 
 
+def normalize_mapping(mapping: dict) -> dict:
+    """Normalize legacy format (vsic_title/suggested_mcc) to standard format."""
+    if "vsic_name" in mapping:
+        return mapping
+    candidates = []
+    for cand in mapping.get("suggested_mcc", []):
+        candidates.append({
+            "rank": cand.get("rank", 0),
+            "mcc_code": cand.get("mcc_code", ""),
+            "mcc_name": cand.get("mcc_description", ""),
+            "score": 0.0,
+            "comment": cand.get("reason", ""),
+        })
+    return {
+        "vsic_code": mapping.get("vsic_code", ""),
+        "vsic_name": mapping.get("vsic_title", ""),
+        "mcc_candidates": candidates,
+    }
+
+
+def load_vsic_lookup() -> dict:
+    with open(VSIC_PATH, encoding="utf-8") as f:
+        vsic_data = json.load(f)
+    return {item["code"]: item["title"] for item in vsic_data["vsic_list"]}
+
+
+def load_mcc_lookup() -> dict:
+    with open(MCC_PATH, encoding="utf-8") as f:
+        mcc_data = json.load(f)
+    return {item["mcc"]: item["title"] for item in mcc_data["mcc_list"]}
+
+
 def main():
     with open(INPUT_PATH, encoding="utf-8") as f:
         data = json.load(f)
+
+    vsic_lookup = load_vsic_lookup()
+    mcc_lookup = load_mcc_lookup()
+    data["mappings"] = [normalize_mapping(m) for m in data["mappings"]]
+    for m in data["mappings"]:
+        title = vsic_lookup.get(m["vsic_code"])
+        if title:
+            m["vsic_name"] = title
+        for cand in m.get("mcc_candidates", []):
+            mcc_title = mcc_lookup.get(cand["mcc_code"])
+            if mcc_title:
+                cand["mcc_name"] = mcc_title
 
     wb = build_workbook(data)
     wb.save(OUTPUT_PATH)

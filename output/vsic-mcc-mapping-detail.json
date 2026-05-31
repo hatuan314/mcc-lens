@@ -1,7 +1,5 @@
 {
   "description": "Kết quả mapping chi tiết từ VSIC sang các mã MCC đề cử xếp hạng 1, 2, 3",
-  "source_file": "output/vsic-mcc-mapping-detail.xlsx",
-  "sheet_name": "Mapping Result",
   "total_records": 743,
   "mappings": [
     {

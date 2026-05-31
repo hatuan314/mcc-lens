@@ -4,7 +4,8 @@
       "Bash(npx ai-devkit@latest memory search --query \"convert mcc image to json feature requirements batch processing\")",
       "Bash(npx ai-devkit@latest *)",
       "Bash(python3 *)",
-      "Bash(rtk ls *)"
+      "Bash(rtk ls *)",
+      "Bash(rtk pip *)"
     ]
   }
 }
