@@ -1,89 +1,69 @@
-"""Use case for mapping VSIC codes to MCC codes using 2-stage retrieval."""
+"""Use case for mapping VSIC codes to MCC codes using 2-stage retrieval.
+
+Consumer-only: embeddings are read from a pre-built artifact (produced by the
+`embed` command); this use case never embeds anything. Stage 1 is a cosine
+top-K pre-filter over the artifact's MCC matrix; Stage 2 is LLM re-ranking.
+"""
 
 import json
-import re
-import time as _time
-from typing import Generator
+from typing import Generator, Optional
 
 import numpy as np
 from loguru import logger
-from tqdm import tqdm
 
-# #region agent log helpers
-import os as _os
-_DEBUG_LOG = _os.path.join(
-    "/content/drive/MyDrive/projects/mcc-lens"
-    if _os.path.isdir("/content/drive/MyDrive/projects/mcc-lens")
-    else _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))),
-    ".cursor", "debug-c603c2.log"
-)
-
-def _dblog(msg: str, data: dict, hypothesis: str) -> None:
-    _os.makedirs(_os.path.dirname(_DEBUG_LOG), exist_ok=True)
-    entry = json.dumps({"sessionId": "c603c2", "timestamp": int(_time.time() * 1000), "location": "map_vsic_to_mcc_use_case.py", "message": msg, "data": data, "hypothesisId": hypothesis})
-    with open(_DEBUG_LOG, "a") as _f:
-        _f.write(entry + "\n")
-# #endregion
-
+from app.models.embedding_artifact import EmbeddingArtifact
 from app.models.mapping_entry import MappingEntry, RankedMcc
+from app.services.embed_text_builder import strip_html
 from app.services.llm_prompts import SYSTEM_PROMPT, build_user_prompt
 from app.services.mcc_code_validator import MccCodeValidator
-from app.services.protocols import (
-    EmbeddingClient,
-    LLMClient,
-    MappingCheckpointRepository,
-)
+from app.services.protocols import LLMClient, MappingCheckpointRepository
 
 
 class MapVsicToMccUseCase:
     """
     Orchestrates the 2-stage mapping pipeline:
-    1. Embedding pre-filter to get top-K MCC candidates
+    1. Cosine pre-filter (over artifact MCC vectors) to get top-K candidates
     2. LLM re-ranking to select top-3 with explanations
     """
 
     LOW_SCORE_THRESHOLD = 0.5
 
-    @staticmethod
-    def _strip_html(text: str) -> str:
-        """Remove HTML tags from text. Returns empty string if input is None/empty."""
-        if not text:
-            return ""
-        return re.sub(r"<[^>]+>", "", text).strip()
-
     def __init__(
         self,
-        embedding_client: EmbeddingClient,
         llm_client: LLMClient,
         checkpoint_repo: MappingCheckpointRepository,
-        vsic_entries: list[dict],
-        mcc_entries: list[dict],
+        artifact: EmbeddingArtifact,
         validator: MccCodeValidator,
     ) -> None:
-        """Initialize use case with dependencies."""
-        self.embedding_client = embedding_client
+        """Initialize use case with dependencies.
+
+        Args:
+            llm_client: LLM client for re-ranking.
+            checkpoint_repo: Checkpoint repository for resume support.
+            artifact: Pre-built embedding artifact (sole source of vectors + text).
+            validator: MCC code validator.
+        """
         self.llm_client = llm_client
         self.checkpoint_repo = checkpoint_repo
-        self.vsic_entries = vsic_entries
-        self.mcc_entries = mcc_entries
+        self.artifact = artifact
         self.validator = validator
 
     def execute(
-        self, top_k: int = 15, resume: bool = False
+        self, top_k: int = 15, resume: bool = False, limit: Optional[int] = None
     ) -> Generator[MappingEntry, None, None]:
         """
-        Execute the mapping pipeline for all VSIC entries.
+        Execute the mapping pipeline for all VSIC entries in the artifact.
 
         Args:
             top_k: Number of top MCC candidates to send to LLM.
             resume: Whether to resume from checkpoint.
+            limit: Process only the first ``limit`` VSIC entries (None = all).
 
         Yields:
             MappingEntry for each processed VSIC.
         """
         logger.info(f"Starting mapping pipeline with top_k={top_k}, resume={resume}")
 
-        # Load checkpoint if resuming
         completed = {}
         if resume:
             completed = self.checkpoint_repo.load()
@@ -91,69 +71,33 @@ class MapVsicToMccUseCase:
                 f"Resuming from checkpoint with {len(completed)} completed entries"
             )
 
-        # Precompute MCC embeddings with batching and progress bar
-        logger.info("Precomputing MCC embeddings...")
-        mcc_texts = []
-        for mcc in self.mcc_entries:
-            title = self._strip_html(mcc["title"])
-            description = self._strip_html(mcc.get("description") or "")
-            text = f"{title} — {description[:500]}"
-            mcc_texts.append(text)
+        # Warn once about zero-vector entries recorded by the producer.
+        zero_codes = self.artifact.meta.get("zero_vector_codes", {})
+        if zero_codes.get("mcc") or zero_codes.get("vsic"):
+            logger.warning(
+                f"Artifact has zero-vector embeddings (rank low): "
+                f"MCC {zero_codes.get('mcc', [])}, VSIC {zero_codes.get('vsic', [])}"
+            )
 
-        # Use batch_size=1 to avoid Ollama NaN (status 500) errors.
-        # bge-m3 via Ollama produces NaN embeddings when the total token count
-        # across a batch exceeds its internal limit, which is unpredictable
-        # with variable-length MCC descriptions (100-560 chars). Processing
-        # one text at a time is the only reliable workaround.
-        batch_size = 1
-        mcc_embeddings = []
-
-        embedding_dim: int = 0
-        with tqdm(total=len(mcc_texts), desc="Computing MCC embeddings") as pbar:
-            for i in range(0, len(mcc_texts), batch_size):
-                batch = mcc_texts[i : i + batch_size]
-                # #region agent log H-B/H-C: scan batch for suspicious entries before embed
-                suspicious = [{"global_idx": i+j, "mcc_raw": self.mcc_entries[i+j], "text": t, "text_len": len(t)} for j, t in enumerate(batch) if not t.strip() or len(t) > 400]
-                if suspicious:
-                    _dblog("mcc_batch_suspicious_entries", {"batch_start": i, "suspicious": suspicious}, "H-B/H-C")
-                # #endregion
-                try:
-                    batch_embeddings = self.embedding_client.embed(batch)
-                    if embedding_dim == 0 and batch_embeddings:
-                        embedding_dim = len(batch_embeddings[0])
-                    mcc_embeddings.extend(batch_embeddings)
-                except RuntimeError as emb_err:
-                    # #region agent log H-F: log skip on unrecoverable embed error
-                    _dblog("mcc_embed_skipped", {
-                        "batch_start": i,
-                        "batch": [{"idx": i+j, "text": t[:120]} for j, t in enumerate(batch)],
-                        "error": str(emb_err),
-                    }, "H-F")
-                    # #endregion
-                    logger.warning(
-                        f"MCC embedding failed for batch at index {i} "
-                        f"after all retries — skipping with zero vector. "
-                        f"Error: {emb_err}"
-                    )
-                    dim = embedding_dim if embedding_dim > 0 else 1024
-                    mcc_embeddings.extend(
-                        [[0.0] * dim for _ in batch]
-                    )
-                pbar.update(len(batch))
-
-        logger.info(f"Computed embeddings for {len(mcc_embeddings)} MCC entries")
-
-        # Precompute normalized MCC matrix for vectorized cosine similarity
-        self._mcc_matrix = np.array(mcc_embeddings)
+        # Precomputed normalized MCC matrix for vectorized cosine similarity.
+        self._mcc_matrix = np.asarray(self.artifact.mcc_vectors)
         self._mcc_norms = np.linalg.norm(self._mcc_matrix, axis=1)
         self._mcc_norms[self._mcc_norms == 0] = 1.0  # Avoid division by zero
 
-        # Process each VSIC
-        for vsic in self.vsic_entries:
-            vsic_code = vsic["code"]
-            vsic_title = vsic["title"]
+        n_mcc = len(self.artifact.mcc_codes)
 
-            # Skip if already completed
+        # Iterate over VSIC entries from the artifact; --limit slices the loop.
+        vsic_iter = list(
+            zip(
+                self.artifact.vsic_codes,
+                self.artifact.vsic_titles,
+                self.artifact.vsic_vectors,
+            )
+        )
+        if limit is not None:
+            vsic_iter = vsic_iter[:limit]
+
+        for vsic_code, vsic_title, vsic_vector in vsic_iter:
             if vsic_code in completed:
                 logger.debug(f"Skipping VSIC {vsic_code} (already completed)")
                 result_data = completed[vsic_code]
@@ -165,81 +109,85 @@ class MapVsicToMccUseCase:
                 )
                 continue
 
-            # Embed VSIC title
-            vsic_embedding = self.embedding_client.embed([vsic_title])[0]
-
-            # Compute cosine similarity with all MCC (vectorized)
-            vsic_arr = np.array(vsic_embedding)
+            # Cosine similarity with all MCC (vectorized) — no embedding call.
+            vsic_arr = np.asarray(vsic_vector)
             vsic_norm = float(np.linalg.norm(vsic_arr))
             if vsic_norm == 0:
                 vsic_norm = 1.0
 
-            # Dot product with normalized MCC matrix
             sim_scores = self._mcc_matrix @ vsic_arr / (self._mcc_norms * vsic_norm)
             similarities = [(float(sim), i) for i, sim in enumerate(sim_scores)]
-
-            # Get top-K candidates
             similarities.sort(reverse=True, key=lambda x: x[0])
-            top_k_similarities = similarities[:top_k]
 
-            # Adaptive Top-K Escalation: double top_k and retry if LLM returns
-            # empty or its top-1 score is low (hard cases need more candidates)
-            current_top_k = top_k
-            ranked_results: list = []
-            while True:
-                top_k_slice = similarities[:current_top_k]
-                score_map = {idx: sim for sim, idx in top_k_slice}
-                candidate_indices = [idx for _, idx in top_k_slice]
+            ranked_results = self._rerank_with_escalation(
+                vsic_code, vsic_title, similarities, top_k, n_mcc
+            )
 
-                candidates = []
-                for idx in candidate_indices:
-                    mcc = self.mcc_entries[idx]
-                    candidates.append(
-                        {
-                            "mcc": mcc["mcc"],
-                            "title": self._strip_html(mcc["title"]),
-                            "description": self._strip_html(
-                                mcc.get("description") or ""
-                            ),
-                            "score": score_map[idx],
-                        }
-                    )
-
-                user_prompt = build_user_prompt(vsic_title, candidates)
-                llm_response = self.llm_client.chat(SYSTEM_PROMPT, user_prompt)
-                ranked_results = self._parse_llm_response(llm_response, candidates)
-
-                top1_llm_score = ranked_results[0].score if ranked_results else 0.0
-                needs_escalation = (
-                    not ranked_results or top1_llm_score < self.LOW_SCORE_THRESHOLD
-                )
-                next_top_k = current_top_k * 2
-                max_allowed_top_k = len(self.mcc_entries)
-
-                if needs_escalation and current_top_k < max_allowed_top_k:
-                    current_top_k = min(next_top_k, max_allowed_top_k)
-                    logger.info(
-                        f"VSIC '{vsic_code}': escalating top_k "
-                        f"to {current_top_k} "
-                        f"(empty={not ranked_results}, score={top1_llm_score:.2f})"
-                    )
-                else:
-                    break
-
-            # Build mapping entry
             entry = MappingEntry(
                 vsic_code=vsic_code,
                 vsic_title=vsic_title,
                 top_results=ranked_results,
             )
 
-            # Save checkpoint
             checkpoint_data = {"top_results": [r.model_dump() for r in ranked_results]}
             self.checkpoint_repo.save(vsic_code, checkpoint_data)
 
             yield entry
 
         logger.info("Mapping pipeline completed")
+
+    def _rerank_with_escalation(
+        self,
+        vsic_code: str,
+        vsic_title: str,
+        similarities: list,
+        top_k: int,
+        n_mcc: int,
+    ) -> list:
+        """LLM re-rank with adaptive top-K escalation.
+
+        Doubles top_k and retries if the LLM returns empty or a low top-1 score
+        (hard cases need more candidates).
+        """
+        current_top_k = top_k
+        ranked_results: list = []
+        while True:
+            top_k_slice = similarities[:current_top_k]
+            score_map = {idx: sim for sim, idx in top_k_slice}
+            candidate_indices = [idx for _, idx in top_k_slice]
+
+            candidates = []
+            for idx in candidate_indices:
+                candidates.append(
+                    {
+                        "mcc": self.artifact.mcc_codes[idx],
+                        "title": strip_html(self.artifact.mcc_titles[idx]),
+                        "description": strip_html(
+                            self.artifact.mcc_descriptions[idx] or ""
+                        ),
+                        "score": score_map[idx],
+                    }
+                )
+
+            user_prompt = build_user_prompt(vsic_title, candidates)
+            llm_response = self.llm_client.chat(SYSTEM_PROMPT, user_prompt)
+            ranked_results = self._parse_llm_response(llm_response, candidates)
+
+            top1_llm_score = ranked_results[0].score if ranked_results else 0.0
+            needs_escalation = (
+                not ranked_results or top1_llm_score < self.LOW_SCORE_THRESHOLD
+            )
+
+            if needs_escalation and current_top_k < n_mcc:
+                current_top_k = min(current_top_k * 2, n_mcc)
+                logger.info(
+                    f"VSIC '{vsic_code}': escalating top_k to {current_top_k} "
+                    f"(empty={not ranked_results}, score={top1_llm_score:.2f})"
+                )
+            else:
+                break
+
+        return ranked_results
 
     def _parse_llm_response(
         self, response: str, candidates: list[dict]
@@ -304,7 +252,7 @@ class MapVsicToMccUseCase:
                                     f"MCC {mcc_code}, "
                                     "fallback to cosine score"
                                 )
-                        
+
                         ranked_results.append(
                             RankedMcc(
                                 mcc_code=valid_mcc,

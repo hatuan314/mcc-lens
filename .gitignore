@@ -212,7 +212,11 @@ assets/
 # Pipeline output & OCR cache
 out/
 output/*.xlsx
+output/*.npz
 output/~$*
 
 # Excel lock files
 ~$*.xlsx
+
+# Git worktrees
+.worktrees/

@@ -1,6 +1,10 @@
-"""Controller for VSIC-to-MCC mapping CLI command."""
+"""Controller for VSIC-to-MCC mapping CLI command (consumer-only).
 
-import json
+Embeddings come from a pre-built `.npz` artifact (produced by `embed`); this
+controller never constructs an embedding client. The LLM re-rank provider stays
+dual (ollama | wokushop).
+"""
+
 from pathlib import Path
 from typing import Optional
 
@@ -8,15 +12,16 @@ from loguru import logger
 from tqdm import tqdm
 
 from app.repositories.detail_mapping_xlsx_repository import DetailMappingXlsxRepository
+from app.repositories.embedding_artifact_repository import EmbeddingArtifactRepository
 from app.repositories.mapping_checkpoint_repository import (
     MappingCheckpointRepository as MappingCheckpointRepositoryImpl,
 )
-from app.repositories.ollama_embedding_client import OllamaEmbeddingClient
 from app.repositories.ollama_llm_client import OllamaLLMClient
+from app.repositories.wokushop_llm_client import WokuShopLLMClient
 from app.repositories.simple_mapping_xlsx_repository import SimpleMappingXlsxRepository
 from app.services.map_vsic_to_mcc_use_case import MapVsicToMccUseCase
 from app.services.mcc_code_validator import MccCodeValidator
-from app.services.ollama_health_check import check_ollama_models
+from app.services.ollama_health_check import check_ollama_llm
 
 DEFAULT_TOP_K = 60
 
@@ -28,27 +33,35 @@ class MappingController:
         self,
         ollama_host: str = "http://localhost:11434",
         llm_model: str = "qwen3.5:9b",
-        embedding_model: str = "bge-m3",
         template_path: Optional[Path] = None,
+        llm_provider: str = "ollama",
+        wokushop_api_key: Optional[str] = None,
+        wokushop_base_url: str = "https://llm.wokushop.com/v1",
+        wokushop_model: str = "gpt-4o",
     ) -> None:
         """
-        Initialize controller with Ollama configuration.
+        Initialize controller with LLM provider configuration.
 
         Args:
-            ollama_host: Ollama server URL.
-            llm_model: LLM model name.
-            embedding_model: Embedding model name.
+            ollama_host: Ollama server URL (for the Ollama LLM provider).
+            llm_model: LLM model name for the Ollama provider.
             template_path: Path to Excel template for detailed output.
+            llm_provider: LLM provider name ("ollama" or "wokushop").
+            wokushop_api_key: WokuShop API key.
+            wokushop_base_url: WokuShop API base URL.
+            wokushop_model: WokuShop LLM model name.
         """
         self.ollama_host = ollama_host
         self.llm_model = llm_model
-        self.embedding_model = embedding_model
         self.template_path = template_path
+        self.llm_provider = llm_provider
+        self.wokushop_api_key = wokushop_api_key
+        self.wokushop_base_url = wokushop_base_url
+        self.wokushop_model = wokushop_model
 
     def execute(
         self,
-        vsic_input: Path,
-        mcc_input: Path,
+        embeddings: Path,
         output: Path,
         output_detail: Path,
         top_k: int = DEFAULT_TOP_K,
@@ -60,8 +73,7 @@ class MappingController:
         Execute the mapping pipeline.
 
         Args:
-            vsic_input: Path to VSIC JSON input.
-            mcc_input: Path to MCC JSON input.
+            embeddings: Path to the embedding artifact (.npz).
             output: Path to simple Excel output.
             output_detail: Path to detailed Excel output.
             top_k: Number of top-K candidates for LLM.
@@ -70,12 +82,12 @@ class MappingController:
             gdrive_output_dir: Base directory on Google Drive for all outputs.
 
         Returns:
-            Exit code (0 = success, 1 = file not found, 2 = Ollama error, 3 = IO error).
+            Exit code (0 = success, 1 = artifact not found, 2 = LLM/Ollama error,
+            3 = IO error, 4 = invalid artifact).
         """
         try:
             # Override paths if gdrive_output_dir is provided
             if gdrive_output_dir:
-                # Check if it looks like a Colab Drive path and verify mount
                 if str(gdrive_output_dir).startswith("/content/drive"):
                     if not Path("/content/drive/MyDrive").exists():
                         logger.warning(
@@ -87,44 +99,43 @@ class MappingController:
                 output = gdrive_output_dir / "vsic-mcc-mapping.xlsx"
                 output_detail = gdrive_output_dir / "vsic-mcc-mapping-detail.xlsx"
                 checkpoint_path = gdrive_output_dir / ".mapping-progress.json"
+                if not embeddings.exists():
+                    embeddings = gdrive_output_dir / "embed-artifact.npz"
                 logger.info(f"Using Google Drive output directory: {gdrive_output_dir}")
             else:
                 checkpoint_path = output.parent / ".mapping-progress.json"
 
-            # Check input files
-            if not vsic_input.exists():
-                logger.error(f"VSIC input file not found: {vsic_input}")
-                return 1
-            if not mcc_input.exists():
-                logger.error(f"MCC input file not found: {mcc_input}")
-                return 1
-
-            # Health check Ollama
+            # Load the embedding artifact (sole source of vectors + text).
             try:
-                check_ollama_models(
-                    self.ollama_host, self.llm_model, self.embedding_model
-                )
-            except RuntimeError as e:
-                logger.error(f"Ollama health check failed: {e}")
-                return 2
-
-            # Load input data
-            with open(vsic_input, "r", encoding="utf-8") as f:
-                vsic_data = json.load(f)
-                vsic_entries = vsic_data.get("vsic_list", [])
-
-            with open(mcc_input, "r", encoding="utf-8") as f:
-                mcc_data = json.load(f)
-                mcc_entries = mcc_data.get("mcc_list", [])
+                artifact = EmbeddingArtifactRepository().read(embeddings)
+            except FileNotFoundError as e:
+                logger.error(f"Embedding artifact not found: {e}")
+                return 1
+            except ValueError as e:
+                logger.error(f"Invalid embedding artifact: {e}")
+                return 4
 
             logger.info(
-                f"Loaded {len(vsic_entries)} VSIC entries and "
-                f"{len(mcc_entries)} MCC entries"
+                f"Loaded artifact: {len(artifact.mcc_codes)} MCC, "
+                f"{len(artifact.vsic_codes)} VSIC entries"
             )
 
-            if limit is not None:
-                vsic_entries = vsic_entries[:limit]
-                logger.info(f"Limited processing to first {limit} entries")
+            # Health check (LLM only — embeddings come from the artifact).
+            try:
+                if self.llm_provider == "wokushop":
+                    wokushop_client = WokuShopLLMClient(
+                        api_key=self.wokushop_api_key,
+                        base_url=self.wokushop_base_url,
+                        model=self.wokushop_model,
+                    )
+                    if not wokushop_client.health_check():
+                        logger.error("WokuShop LLM health check failed")
+                        return 2
+                else:
+                    check_ollama_llm(self.ollama_host, self.llm_model)
+            except RuntimeError as e:
+                logger.error(f"Health check failed: {e}")
+                return 2
 
             # Clamp top-k to reasonable range
             max_top_k = 100
@@ -136,23 +147,27 @@ class MappingController:
                 )
                 top_k = max_top_k
 
-            # Initialize dependencies
-            embedding_client = OllamaEmbeddingClient(
-                self.ollama_host, self.embedding_model
-            )
-            llm_client = OllamaLLMClient(self.ollama_host, self.llm_model)
+            # Initialize LLM client
+            if self.llm_provider == "wokushop":
+                logger.info(
+                    f"Using WokuShop LLM provider with model: {self.wokushop_model}"
+                )
+                llm_client = WokuShopLLMClient(
+                    api_key=self.wokushop_api_key,
+                    base_url=self.wokushop_base_url,
+                    model=self.wokushop_model,
+                )
+            else:
+                logger.info(f"Using Ollama LLM provider with model: {self.llm_model}")
+                llm_client = OllamaLLMClient(self.ollama_host, self.llm_model)
 
             checkpoint_repo = MappingCheckpointRepositoryImpl(checkpoint_path)
-
-            valid_mcc_codes = [mcc["mcc"] for mcc in mcc_entries]
-            validator = MccCodeValidator(valid_mcc_codes)
+            validator = MccCodeValidator(list(artifact.mcc_codes))
 
             use_case = MapVsicToMccUseCase(
-                embedding_client=embedding_client,
                 llm_client=llm_client,
                 checkpoint_repo=checkpoint_repo,
-                vsic_entries=vsic_entries,
-                mcc_entries=mcc_entries,
+                artifact=artifact,
                 validator=validator,
             )
 
@@ -163,14 +178,18 @@ class MappingController:
                 logger.warning("No template path provided, skipping detailed output")
                 detail_repo = None
 
-            # Execute use case with progress bar
+            total = (
+                len(artifact.vsic_codes)
+                if limit is None
+                else min(limit, len(artifact.vsic_codes))
+            )
+
             entries = []
-            with tqdm(total=len(vsic_entries), desc="Mapping VSIC to MCC") as pbar:
-                for entry in use_case.execute(top_k=top_k, resume=resume):
+            with tqdm(total=total, desc="Mapping VSIC to MCC") as pbar:
+                for entry in use_case.execute(top_k=top_k, resume=resume, limit=limit):
                     entries.append(entry)
                     pbar.update(1)
 
-            # Write outputs
             simple_repo.write(entries, output)
             logger.info(f"Wrote simple mapping to {output}")
 

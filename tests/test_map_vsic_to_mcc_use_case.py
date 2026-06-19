@@ -1,23 +1,27 @@
 """Unit tests for MapVsicToMccUseCase."""
 
 import json
-from typing import Dict, List
+from typing import Dict
 
+import numpy as np
 
+from app.models.embedding_artifact import EmbeddingArtifact
 from app.services.map_vsic_to_mcc_use_case import MapVsicToMccUseCase
 from app.services.mcc_code_validator import MccCodeValidator
+
+_DIM = 8
+
+
+def _unit_vectors(n: int) -> np.ndarray:
+    """n identical unit vectors → cosine = 1.0 for all (no escalation)."""
+    if n == 0:
+        return np.zeros((0, _DIM), dtype=np.float32)
+    return np.array([[1.0] + [0.0] * (_DIM - 1) for _ in range(n)], dtype=np.float32)
 
 
 # ---------------------------------------------------------------------------
 # Fake clients
 # ---------------------------------------------------------------------------
-
-
-class FakeEmbeddingClient:
-    """Returns the same unit vector for all texts → cosine = 1.0 (no escalation)."""
-
-    def embed(self, texts: List[str]) -> List[List[float]]:
-        return [[1.0] + [0.0] * 7 for _ in texts]
 
 
 class FakeLLMClient:
@@ -83,6 +87,20 @@ VALID_LLM_RESPONSE = json.dumps(
 )
 
 
+def _make_artifact(vsic_entries: list, mcc_entries: list) -> EmbeddingArtifact:
+    """Build an in-memory artifact with identical unit vectors."""
+    return EmbeddingArtifact(
+        mcc_vectors=_unit_vectors(len(mcc_entries)),
+        mcc_codes=[m["mcc"] for m in mcc_entries],
+        mcc_titles=[m["title"] for m in mcc_entries],
+        mcc_descriptions=[m.get("description") or "" for m in mcc_entries],
+        vsic_vectors=_unit_vectors(len(vsic_entries)),
+        vsic_codes=[v["code"] for v in vsic_entries],
+        vsic_titles=[v["title"] for v in vsic_entries],
+        meta={"dim": _DIM, "zero_vector_codes": {"mcc": [], "vsic": []}},
+    )
+
+
 def _make_use_case(
     llm_response: str = VALID_LLM_RESPONSE,
     checkpoint_data: Dict = None,
@@ -91,13 +109,14 @@ def _make_use_case(
 ) -> tuple:
     checkpoint_repo = FakeCheckpointRepo(checkpoint_data or {})
     llm_client = FakeLLMClient(llm_response)
-    validator = MccCodeValidator(VALID_MCC_CODES)
+    mcc_entries = MCC_ENTRIES if mcc_entries is None else mcc_entries
+    vsic_entries = VSIC_ENTRIES if vsic_entries is None else vsic_entries
+    validator = MccCodeValidator([m["mcc"] for m in mcc_entries])
+    artifact = _make_artifact(vsic_entries, mcc_entries)
     use_case = MapVsicToMccUseCase(
-        embedding_client=FakeEmbeddingClient(),
         llm_client=llm_client,
         checkpoint_repo=checkpoint_repo,
-        vsic_entries=VSIC_ENTRIES if vsic_entries is None else vsic_entries,
-        mcc_entries=MCC_ENTRIES if mcc_entries is None else mcc_entries,
+        artifact=artifact,
         validator=validator,
     )
     return use_case, llm_client, checkpoint_repo
