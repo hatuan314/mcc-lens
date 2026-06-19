@@ -2,96 +2,67 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Purpose
+# Principle: CLAUDE.md must be short and prunable — only what Claude cannot infer from code
 
-MCC Lens là dự án Python dùng để chuyển đổi dữ liệu mã ngành (VSIC ↔ MCC). Nguồn dữ liệu MCC gốc là ảnh scan do VISA phát hành (`assets/mcc-visa/`), cần được OCR/parse thành JSON có cấu trúc trước khi dùng cho các pipeline mapping downstream.
+# MCC Lens — Python CLI
+
+VSIC → MCC mapping toolkit. Converts Visa MCC reference images (OCR) and VSIC Excel into JSON, then maps Vietnamese VSIC industry codes to Visa MCC codes via a 2-stage embedding + LLM pipeline.
 
 ## Commands
-
-All shell commands must use `python3` (not `python`) per project convention.
-
 ```bash
-# Setup
-python3 -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-
-# Run app entrypoint
-python3 main.py
-
-# Tests — pytest.ini auto-enables coverage (term-missing + html) on app/
-pytest                                   # full suite
-pytest tests/test_config.py              # single file
-pytest tests/test_models.py::TestClass::test_fn  # single test
-pytest -k "pattern"                      # by name
-
-# Code quality
-black app/        # format (line-length 88, configured in pyproject.toml)
-flake8 app/       # lint (extend-ignore E203, W503)
-mypy app/         # type check (python_version = 3.8, ignore_missing_imports)
+python3 -m venv venv && source venv/bin/activate   # setup
+pip install -r requirements.txt                    # install deps
+python3 main.py <command>                           # run a CLI subcommand
+pytest                                              # run all tests (config in pytest.ini)
+black app/                                           # format (line-length 88)
+flake8 app/                                          # lint (.flake8)
+mypy app/                                            # type-check (py3.9, ignore_missing_imports)
 ```
 
-Always update `requirements.txt` when importing a new third-party library.
+CLI subcommands (argparse, dispatched in `main.py`): `convert-mcc`, `convert-vsic`, `convert-vsic-2025`, `embed`, `map-vsic-mcc`. See README.md for full flag matrix and output schemas.
 
-## Architecture
+## Testing
+- Run a single test: `pytest tests/test_mapping_controller.py::TestName::test_case -v`
+- `pytest` auto-runs coverage on `app/` (`--cov`, `--strict-markers`); HTML report lands in `htmlcov/`
+- No network in unit tests — Ollama/WokuShop clients and Surya OCR are stubbed at the client boundary
+- `main.py` exits with `0` on success, `1` on any exception — controllers return the exit code
 
-The codebase follows **Clean Architecture + MVC** as mandated by `.claude/rules/python-standards.md`. The layer boundaries are load-bearing — do not cross them:
+## Architecture (MVC + Clean Architecture, dependency rule inward)
+- `app/models/` — entities (`mcc_entry`, `vsic_entry`, `vsic_2025_entry`, `mapping_entry`, `ocr_line`); no I/O
+- `app/repositories/` — all I/O: Excel/JSON read-write, image loading, checkpoints, and LLM/embedding clients (`ollama_*`, `wokushop_*`)
+- `app/services/` — business logic; `map_vsic_to_mcc_use_case.py` orchestrates the pipeline; `protocols.py` defines the client interfaces (typing.Protocol) that decouple services from concrete repos
+- `app/controllers/` — wire repos+services together and return an exit code
+- `app/views/` — output formatting (`progress_bar_view`)
 
-```
-app/
-├── models/         # Domain entities & pydantic schemas (innermost layer)
-├── services/       # Use cases / business logic — depends only on models + abstractions
-├── repositories/   # Data access (files, DB, external APIs)
-├── controllers/    # Entry-point coordinators; receive input, invoke services, return to view
-└── views/          # Output formatting (CLI progress, JSON response shaping, etc.)
-```
+Flow: `main.py` (parse args, instantiate deps) → controller (`.execute()`) → use-case/service → repository. Manual dependency injection, no framework. Inner layers (models/services) never import outer layers; services depend on `protocols.py` abstractions, not concrete clients.
 
-**Dependency Rule (strict):** inner layers (`models`, `services`) must not import from outer layers (`repositories`, `controllers`, `views`). Services depend on **Protocols/abstractions** defined alongside them; concrete implementations (e.g. a Surya OCR backend, a filesystem JSON writer) are injected by the Controller. When adding a new capability, introduce the Protocol first, then the implementation.
+### The 2-module embedding split (`embed` → `map-vsic-mcc`)
+Embedding and LLM re-rank are split into two commands sharing one self-contained `.npz` artifact:
+- **`embed` (producer, run on Colab/GPU)** — `EmbedController` reads MCC+VSIC JSON, embeds all via Ollama `bge-m3` (1024-dim, batch_size=1), writes `embed-artifact.npz` (vectors + codes + titles + descriptions + meta). Text built by `app/services/embed_text_builder.py` (shared so vectors stay reproducible).
+- **`map-vsic-mcc` (consumer, run locally — no embedding)** — `MappingController` loads the artifact via `EmbeddingArtifactRepository` (hard-fails if missing/corrupt/wrong-dim), then `MapVsicToMccUseCase.execute`:
+  1. **Cosine pre-filter** — rank all MCC vectors from the artifact, take top-K (`--top-k`, default 60)
+  2. **LLM re-rank** — send candidates to the LLM, get top-3 with scores + explanations; entries below `LOW_SCORE_THRESHOLD` are flagged
+Outputs two xlsx files (simple top-1, detailed top-3 + commentary). Per-VSIC checkpoint enables `--resume`. The artifact is the **sole source of the work set** — `map-vsic-mcc` no longer reads source JSON and takes `--embeddings <path>` instead of `--vsic-input`/`--mcc-input`.
 
-`app/config.py` exposes a `Config` class that reads env vars via `python-dotenv` and self-validates at import time. `main.py` wires `loguru` logging from `Config.LOG_LEVEL` / `Config.LOG_FILE` before dispatching to controllers.
+## LLM providers
+- Selected by `LLM_PROVIDER` env var (`ollama` | `wokushop`), read via `app/config.py` `Config`
+- **Embeddings come from the `.npz` artifact** (produced by `embed` via Ollama `bge-m3`), NOT computed live during `map-vsic-mcc` — the mapping run needs no embedding client. With the `wokushop` LLM provider it needs no Ollama at all; with the `ollama` LLM provider only the LLM model is required (health-check via `check_ollama_llm`).
+- WokuShop is an OpenAI-compatible proxy (uses the `openai` SDK); requires `WOKUSHOP_API_KEY`. `Config.validate()` raises at import time if the key is missing when provider is `wokushop`
+- When provider is `wokushop`, `--llm-model` is ignored; the model comes from `WOKUSHOP_MODEL`
 
-## Feature Development Workflow
+## Non-obvious conventions
+- `Config.validate()` runs at **import time** (bottom of `config.py`) — a bad `ENVIRONMENT` or missing WokuShop key fails fast on any import of `app.config`
+- Heavy deps (Surya OCR, torch/transformers) are imported **lazily inside command branches** in `main.py` — keep them out of module top-level so unrelated commands stay fast
+- Surya OCR runs on Apple MPS natively (no CUDA); first run downloads ~1-2GB weights from HuggingFace
+- Logging is `loguru` configured in `main.py:setup_logging()` — log to stderr, never `print()` to stdout for diagnostics
+- Code comments/docstrings in this repo are often Vietnamese; match the surrounding file's language
+- Keep code files under 200 lines, kebab-case filenames (see `.claude/rules/`)
 
-This repo drives all non-trivial features through a document-first workflow under `docs/ai/`. A feature named `{name}` gets five synchronized files:
+## Security
+- `.env` contains a real `WOKUSHOP_API_KEY` and is gitignored — never commit it, never echo it to logs/stdout
+- Validate user-supplied paths before opening; pass `subprocess`/external args as lists, never `shell=True` with interpolation
 
-```
-docs/ai/requirements/feature-{name}.md   # problem, user stories, acceptance criteria
-docs/ai/design/feature-{name}.md         # architecture, data models, interfaces
-docs/ai/planning/feature-{name}.md       # task breakdown, dependencies, risks
-docs/ai/implementation/feature-{name}.md # implementation notes (filled during coding)
-docs/ai/testing/feature-{name}.md        # test plan, coverage targets
-```
-
-Templates live at `docs/ai/{phase}/README.md` — copy them (preserving YAML frontmatter + headings) to create feature docs. New feature requests typically arrive as briefs in `docs/ai/orders/`.
-
-Slash commands in `.claude/commands/` automate each phase: `/new-requirement`, `/review-requirements`, `/review-design`, `/execute-plan`, `/check-implementation`, `/update-planning`, `/code-review`, `/writing-test`, `/simplify-implementation`, `/capture-knowledge`, `/remember`, `/debug`. The expected gate order before implementation: **new-requirement → review-requirements → review-design → execute-plan**.
-
-## Coding Standards (project-specific)
-
-From `.claude/rules/python-standards.md`:
-
-- **PEP 8** with type hints on every function signature; docstrings in **Google style**.
-- Functions do one thing; prefer ≤ 3 parameters.
-- **SOLID** is enforced — especially **D**: depend on abstractions (Protocols), not concretions. When in doubt, add a Protocol in `services/` rather than importing a concrete class across layers.
-- Respond to the user in Vietnamese (per global user instructions).
-
-## Notes for Claude
-
-### Surya OCR Setup
-
-For the `convert-mcc-image-to-json` feature, the project uses Surya OCR for text extraction:
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Optional: Set HuggingFace cache directory (recommended for first download)
-export HF_HOME=~/.cache/huggingface
-
-# First run will automatically download Surya weights (~1-2GB)
-# Models: surya foundation + recognition + detection predictors
-# Apple M1/M2: MPS native — no CUDA needed
-```
-
-- Subdirectories under `app/` currently contain only `__init__.py` — the scaffolding is intentional; populate them following the layer rules above rather than inventing a new structure.
-- `tests/` mirrors `app/` layout. `pytest.ini` already forces `--cov=app`; a test run will fail noisily if coverage collection breaks, which usually means a module import error, not a missing test.
-- `docs/ai/orders/*.md` are human-written briefs — read them verbatim when starting a feature; don't paraphrase them into requirements without the `/new-requirement` flow.
+## See also
+- @README.md for CLI flags, output JSON schemas, hardware requirements, and Google Colab setup
+- @docs/ai/ for per-feature requirements/design/implementation/testing docs
+- @.claude/rules/ for project development + Python style rules (PEP 8, SOLID)

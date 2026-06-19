@@ -114,21 +114,57 @@ def main() -> int:
         help="Output JSON file path (default: output/vsic-vn.json)",
     )
 
-    mapping_parser = subparsers.add_parser(
-        "map-vsic-mcc",
-        help="Map VSIC codes to MCC codes using Ollama LLM",
+    embed_parser = subparsers.add_parser(
+        "embed",
+        help="Embed all MCC + VSIC entries into one .npz artifact (run on Colab/GPU)",
     )
-    mapping_parser.add_argument(
+    embed_parser.add_argument(
+        "--mcc-input",
+        type=Path,
+        default=Path("output/mcc-visa.json"),
+        help="MCC JSON input file (default: output/mcc-visa.json)",
+    )
+    embed_parser.add_argument(
         "--vsic-input",
         type=Path,
         default=Path("output/vsic-vn.json"),
         help="VSIC JSON input file (default: output/vsic-vn.json)",
     )
-    mapping_parser.add_argument(
-        "--mcc-input",
+    embed_parser.add_argument(
+        "--output",
+        "-o",
         type=Path,
-        default=Path("output/mcc-visa.json"),
-        help="MCC JSON input file (default: output/mcc-visa.json)",
+        default=Path("output/embed-artifact.npz"),
+        help="Artifact output file (default: output/embed-artifact.npz)",
+    )
+    embed_parser.add_argument(
+        "--gdrive-output-dir",
+        type=Path,
+        help="Base directory on Google Drive to write embed-artifact.npz",
+    )
+    embed_parser.add_argument(
+        "--ollama-host",
+        type=str,
+        default="http://localhost:11434",
+        help="Ollama server URL (default: http://localhost:11434)",
+    )
+    embed_parser.add_argument(
+        "--embedding-model",
+        type=str,
+        default="bge-m3",
+        help="Embedding model name (default: bge-m3)",
+    )
+
+    mapping_parser = subparsers.add_parser(
+        "map-vsic-mcc",
+        help="Map VSIC codes to MCC codes using configured LLM provider (ollama|wokushop)",
+    )
+    mapping_parser.add_argument(
+        "--embeddings",
+        type=Path,
+        default=Path("output/embed-artifact.npz"),
+        help="Embedding artifact (.npz) produced by `embed` "
+        "(default: output/embed-artifact.npz)",
     )
     mapping_parser.add_argument(
         "--output",
@@ -160,12 +196,6 @@ def main() -> int:
         type=str,
         default="qwen3.5:9b",
         help="LLM model name (default: qwen3.5:9b)",
-    )
-    mapping_parser.add_argument(
-        "--embedding-model",
-        type=str,
-        default="bge-m3",
-        help="Embedding model name (default: bge-m3)",
     )
     mapping_parser.add_argument(
         "--template",
@@ -278,16 +308,37 @@ def main() -> int:
                 output_path=args.vsic_2025_output,
             )
 
+        if args.command == "embed":
+            logger.info("Starting embedding artifact generation...")
+            logger.info(f"MCC input: {args.mcc_input}")
+            logger.info(f"VSIC input: {args.vsic_input}")
+            logger.info(f"Output: {args.output}")
+            logger.info(f"Ollama host: {args.ollama_host}")
+            logger.info(f"Embedding model: {args.embedding_model}")
+            if args.gdrive_output_dir:
+                logger.info(f"Google Drive output dir: {args.gdrive_output_dir}")
+
+            from app.controllers.embed_controller import EmbedController
+
+            controller = EmbedController(
+                ollama_host=args.ollama_host,
+                embedding_model=args.embedding_model,
+            )
+            return controller.execute(
+                mcc_input=args.mcc_input,
+                vsic_input=args.vsic_input,
+                output=args.output,
+                gdrive_output_dir=args.gdrive_output_dir,
+            )
+
         if args.command == "map-vsic-mcc":
             logger.info("Starting VSIC to MCC mapping...")
-            logger.info(f"VSIC input: {args.vsic_input}")
-            logger.info(f"MCC input: {args.mcc_input}")
+            logger.info(f"Embeddings artifact: {args.embeddings}")
             logger.info(f"Output: {args.output}")
             logger.info(f"Output detail: {args.output_detail}")
             logger.info(f"Top-K: {args.top_k}")
             logger.info(f"Ollama host: {args.ollama_host}")
             logger.info(f"LLM model: {args.llm_model}")
-            logger.info(f"Embedding model: {args.embedding_model}")
             logger.info(f"Resume: {args.resume}")
             if args.limit:
                 logger.info(f"Limit: {args.limit}")
@@ -299,12 +350,14 @@ def main() -> int:
             controller = MappingController(
                 ollama_host=args.ollama_host,
                 llm_model=args.llm_model,
-                embedding_model=args.embedding_model,
                 template_path=args.template,
+                llm_provider=Config.LLM_PROVIDER,
+                wokushop_api_key=Config.WOKUSHOP_API_KEY,
+                wokushop_base_url=Config.WOKUSHOP_BASE_URL,
+                wokushop_model=Config.WOKUSHOP_MODEL,
             )
             return controller.execute(
-                vsic_input=args.vsic_input,
-                mcc_input=args.mcc_input,
+                embeddings=args.embeddings,
                 output=args.output,
                 output_detail=args.output_detail,
                 top_k=args.top_k,

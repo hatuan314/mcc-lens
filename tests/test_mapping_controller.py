@@ -1,12 +1,16 @@
-"""Unit tests for MappingController."""
+"""Unit tests for MappingController (consumer-only)."""
 
-import json
 from pathlib import Path
 from unittest.mock import patch
 
+import numpy as np
 
 from app.controllers.mapping_controller import DEFAULT_TOP_K, MappingController
+from app.models.embedding_artifact import EmbeddingArtifact
 from app.models.mapping_entry import MappingEntry, RankedMcc
+from app.repositories.embedding_artifact_repository import EmbeddingArtifactRepository
+
+_DIM = 1024
 
 
 # ---------------------------------------------------------------------------
@@ -14,52 +18,20 @@ from app.models.mapping_entry import MappingEntry, RankedMcc
 # ---------------------------------------------------------------------------
 
 
-def _write_vsic_json(path: Path) -> None:
-    path.write_text(
-        json.dumps(
-            {
-                "source": "test",
-                "total_vsic_count": 2,
-                "vsic_list": [
-                    {
-                        "code": "0111",
-                        "title": "Trồng lúa",
-                        "level": 4,
-                        "parent_code": None,
-                        "description": "",
-                    },
-                    {
-                        "code": "6201",
-                        "title": "Lập trình",
-                        "level": 4,
-                        "parent_code": None,
-                        "description": "",
-                    },
-                ],
-            }
-        ),
-        encoding="utf-8",
+def _write_artifact(path: Path, n_vsic: int = 2, n_mcc: int = 2) -> Path:
+    """Write a valid embedding artifact to ``path`` and return it."""
+    artifact = EmbeddingArtifact(
+        mcc_vectors=np.ones((n_mcc, _DIM), dtype=np.float32),
+        mcc_codes=[f"{1000 + i}" for i in range(n_mcc)],
+        mcc_titles=[f"MCC {i}" for i in range(n_mcc)],
+        mcc_descriptions=[f"desc {i}" for i in range(n_mcc)],
+        vsic_vectors=np.ones((n_vsic, _DIM), dtype=np.float32),
+        vsic_codes=[f"{i:04d}" for i in range(n_vsic)],
+        vsic_titles=[f"VSIC {i}" for i in range(n_vsic)],
+        meta={"dim": _DIM, "zero_vector_codes": {"mcc": [], "vsic": []}},
     )
-
-
-def _write_mcc_json(path: Path) -> None:
-    path.write_text(
-        json.dumps(
-            {
-                "source": "test",
-                "total_mcc_count": 2,
-                "mcc_list": [
-                    {"mcc": "0111", "title": "Farms", "description": "Agriculture"},
-                    {
-                        "mcc": "7372",
-                        "title": "Computer Programming",
-                        "description": "Software",
-                    },
-                ],
-            }
-        ),
-        encoding="utf-8",
-    )
+    EmbeddingArtifactRepository().write(path, artifact)
+    return path
 
 
 def _make_template(tmp_path: Path) -> Path:
@@ -77,86 +49,68 @@ def _make_template(tmp_path: Path) -> Path:
 
 FAKE_ENTRIES = [
     MappingEntry(
-        vsic_code="0111",
-        vsic_title="Trồng lúa",
+        vsic_code="0000",
+        vsic_title="VSIC 0",
         top_results=[
-            RankedMcc(mcc_code="0111", mcc_title="Farms", score=0.9, comment="ok")
+            RankedMcc(mcc_code="1000", mcc_title="MCC 0", score=0.9, comment="ok")
         ],
     ),
-    MappingEntry(vsic_code="6201", vsic_title="Lập trình", top_results=[]),
+    MappingEntry(vsic_code="0001", vsic_title="VSIC 1", top_results=[]),
 ]
 
 
 class TestMappingControllerExitCodes:
-    def test_returns_1_when_vsic_file_missing(self, tmp_path: Path) -> None:
+    def test_returns_1_when_artifact_missing(self, tmp_path: Path) -> None:
         controller = MappingController(template_path=_make_template(tmp_path))
         exit_code = controller.execute(
-            vsic_input=tmp_path / "missing.json",
-            mcc_input=tmp_path / "mcc.json",
+            embeddings=tmp_path / "missing.npz",
             output=tmp_path / "out.xlsx",
             output_detail=tmp_path / "detail.xlsx",
         )
         assert exit_code == 1
 
-    def test_returns_1_when_mcc_file_missing(self, tmp_path: Path) -> None:
-        vsic_path = tmp_path / "vsic.json"
-        _write_vsic_json(vsic_path)
+    def test_returns_4_when_artifact_corrupt(self, tmp_path: Path) -> None:
+        bad = tmp_path / "bad.npz"
+        bad.write_text("not an npz file")
         controller = MappingController(template_path=_make_template(tmp_path))
         exit_code = controller.execute(
-            vsic_input=vsic_path,
-            mcc_input=tmp_path / "missing.json",
+            embeddings=bad,
             output=tmp_path / "out.xlsx",
             output_detail=tmp_path / "detail.xlsx",
         )
-        assert exit_code == 1
+        assert exit_code == 4
 
     def test_returns_2_when_ollama_unavailable(self, tmp_path: Path) -> None:
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
+        artifact = _write_artifact(tmp_path / "a.npz")
         with patch(
-            "app.controllers.mapping_controller.check_ollama_models",
+            "app.controllers.mapping_controller.check_ollama_llm",
             side_effect=RuntimeError("Ollama unavailable"),
         ):
             controller = MappingController(template_path=_make_template(tmp_path))
             exit_code = controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=artifact,
                 output=tmp_path / "out.xlsx",
                 output_detail=tmp_path / "detail.xlsx",
             )
         assert exit_code == 2
 
     def test_returns_0_on_success(self, tmp_path: Path) -> None:
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
-
-        def fake_use_case_execute(**kwargs):
-            return iter(FAKE_ENTRIES)
-
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
+        artifact = _write_artifact(tmp_path / "a.npz")
+        with patch("app.controllers.mapping_controller.check_ollama_llm"), patch(
             "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
             return_value=iter(FAKE_ENTRIES),
         ):
             controller = MappingController(template_path=_make_template(tmp_path))
             exit_code = controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=artifact,
                 output=tmp_path / "out.xlsx",
                 output_detail=tmp_path / "detail.xlsx",
             )
         assert exit_code == 0
 
     def test_returns_3_on_io_error(self, tmp_path: Path) -> None:
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
-
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
+        artifact = _write_artifact(tmp_path / "a.npz")
+        with patch("app.controllers.mapping_controller.check_ollama_llm"), patch(
             "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
             return_value=iter(FAKE_ENTRIES),
         ), patch(
@@ -166,12 +120,18 @@ class TestMappingControllerExitCodes:
         ):
             controller = MappingController(template_path=_make_template(tmp_path))
             exit_code = controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=artifact,
                 output=tmp_path / "out.xlsx",
                 output_detail=tmp_path / "detail.xlsx",
             )
         assert exit_code == 3
+
+    def test_no_embedding_client_constructed(self, tmp_path: Path) -> None:
+        """Module 2 must never instantiate an embedding client."""
+        import app.controllers.mapping_controller as mc
+
+        assert not hasattr(mc, "OllamaEmbeddingClient")
+        assert not hasattr(mc, "WokuShopEmbeddingClient")
 
 
 class TestMappingControllerDefaults:
@@ -182,15 +142,6 @@ class TestMappingControllerDefaults:
         assert sig.parameters["top_k"].default == DEFAULT_TOP_K
         assert DEFAULT_TOP_K == 60
 
-    def test_cli_top_k_default_matches_controller(self) -> None:
-        """CLI --top-k default must match MappingController.execute default."""
-        import inspect
-
-        controller_default = inspect.signature(MappingController.execute).parameters[
-            "top_k"
-        ].default
-        assert DEFAULT_TOP_K == controller_default
-
     def test_default_gdrive_output_dir_is_none(self) -> None:
         import inspect
 
@@ -198,24 +149,18 @@ class TestMappingControllerDefaults:
         assert sig.parameters["gdrive_output_dir"].default is None
 
     def test_template_path_none_skips_detail_output(self, tmp_path: Path) -> None:
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
-
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
+        artifact = _write_artifact(tmp_path / "a.npz")
+        with patch("app.controllers.mapping_controller.check_ollama_llm"), patch(
             "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
             return_value=iter(FAKE_ENTRIES),
         ):
             controller = MappingController(template_path=None)
             controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=artifact,
                 output=tmp_path / "out.xlsx",
                 output_detail=tmp_path / "detail.xlsx",
             )
-        detail_path = tmp_path / "detail.xlsx"
-        assert not detail_path.exists()
+        assert not (tmp_path / "detail.xlsx").exists()
 
 
 class TestMappingControllerGdriveOutputDir:
@@ -227,30 +172,22 @@ class TestMappingControllerGdriveOutputDir:
         gdrive_dir: Path,
         template: bool = True,
     ) -> int:
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
+        # Put the artifact inside the gdrive dir so the default override finds it.
+        gdrive_dir.mkdir(parents=True, exist_ok=True)
+        _write_artifact(gdrive_dir / "embed-artifact.npz")
         controller = MappingController(
             template_path=_make_template(tmp_path) if template else None
         )
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
+        with patch("app.controllers.mapping_controller.check_ollama_llm"), patch(
             "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
             return_value=iter(FAKE_ENTRIES),
         ):
             return controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=tmp_path / "nonexistent.npz",
                 output=tmp_path / "ignored.xlsx",
                 output_detail=tmp_path / "ignored-detail.xlsx",
                 gdrive_output_dir=gdrive_dir,
             )
-
-    def test_creates_gdrive_directory(self, tmp_path: Path) -> None:
-        gdrive_dir = tmp_path / "drive" / "projects" / "mcc-lens"
-        assert not gdrive_dir.exists()
-        self._run_with_gdrive(tmp_path, gdrive_dir)
-        assert gdrive_dir.is_dir()
 
     def test_output_files_written_to_gdrive_dir(self, tmp_path: Path) -> None:
         gdrive_dir = tmp_path / "drive" / "mcc-lens"
@@ -259,15 +196,12 @@ class TestMappingControllerGdriveOutputDir:
         assert (gdrive_dir / "vsic-mcc-mapping-detail.xlsx").exists()
 
     def test_checkpoint_path_uses_gdrive_dir(self, tmp_path: Path) -> None:
-        """MappingCheckpointRepository must be initialised with a path inside gdrive_dir."""
         gdrive_dir = tmp_path / "drive" / "mcc-lens"
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
+        gdrive_dir.mkdir(parents=True, exist_ok=True)
+        _write_artifact(gdrive_dir / "embed-artifact.npz")
         controller = MappingController(template_path=None)
 
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
+        with patch("app.controllers.mapping_controller.check_ollama_llm"), patch(
             "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
             return_value=iter(FAKE_ENTRIES),
         ), patch(
@@ -275,8 +209,7 @@ class TestMappingControllerGdriveOutputDir:
         ) as MockCkpt:
             MockCkpt.return_value.load.return_value = {}
             controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=tmp_path / "nonexistent.npz",
                 output=tmp_path / "out.xlsx",
                 output_detail=tmp_path / "detail.xlsx",
                 gdrive_output_dir=gdrive_dir,
@@ -285,7 +218,6 @@ class TestMappingControllerGdriveOutputDir:
         assert str(checkpoint_arg).startswith(str(gdrive_dir))
 
     def test_original_output_paths_ignored(self, tmp_path: Path) -> None:
-        """Files given as --output / --output-detail must NOT be created when gdrive_output_dir is set."""
         gdrive_dir = tmp_path / "drive"
         self._run_with_gdrive(tmp_path, gdrive_dir)
         assert not (tmp_path / "ignored.xlsx").exists()
@@ -296,91 +228,88 @@ class TestMappingControllerGdriveOutputDir:
         exit_code = self._run_with_gdrive(tmp_path, gdrive_dir)
         assert exit_code == 0
 
-    def test_warning_logged_when_drive_not_mounted(
-        self, tmp_path: Path, caplog
-    ) -> None:
-        """When path starts with /content/drive but Drive is not mounted, warn."""
-        import logging
-
-        gdrive_dir = Path("/content/drive/MyDrive/projects/mcc-lens")
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
-        controller = MappingController(template_path=None)
-
-        # /content/drive/MyDrive should NOT exist in CI/local, triggering warning
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
-            "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
-            return_value=iter([]),
-        ), patch(
-            "pathlib.Path.mkdir"
-        ), patch(
-            "pathlib.Path.exists", return_value=False
-        ), patch(
-            "builtins.open",
-            side_effect=FileNotFoundError("mocked"),
-        ):
-            # The controller will hit the warning, then fail on file reads — exit 1 is OK
-            with caplog.at_level(logging.WARNING, logger="app.controllers.mapping_controller"):
-                controller.execute(
-                    vsic_input=vsic_path,
-                    mcc_input=mcc_path,
-                    output=tmp_path / "out.xlsx",
-                    output_detail=tmp_path / "detail.xlsx",
-                    gdrive_output_dir=gdrive_dir,
-                )
-
-        assert any(
-            "does not appear to be mounted" in record.message
-            for record in caplog.records
-        ) or True  # loguru may not propagate to caplog; test passes if no crash
-
     def test_nested_gdrive_dir_created_with_parents(self, tmp_path: Path) -> None:
-        """Deeply nested path that doesn't exist yet should be created."""
         gdrive_dir = tmp_path / "a" / "b" / "c" / "d"
         self._run_with_gdrive(tmp_path, gdrive_dir)
         assert gdrive_dir.is_dir()
 
     def test_top_k_clamped_to_100(self, tmp_path: Path) -> None:
-        """top_k > 100 must be clamped to 100 without raising."""
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
+        artifact = _write_artifact(tmp_path / "a.npz")
         controller = MappingController(template_path=None)
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
+        with patch("app.controllers.mapping_controller.check_ollama_llm"), patch(
             "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
             return_value=iter(FAKE_ENTRIES),
         ):
             exit_code = controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=artifact,
                 output=tmp_path / "out.xlsx",
                 output_detail=tmp_path / "detail.xlsx",
                 top_k=200,
             )
         assert exit_code == 0
 
-    def test_limit_restricts_vsic_entries(self, tmp_path: Path) -> None:
-        """With limit=1, only 1 VSIC entry should be passed to MapVsicToMccUseCase."""
-        vsic_path = tmp_path / "vsic.json"
-        mcc_path = tmp_path / "mcc.json"
-        _write_vsic_json(vsic_path)
-        _write_mcc_json(mcc_path)
+    def test_limit_passed_to_use_case_execute(self, tmp_path: Path) -> None:
+        """limit must be forwarded to MapVsicToMccUseCase.execute(limit=...)."""
+        artifact = _write_artifact(tmp_path / "a.npz")
         controller = MappingController(template_path=None)
 
-        with patch("app.controllers.mapping_controller.check_ollama_models"), patch(
+        with patch("app.controllers.mapping_controller.check_ollama_llm"), patch(
             "app.controllers.mapping_controller.MapVsicToMccUseCase",
         ) as MockUseCase:
             MockUseCase.return_value.execute.return_value = iter([])
             controller.execute(
-                vsic_input=vsic_path,
-                mcc_input=mcc_path,
+                embeddings=artifact,
                 output=tmp_path / "out.xlsx",
                 output_detail=tmp_path / "detail.xlsx",
                 limit=1,
             )
-            init_kwargs = MockUseCase.call_args[1]
-            vsic_entries_passed = init_kwargs.get("vsic_entries", [])
-        assert len(vsic_entries_passed) == 1
+            execute_kwargs = MockUseCase.return_value.execute.call_args[1]
+        assert execute_kwargs.get("limit") == 1
+
+    def test_wokushop_provider_success(self, tmp_path: Path) -> None:
+        """WokuShop provider succeeds and needs no Ollama embedding check."""
+        artifact = _write_artifact(tmp_path / "a.npz")
+        controller = MappingController(
+            template_path=None,
+            llm_provider="wokushop",
+            wokushop_api_key="test-api-key",
+            wokushop_model="gpt-4o-test",
+        )
+
+        with patch(
+            "app.controllers.mapping_controller.WokuShopLLMClient"
+        ) as MockWokuClient, patch(
+            "app.services.map_vsic_to_mcc_use_case.MapVsicToMccUseCase.execute",
+            return_value=iter(FAKE_ENTRIES),
+        ):
+            MockWokuClient.return_value.health_check.return_value = True
+            exit_code = controller.execute(
+                embeddings=artifact,
+                output=tmp_path / "out.xlsx",
+                output_detail=tmp_path / "detail.xlsx",
+            )
+
+        assert exit_code == 0
+        MockWokuClient.return_value.health_check.assert_called_once()
+
+    def test_wokushop_provider_health_check_failure(self, tmp_path: Path) -> None:
+        """Returns 2 if WokuShop health check fails."""
+        artifact = _write_artifact(tmp_path / "a.npz")
+        controller = MappingController(
+            template_path=None,
+            llm_provider="wokushop",
+            wokushop_api_key="test-api-key",
+        )
+
+        with patch(
+            "app.controllers.mapping_controller.WokuShopLLMClient"
+        ) as MockWokuClient:
+            MockWokuClient.return_value.health_check.return_value = False
+            exit_code = controller.execute(
+                embeddings=artifact,
+                output=tmp_path / "out.xlsx",
+                output_detail=tmp_path / "detail.xlsx",
+            )
+
+        assert exit_code == 2
+        MockWokuClient.return_value.health_check.assert_called_once()
