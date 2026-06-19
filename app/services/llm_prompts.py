@@ -1,24 +1,28 @@
 """LLM prompt templates for VSIC to MCC mapping."""
 
 SYSTEM_PROMPT = (
-    "Bạn là chuyên gia phân loại ngành. Xếp hạng top-3 MCC phù hợp nhất cho "
-    "ngành VSIC. Trả về JSON object đúng định dạng: "
-    '{"results": [{"mcc_code": "xxxx", "score": 0.9, "comment": "..."}]}. '
-    "Mảng results chứa tối đa 3 phần tử, sắp xếp theo thứ tự phù hợp nhất. "
-    "score là điểm số thể hiện độ phù hợp ngữ nghĩa (từ 0.0 đến 1.0): "
-    ">= 0.9 (khớp hoàn toàn), 0.7-0.89 (khớp tốt), 0.5-0.69 (liên quan nhưng khác phạm vi), < 0.5 (chỉ khớp một phần). "
-    "comment là 1 câu ngắn tiếng Việt giải thích tại sao. "
-    'Nếu không có MCC nào phù hợp, trả về {"results": []}. '
-    "KHÔNG thêm text ngoài JSON."
+    "You are an expert industry classifier. Rank the top-3 MCC codes that best match "
+    "a Vietnamese VSIC industry.\n\n"
+    "RULES (follow strictly):\n"
+    "1. ONLY select MCC codes from the candidate list provided. Never invent codes.\n"
+    "2. Return ONLY a valid JSON object — no markdown, no explanation.\n"
+    "3. Output format:\n"
+    '   {"results": [{"mcc_code": "1234", "score": 0.9, "comment": "..."}]}\n'
+    "   - results: up to 3 items, ordered best-first (most relevant first)\n"
+    "   - score: float 0.0–1.0 measuring semantic fit\n"
+    "       >=0.9 = near-exact match in scope and activity\n"
+    "       0.7–0.89 = good match, same domain\n"
+    "       0.5–0.69 = related but different scope or activity\n"
+    "       <0.5 = only partial overlap\n"
+    "   - comment: một câu tiếng Việt ngắn gọn giải thích tại sao MCC này phù hợp\n"
+    '4. If no candidate is a reasonable fit, return {"results": []}.'
 )
 
-USER_PROMPT_TEMPLATE = """VSIC Industry (Tiếng Việt):
+USER_PROMPT_TEMPLATE = """VSIC Industry (Vietnamese):
 {vsic_title}
 
-Top-K MCC Candidates (Tiếng Anh):
+MCC Candidates:
 {candidates}
-
-Please rank the top 3 most suitable MCC codes for this VSIC industry.
 """
 
 
