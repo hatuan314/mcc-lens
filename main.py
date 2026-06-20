@@ -150,14 +150,14 @@ def main() -> int:
     embed_parser.add_argument(
         "--embedding-model",
         type=str,
-        default="Qwen/Qwen3-Embedding",
-        help="Embedding model name (default: Qwen/Qwen3-Embedding)",
+        default="Qwen/Qwen3-Embedding-4B",
+        help="Embedding model name (default: Qwen/Qwen3-Embedding-4B)",
     )
     embed_parser.add_argument(
         "--reranker-model",
         type=str,
-        default="Qwen/Qwen3-Reranker",
-        help="Reranker model name (default: Qwen/Qwen3-Reranker)",
+        default="Qwen/Qwen3-Reranker-4B",
+        help="Reranker model name (default: Qwen/Qwen3-Reranker-4B)",
     )
     embed_parser.add_argument(
         "--rerank-top-n",

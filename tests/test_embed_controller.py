@@ -63,6 +63,16 @@ class _ZeroForOneClient:
         return [[1.0] + [0.0] * (EXPECTED_DIM - 1) for _ in texts]
 
 
+class _FakeRerankerClient:
+    """Returns scores decreasing by 0.1 per document."""
+
+    def __init__(self, *args, **kwargs) -> None:
+        pass
+
+    def rerank(self, query: str, documents: list) -> list:
+        return [0.9 - i * 0.05 for i in range(len(documents))]
+
+
 class TestEmbedControllerHappyPath:
     def test_produces_artifact_with_correct_shapes(self, tmp_path: Path) -> None:
         mcc = tmp_path / "mcc.json"
@@ -72,10 +82,12 @@ class TestEmbedControllerHappyPath:
         _write_vsic_json(vsic, n=3)
 
         with patch(
-            "app.controllers.embed_controller.OllamaEmbeddingClient",
+            "app.controllers.embed_controller.Qwen3EmbeddingClient",
             _FakeEmbeddingClient,
         ):
-            code = EmbedController().execute(mcc_input=mcc, vsic_input=vsic, output=out)
+            code = EmbedController(
+                embedding_model="Qwen/Qwen3-Embedding", rerank_top_n=2
+            ).execute(mcc_input=mcc, vsic_input=vsic, output=out)
 
         assert code == 0
         artifact = EmbeddingArtifactRepository().read(out)
@@ -83,6 +95,9 @@ class TestEmbedControllerHappyPath:
         assert artifact.vsic_vectors.shape == (3, EXPECTED_DIM)
         assert artifact.mcc_codes == ["1000", "1001"]
         assert artifact.meta["dim"] == EXPECTED_DIM
+        assert artifact.meta["artifact_version"] == 2
+        assert artifact.reranked_mcc_indices.shape == (3, 2)
+        assert artifact.rerank_scores.shape == (3, 2)
 
     def test_returns_1_when_input_missing(self, tmp_path: Path) -> None:
         vsic = tmp_path / "vsic.json"
@@ -106,9 +121,11 @@ class TestEmbedControllerZeroVector:
         # Fail the second MCC text ("MCC 1 — d") → its code 1001 becomes zero.
         fake = _ZeroForOneClient(fail_text="MCC 1 — d")
         with patch(
-            "app.controllers.embed_controller.OllamaEmbeddingClient", fake
+            "app.controllers.embed_controller.Qwen3EmbeddingClient", fake
         ):
-            code = EmbedController().execute(mcc_input=mcc, vsic_input=vsic, output=out)
+            code = EmbedController(
+                embedding_model="Qwen/Qwen3-Embedding", rerank_top_n=2
+            ).execute(mcc_input=mcc, vsic_input=vsic, output=out)
 
         assert code == 0
         artifact = EmbeddingArtifactRepository().read(out)
@@ -116,3 +133,96 @@ class TestEmbedControllerZeroVector:
         # The zero-vector row is all zeros.
         assert np.allclose(artifact.mcc_vectors[1], 0.0)
         assert not np.allclose(artifact.mcc_vectors[0], 0.0)
+
+
+class TestEmbedControllerDummyRerank:
+    """No reranker model — dummy rerank from cosine similarity."""
+
+    def test_dummy_rerank_fills_artifact_shapes(self, tmp_path: Path) -> None:
+        mcc = tmp_path / "mcc.json"
+        vsic = tmp_path / "vsic.json"
+        out = tmp_path / "art.npz"
+        _write_mcc_json(mcc, n=3)
+        _write_vsic_json(vsic, n=2)
+
+        with patch(
+            "app.controllers.embed_controller.Qwen3EmbeddingClient",
+            _FakeEmbeddingClient,
+        ):
+            code = EmbedController(
+                embedding_model="Qwen/Qwen3-Embedding",
+                reranker_model=None,
+                rerank_top_n=2,
+            ).execute(mcc_input=mcc, vsic_input=vsic, output=out)
+
+        assert code == 0
+        artifact = EmbeddingArtifactRepository().read(out)
+        assert artifact.reranked_mcc_indices.shape == (2, 2)
+        assert artifact.rerank_scores.shape == (2, 2)
+        assert artifact.meta["rerank_top_n"] == 2
+        assert artifact.meta["artifact_version"] == 2
+        # reranker_model is None → written as None in meta
+        assert artifact.meta["reranker_model"] is None
+
+    def test_dummy_rerank_when_fewer_mcc_than_top_n_pads_with_minus1(
+        self, tmp_path: Path
+    ) -> None:
+        mcc = tmp_path / "mcc.json"
+        vsic = tmp_path / "vsic.json"
+        out = tmp_path / "art.npz"
+        _write_mcc_json(mcc, n=2)  # only 2 MCC but rerank_top_n=5
+        _write_vsic_json(vsic, n=1)
+
+        with patch(
+            "app.controllers.embed_controller.Qwen3EmbeddingClient",
+            _FakeEmbeddingClient,
+        ):
+            code = EmbedController(
+                embedding_model="Qwen/Qwen3-Embedding",
+                reranker_model=None,
+                rerank_top_n=5,
+            ).execute(mcc_input=mcc, vsic_input=vsic, output=out)
+
+        assert code == 0
+        artifact = EmbeddingArtifactRepository().read(out)
+        assert artifact.reranked_mcc_indices.shape == (1, 5)
+        # Positions after the 2 real MCCs should be padded with -1
+        padded = artifact.reranked_mcc_indices[0, 2:]
+        assert all(idx == -1 for idx in padded)
+
+
+class TestEmbedControllerWithReranker:
+    """Reranker model provided — full rerank phase runs."""
+
+    def test_reranker_writes_indices_and_scores(self, tmp_path: Path) -> None:
+        mcc = tmp_path / "mcc.json"
+        vsic = tmp_path / "vsic.json"
+        out = tmp_path / "art.npz"
+        _write_mcc_json(mcc, n=3)
+        _write_vsic_json(vsic, n=2)
+
+        with (
+            patch(
+                "app.controllers.embed_controller.Qwen3EmbeddingClient",
+                _FakeEmbeddingClient,
+            ),
+            patch(
+                "app.controllers.embed_controller.Qwen3RerankerClient",
+                _FakeRerankerClient,
+            ),
+        ):
+            code = EmbedController(
+                embedding_model="Qwen/Qwen3-Embedding",
+                reranker_model="Qwen/Qwen3-Reranker",
+                rerank_top_n=2,
+                cosine_top_k=3,
+            ).execute(mcc_input=mcc, vsic_input=vsic, output=out)
+
+        assert code == 0
+        artifact = EmbeddingArtifactRepository().read(out)
+        assert artifact.reranked_mcc_indices.shape == (2, 2)
+        assert artifact.rerank_scores.shape == (2, 2)
+        assert artifact.meta["reranker_model"] == "Qwen/Qwen3-Reranker"
+        assert artifact.meta["cosine_top_k"] == 3
+        # Scores should be non-negative (sigmoid range)
+        assert np.all(artifact.rerank_scores >= 0.0)

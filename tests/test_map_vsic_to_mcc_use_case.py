@@ -345,3 +345,196 @@ class TestRealVSICEntries:
             user_prompt = call["user"]
             mcc_count = user_prompt.count("MCC:")
             assert mcc_count <= 2
+
+
+# ---------------------------------------------------------------------------
+# Additional coverage for new Qwen3 migration branches
+# ---------------------------------------------------------------------------
+
+
+def _make_artifact_with_padding(vsic_entries: list, mcc_entries: list) -> EmbeddingArtifact:
+    """Artifact where all reranked indices are -1 (no valid candidates)."""
+    n_vsic = len(vsic_entries)
+    rerank_top_n = 3
+    reranked_mcc_indices = np.full((n_vsic, rerank_top_n), -1, dtype=np.int32)
+    rerank_scores = np.zeros((n_vsic, rerank_top_n), dtype=np.float32)
+    return EmbeddingArtifact(
+        mcc_vectors=np.zeros((len(mcc_entries), _DIM), dtype=np.float32),
+        mcc_codes=[m["mcc"] for m in mcc_entries],
+        mcc_titles=[m["title"] for m in mcc_entries],
+        mcc_descriptions=[m.get("description") or "" for m in mcc_entries],
+        vsic_vectors=np.zeros((n_vsic, _DIM), dtype=np.float32),
+        vsic_codes=[v["code"] for v in vsic_entries],
+        vsic_titles=[v["title"] for v in vsic_entries],
+        reranked_mcc_indices=reranked_mcc_indices,
+        rerank_scores=rerank_scores,
+        meta={
+            "dim": _DIM,
+            "zero_vector_codes": {"mcc": [], "vsic": []},
+            "artifact_version": 2,
+            "rerank_top_n": rerank_top_n,
+        },
+    )
+
+
+def _make_artifact_low_score(vsic_entries: list, mcc_entries: list) -> EmbeddingArtifact:
+    """Artifact with very low rerank scores (< LOW_SCORE_THRESHOLD=0.5)."""
+    n_vsic = len(vsic_entries)
+    n_mcc = len(mcc_entries)
+    rerank_top_n = min(n_mcc, 3)
+    reranked_mcc_indices = np.zeros((n_vsic, rerank_top_n), dtype=np.int32)
+    for i in range(n_vsic):
+        for k in range(rerank_top_n):
+            reranked_mcc_indices[i, k] = k % n_mcc
+    rerank_scores = np.full((n_vsic, rerank_top_n), 0.2, dtype=np.float32)
+    return EmbeddingArtifact(
+        mcc_vectors=np.ones((n_mcc, _DIM), dtype=np.float32),
+        mcc_codes=[m["mcc"] for m in mcc_entries],
+        mcc_titles=[m["title"] for m in mcc_entries],
+        mcc_descriptions=[m.get("description") or "" for m in mcc_entries],
+        vsic_vectors=np.ones((n_vsic, _DIM), dtype=np.float32),
+        vsic_codes=[v["code"] for v in vsic_entries],
+        vsic_titles=[v["title"] for v in vsic_entries],
+        reranked_mcc_indices=reranked_mcc_indices,
+        rerank_scores=rerank_scores,
+        meta={
+            "dim": _DIM,
+            "zero_vector_codes": {"mcc": ["0111"], "vsic": []},
+            "artifact_version": 2,
+            "rerank_top_n": rerank_top_n,
+        },
+    )
+
+
+class TestLimitParameter:
+    def test_limit_slices_vsic_entries(self) -> None:
+        use_case, llm_client, _ = _make_use_case()
+        results = list(use_case.execute(top_k=3, limit=1))
+        assert len(results) == 1
+        assert len(llm_client.calls) == 1
+
+    def test_limit_zero_returns_no_entries(self) -> None:
+        use_case, llm_client, _ = _make_use_case()
+        results = list(use_case.execute(top_k=3, limit=0))
+        assert results == []
+        assert len(llm_client.calls) == 0
+
+
+class TestPaddingIndices:
+    def test_all_minus1_indices_yields_empty_top_results(self) -> None:
+        """All reranked indices == -1 → no candidates → empty top_results."""
+        checkpoint_repo = FakeCheckpointRepo()
+        llm_client = FakeLLMClient(VALID_LLM_RESPONSE)
+        validator = MccCodeValidator([m["mcc"] for m in MCC_ENTRIES])
+        artifact = _make_artifact_with_padding(VSIC_ENTRIES[:1], MCC_ENTRIES)
+        use_case = MapVsicToMccUseCase(
+            llm_client=llm_client,
+            checkpoint_repo=checkpoint_repo,
+            artifact=artifact,
+            validator=validator,
+        )
+        results = list(use_case.execute(llm_n=3))
+        assert len(results) == 1
+        assert results[0].top_results == []
+        # LLM not called when no candidates
+        assert len(llm_client.calls) == 0
+
+
+class TestZeroVectorWarning:
+    def test_zero_vector_meta_still_yields_results(self) -> None:
+        """Artifact with zero_vector_codes in meta still processes all VSIC."""
+        checkpoint_repo = FakeCheckpointRepo()
+        llm_client = FakeLLMClient(VALID_LLM_RESPONSE)
+        validator = MccCodeValidator([m["mcc"] for m in MCC_ENTRIES])
+        artifact = _make_artifact_low_score(VSIC_ENTRIES, MCC_ENTRIES)
+        # meta has zero_vector_codes.mcc = ["0111"] → should log warning on execute
+        use_case = MapVsicToMccUseCase(
+            llm_client=llm_client,
+            checkpoint_repo=checkpoint_repo,
+            artifact=artifact,
+            validator=validator,
+        )
+        results = list(use_case.execute(llm_n=3))
+        assert len(results) == len(VSIC_ENTRIES)
+
+
+class TestLowScoreWarning:
+    def test_low_rerank_score_still_returns_results(self) -> None:
+        """Score < LOW_SCORE_THRESHOLD logs warning but result is still returned."""
+        checkpoint_repo = FakeCheckpointRepo()
+        # LLM returns a match without explicit score → uses candidate score (0.2)
+        llm_client = FakeLLMClient(VALID_LLM_RESPONSE)
+        validator = MccCodeValidator([m["mcc"] for m in MCC_ENTRIES])
+        artifact = _make_artifact_low_score(VSIC_ENTRIES, MCC_ENTRIES)
+        use_case = MapVsicToMccUseCase(
+            llm_client=llm_client,
+            checkpoint_repo=checkpoint_repo,
+            artifact=artifact,
+            validator=validator,
+        )
+        results = list(use_case.execute(llm_n=3))
+        # Despite low score, results are yielded
+        assert len(results) == len(VSIC_ENTRIES)
+        for entry in results:
+            if entry.top_results:
+                assert entry.top_results[0].score < MapVsicToMccUseCase.LOW_SCORE_THRESHOLD
+
+
+class TestDictWrappedLLMResponse:
+    def test_dict_response_with_results_key(self) -> None:
+        """LLM returns {"results": [...]} → unwrapped correctly."""
+        items = [
+            {"mcc_code": "0111", "comment": "Agriculture"},
+            {"mcc_code": "5411", "comment": "Food"},
+        ]
+        response = json.dumps({"results": items})
+        use_case, _, _ = _make_use_case(llm_response=response)
+        results = list(use_case.execute(top_k=3))
+        for entry in results:
+            assert len(entry.top_results) >= 1
+
+    def test_dict_response_fallback_to_first_list_value(self) -> None:
+        """Dict with unknown key but list value → uses that list."""
+        items = [{"mcc_code": "0111", "comment": "ok"}]
+        response = json.dumps({"unknown_key": items})
+        use_case, _, _ = _make_use_case(llm_response=response)
+        results = list(use_case.execute(top_k=3))
+        for entry in results:
+            assert len(entry.top_results) >= 1
+
+    def test_dict_response_no_list_field_falls_back_to_rerank(self) -> None:
+        """Dict with no list-valued key → _parse_llm_response returns [] → fallback."""
+        response = json.dumps({"some_key": "string_value", "other_key": 42})
+        use_case, _, _ = _make_use_case(llm_response=response)
+        results = list(use_case.execute(top_k=3))
+        # Fallback to top-3 rerank candidates
+        for entry in results:
+            assert len(entry.top_results) == 3
+
+
+class TestNonDictItemInList:
+    def test_non_dict_item_in_list_is_skipped(self) -> None:
+        """If list contains non-dict items, they are skipped gracefully."""
+        response = json.dumps(["not_a_dict", {"mcc_code": "0111", "comment": "ok"}])
+        use_case, _, _ = _make_use_case(llm_response=response)
+        results = list(use_case.execute(top_k=3))
+        for entry in results:
+            # "not_a_dict" is skipped; only valid dict items are parsed
+            for rank in entry.top_results:
+                assert rank.mcc_code in VALID_MCC_CODES
+
+
+class TestInvalidLLMScore:
+    def test_invalid_score_string_falls_back_to_rerank_score(self) -> None:
+        """LLM provides non-numeric score → fallback to rerank score from artifact."""
+        response = json.dumps([
+            {"mcc_code": "0111", "comment": "Agriculture", "score": "not_a_number"},
+            {"mcc_code": "5411", "comment": "Food", "score": "bad"},
+        ])
+        use_case, _, _ = _make_use_case(llm_response=response)
+        results = list(use_case.execute(top_k=3))
+        for entry in results:
+            for rank in entry.top_results:
+                # Score must be a valid float (from artifact rerank scores, not LLM)
+                assert isinstance(rank.score, float)
+                assert 0.0 <= rank.score <= 1.0
