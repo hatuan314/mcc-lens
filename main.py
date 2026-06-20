@@ -151,8 +151,26 @@ def main() -> int:
     embed_parser.add_argument(
         "--embedding-model",
         type=str,
-        default="bge-m3",
-        help="Embedding model name (default: bge-m3)",
+        default="Qwen/Qwen3-Embedding",
+        help="Embedding model name (default: Qwen/Qwen3-Embedding)",
+    )
+    embed_parser.add_argument(
+        "--reranker-model",
+        type=str,
+        default="Qwen/Qwen3-Reranker",
+        help="Reranker model name (default: Qwen/Qwen3-Reranker)",
+    )
+    embed_parser.add_argument(
+        "--rerank-top-n",
+        type=int,
+        default=20,
+        help="Number of top candidates to keep after rerank (default: 20)",
+    )
+    embed_parser.add_argument(
+        "--cosine-top-k",
+        type=int,
+        default=100,
+        help="Number of top candidates from cosine to pass to reranker (default: 100)",
     )
 
     mapping_parser = subparsers.add_parser(
@@ -315,6 +333,9 @@ def main() -> int:
             logger.info(f"Output: {args.output}")
             logger.info(f"Ollama host: {args.ollama_host}")
             logger.info(f"Embedding model: {args.embedding_model}")
+            logger.info(f"Reranker model: {args.reranker_model}")
+            logger.info(f"Rerank top-N: {args.rerank_top_n}")
+            logger.info(f"Cosine top-K: {args.cosine_top_k}")
             if args.gdrive_output_dir:
                 logger.info(f"Google Drive output dir: {args.gdrive_output_dir}")
 
@@ -323,6 +344,9 @@ def main() -> int:
             controller = EmbedController(
                 ollama_host=args.ollama_host,
                 embedding_model=args.embedding_model,
+                reranker_model=args.reranker_model,
+                rerank_top_n=args.rerank_top_n,
+                cosine_top_k=args.cosine_top_k,
             )
             return controller.execute(
                 mcc_input=args.mcc_input,

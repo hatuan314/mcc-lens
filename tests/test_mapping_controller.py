@@ -20,6 +20,7 @@ _DIM = 1024
 
 def _write_artifact(path: Path, n_vsic: int = 2, n_mcc: int = 2) -> Path:
     """Write a valid embedding artifact to ``path`` and return it."""
+    rerank_top_n = min(n_mcc, 2)
     artifact = EmbeddingArtifact(
         mcc_vectors=np.ones((n_mcc, _DIM), dtype=np.float32),
         mcc_codes=[f"{1000 + i}" for i in range(n_mcc)],
@@ -28,7 +29,14 @@ def _write_artifact(path: Path, n_vsic: int = 2, n_mcc: int = 2) -> Path:
         vsic_vectors=np.ones((n_vsic, _DIM), dtype=np.float32),
         vsic_codes=[f"{i:04d}" for i in range(n_vsic)],
         vsic_titles=[f"VSIC {i}" for i in range(n_vsic)],
-        meta={"dim": _DIM, "zero_vector_codes": {"mcc": [], "vsic": []}},
+        reranked_mcc_indices=np.zeros((n_vsic, rerank_top_n), dtype=np.int32),
+        rerank_scores=np.ones((n_vsic, rerank_top_n), dtype=np.float32),
+        meta={
+            "dim": _DIM,
+            "zero_vector_codes": {"mcc": [], "vsic": []},
+            "artifact_version": 2,
+            "rerank_top_n": rerank_top_n,
+        },
     )
     EmbeddingArtifactRepository().write(path, artifact)
     return path
@@ -135,12 +143,12 @@ class TestMappingControllerExitCodes:
 
 
 class TestMappingControllerDefaults:
-    def test_default_top_k_is_60(self) -> None:
+    def test_default_top_k_is_10(self) -> None:
         import inspect
 
         sig = inspect.signature(MappingController.execute)
         assert sig.parameters["top_k"].default == DEFAULT_TOP_K
-        assert DEFAULT_TOP_K == 60
+        assert DEFAULT_TOP_K == 10
 
     def test_default_gdrive_output_dir_is_none(self) -> None:
         import inspect

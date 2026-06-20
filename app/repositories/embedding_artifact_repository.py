@@ -11,8 +11,6 @@ import numpy as np
 
 from app.models.embedding_artifact import EmbeddingArtifact
 
-EXPECTED_DIM = 1024  # bge-m3
-
 _REQUIRED_KEYS = (
     "mcc_vectors",
     "mcc_codes",
@@ -22,6 +20,8 @@ _REQUIRED_KEYS = (
     "vsic_codes",
     "vsic_titles",
     "meta",
+    "reranked_mcc_indices",
+    "rerank_scores",
 )
 
 
@@ -46,6 +46,8 @@ class EmbeddingArtifactRepository:
             vsic_vectors=np.asarray(artifact.vsic_vectors, dtype=np.float32),
             vsic_codes=np.array(artifact.vsic_codes, dtype=object),
             vsic_titles=np.array(artifact.vsic_titles, dtype=object),
+            reranked_mcc_indices=np.asarray(artifact.reranked_mcc_indices, dtype=np.int32),
+            rerank_scores=np.asarray(artifact.rerank_scores, dtype=np.float32),
             meta=np.array(json.dumps(artifact.meta), dtype=object),
         )
 
@@ -56,7 +58,7 @@ class EmbeddingArtifactRepository:
           1. file not found        -> FileNotFoundError
           2. not loadable / bad npz -> ValueError
           3. missing required key   -> ValueError (lists missing keys)
-          4. wrong dimension        -> ValueError (vectors.shape[1] != 1024)
+          4. wrong dimension        -> ValueError (vectors.shape[1] != dim)
           5. length mismatch        -> ValueError (len(codes) != vectors rows)
 
         Args:
@@ -88,19 +90,33 @@ class EmbeddingArtifactRepository:
         # 3. missing required key
         missing = [k for k in _REQUIRED_KEYS if k not in data.files]
         if missing:
+            if "reranked_mcc_indices" in missing or "rerank_scores" in missing:
+                raise ValueError(
+                    "artifact thiếu rerank — regenerate bằng `python3 main.py embed`"
+                )
             raise ValueError(
                 f"Embedding artifact missing required keys: {missing} (path: {path})"
             )
+
+        meta = json.loads(str(data["meta"]))
+
+        # Validate artifact version
+        if meta.get("artifact_version") != 2:
+            raise ValueError("artifact version cũ — regenerate")
+
+        dim = meta.get("dim")
+        if not dim:
+            raise ValueError("artifact thiếu thông tin dim trong meta — regenerate")
 
         mcc_vectors = data["mcc_vectors"]
         vsic_vectors = data["vsic_vectors"]
 
         # 4. wrong dimension
         for name, vectors in (("mcc", mcc_vectors), ("vsic", vsic_vectors)):
-            if vectors.ndim != 2 or vectors.shape[1] != EXPECTED_DIM:
+            if vectors.ndim != 2 or vectors.shape[1] != dim:
                 raise ValueError(
                     f"Embedding artifact {name}_vectors has wrong dimension: "
-                    f"expected (*, {EXPECTED_DIM}), got {vectors.shape}"
+                    f"expected (*, {dim}), got {vectors.shape}"
                 )
 
         mcc_codes = list(data["mcc_codes"])
@@ -108,6 +124,26 @@ class EmbeddingArtifactRepository:
         mcc_descriptions = list(data["mcc_descriptions"])
         vsic_codes = list(data["vsic_codes"])
         vsic_titles = list(data["vsic_titles"])
+        
+        reranked_mcc_indices = data["reranked_mcc_indices"]
+        rerank_scores = data["rerank_scores"]
+
+        # Validate rerank shapes
+        n_vsic = len(vsic_codes)
+        rerank_top_n = meta.get("rerank_top_n")
+        if rerank_top_n is None:
+            raise ValueError("artifact thiếu rerank_top_n trong meta")
+
+        if reranked_mcc_indices.shape != (n_vsic, rerank_top_n):
+            raise ValueError(
+                f"reranked_mcc_indices shape mismatch: "
+                f"expected ({n_vsic}, {rerank_top_n}), got {reranked_mcc_indices.shape}"
+            )
+        if rerank_scores.shape != reranked_mcc_indices.shape:
+            raise ValueError(
+                f"rerank_scores shape mismatch: "
+                f"expected {reranked_mcc_indices.shape}, got {rerank_scores.shape}"
+            )
 
         # 5. length mismatch
         self._check_length("mcc_codes", mcc_codes, mcc_vectors)
@@ -115,8 +151,6 @@ class EmbeddingArtifactRepository:
         self._check_length("mcc_descriptions", mcc_descriptions, mcc_vectors)
         self._check_length("vsic_codes", vsic_codes, vsic_vectors)
         self._check_length("vsic_titles", vsic_titles, vsic_vectors)
-
-        meta = json.loads(str(data["meta"]))
 
         return EmbeddingArtifact(
             mcc_vectors=mcc_vectors,
@@ -126,6 +160,8 @@ class EmbeddingArtifactRepository:
             vsic_vectors=vsic_vectors,
             vsic_codes=vsic_codes,
             vsic_titles=vsic_titles,
+            reranked_mcc_indices=reranked_mcc_indices,
+            rerank_scores=rerank_scores,
             meta=meta,
         )
 

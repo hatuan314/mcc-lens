@@ -29,3 +29,6 @@ requests>=2.31.0
 
 # Ollama
 ollama>=0.3.0
+
+# OpenAI (for WokuShop LLM Proxy)
+openai>=1.0.0

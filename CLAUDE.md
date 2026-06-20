@@ -36,12 +36,10 @@ CLI subcommands (argparse, dispatched in `main.py`): `convert-mcc`, `convert-vsi
 
 Flow: `main.py` (parse args, instantiate deps) → controller (`.execute()`) → use-case/service → repository. Manual dependency injection, no framework. Inner layers (models/services) never import outer layers; services depend on `protocols.py` abstractions, not concrete clients.
 
-### The 2-module embedding split (`embed` → `map-vsic-mcc`)
-Embedding and LLM re-rank are split into two commands sharing one self-contained `.npz` artifact:
-- **`embed` (producer, run on Colab/GPU)** — `EmbedController` reads MCC+VSIC JSON, embeds all via Ollama `bge-m3` (1024-dim, batch_size=1), writes `embed-artifact.npz` (vectors + codes + titles + descriptions + meta). Text built by `app/services/embed_text_builder.py` (shared so vectors stay reproducible).
-- **`map-vsic-mcc` (consumer, run locally — no embedding)** — `MappingController` loads the artifact via `EmbeddingArtifactRepository` (hard-fails if missing/corrupt/wrong-dim), then `MapVsicToMccUseCase.execute`:
-  1. **Cosine pre-filter** — rank all MCC vectors from the artifact, take top-K (`--top-k`, default 60)
-  2. **LLM re-rank** — send candidates to the LLM, get top-3 with scores + explanations; entries below `LOW_SCORE_THRESHOLD` are flagged
+### The 3-stage pipeline (`embed` → `map-vsic-mcc`)
+The pipeline runs in 3 stages across two commands sharing one self-contained `.npz` artifact version 2:
+- **`embed` (producer, run on Colab/GPU)** — `EmbedController` reads MCC+VSIC JSON, generates embeddings via Qwen3-Embedding (dynamic dim, read from meta) and performs reranking via Qwen3-Reranker in-process (sentence-transformers). The top-K cosine similarities (default 100) are reranked, and top-N reranked indices and scores (default 20) are saved directly into the artifact.
+- **`map-vsic-mcc` (consumer, run locally — no embedding/reranking)** — `MappingController` loads the artifact via `EmbeddingArtifactRepository` (hard-fails if version != 2 or wrong dim), then `MapVsicToMccUseCase.execute` reads the pre-computed rerank indices directly to build candidates for the LLM. No cosine or heavy compute is done locally. Number of candidates sent to LLM is controlled by `llm_n` (default 10, clamped <= `rerank_top_n` from artifact).
 Outputs two xlsx files (simple top-1, detailed top-3 + commentary). Per-VSIC checkpoint enables `--resume`. The artifact is the **sole source of the work set** — `map-vsic-mcc` no longer reads source JSON and takes `--embeddings <path>` instead of `--vsic-input`/`--mcc-input`.
 
 ## LLM providers

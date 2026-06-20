@@ -23,7 +23,7 @@ from app.services.map_vsic_to_mcc_use_case import MapVsicToMccUseCase
 from app.services.mcc_code_validator import MccCodeValidator
 from app.services.ollama_health_check import check_ollama_llm
 
-DEFAULT_TOP_K = 60
+DEFAULT_TOP_K = 10
 
 
 class MappingController:
@@ -76,7 +76,7 @@ class MappingController:
             embeddings: Path to the embedding artifact (.npz).
             output: Path to simple Excel output.
             output_detail: Path to detailed Excel output.
-            top_k: Number of top-K candidates for LLM.
+            top_k: Number of top candidate MCCs to send to LLM.
             resume: Whether to resume from checkpoint.
             limit: Maximum number of VSIC entries to process.
             gdrive_output_dir: Base directory on Google Drive for all outputs.
@@ -137,15 +137,16 @@ class MappingController:
                 logger.error(f"Health check failed: {e}")
                 return 2
 
-            # Clamp top-k to reasonable range
-            max_top_k = 100
-            if top_k > max_top_k:
+            # Clamp top-k to rerank_top_n in the artifact metadata
+            rerank_top_n = artifact.meta.get("rerank_top_n", 20)
+            if top_k > rerank_top_n:
                 logger.warning(
-                    f"Requested --top-k {top_k} exceeds recommended "
-                    f"maximum {max_top_k}. Clamping to avoid excessive "
-                    "prompt size and timeout."
+                    f"Requested --top-k {top_k} exceeds rerank_top_n ({rerank_top_n}) "
+                    f"available in the artifact. Clamping to {rerank_top_n}."
                 )
-                top_k = max_top_k
+                llm_n = rerank_top_n
+            else:
+                llm_n = top_k
 
             # Initialize LLM client
             if self.llm_provider == "wokushop":
@@ -186,7 +187,7 @@ class MappingController:
 
             entries = []
             with tqdm(total=total, desc="Mapping VSIC to MCC") as pbar:
-                for entry in use_case.execute(top_k=top_k, resume=resume, limit=limit):
+                for entry in use_case.execute(llm_n=llm_n, resume=resume, limit=limit):
                     entries.append(entry)
                     pbar.update(1)
 

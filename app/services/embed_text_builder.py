@@ -10,6 +10,12 @@ Stage-1 guarantee).
 import re
 
 
+QUERY_INSTRUCTION = (
+    "Given a Vietnamese industry name, "
+    "retrieve the most relevant Visa MCC merchant category"
+)
+
+
 def strip_html(text: str) -> str:
     """Remove HTML tags from text. Returns empty string if input is None/empty."""
     if not text:
@@ -21,11 +27,11 @@ def build_mcc_text(mcc: dict) -> str:
     """Build the embed text for an MCC entry.
 
     Mirrors the original use-case logic exactly: stripped title + em-dash +
-    stripped description truncated to 500 chars.
+    stripped description truncated to 1000 chars.
     """
     title = strip_html(mcc["title"])
     description = strip_html(mcc.get("description") or "")
-    return f"{title} — {description[:500]}"
+    return f"{title} — {description[:1000]}"
 
 
 def build_vsic_text(vsic: dict) -> str:
@@ -35,3 +41,11 @@ def build_vsic_text(vsic: dict) -> str:
     truncation.
     """
     return vsic["title"]
+
+
+def build_vsic_query(vsic: dict) -> str:
+    """Build the query string with Qwen3-style instruction prefix.
+
+    Used for embedding and reranking query representations.
+    """
+    return f"Instruct: {QUERY_INSTRUCTION}\nQuery: {vsic['title']}"

@@ -145,74 +145,79 @@ python3 main.py convert-vsic-2025 \
 Lưu ý: `source` luôn là **input file path** thực tế được dùng để convert.
 
 ### Embed (tạo artifact embedding)
-
-Embedding và LLM re-rank được tách thành 2 lệnh dùng chung một file artifact `.npz`. Bước `embed` chạy trên **Colab/GPU** để nhúng toàn bộ MCC + VSIC qua Ollama `bge-m3`, tạo ra file artifact tự chứa (vectors + code + title + description + meta).
-
+ 
+Embedding và LLM re-rank được tách biệt thông qua file artifact `.npz` phiên bản 2. Bước `embed` chạy trên **Colab/GPU** để nhúng toàn bộ MCC + VSIC qua Qwen3-Embedding (dim động, mặc định: `Qwen/Qwen3-Embedding`) và thực hiện rerank bằng Qwen3-Reranker in-process (mặc định: `Qwen/Qwen3-Reranker`) qua thư viện `sentence-transformers`. Kết quả rerank (indices và scores) được lưu trực tiếp vào file artifact để phía local sử dụng.
+ 
 ```bash
 # Cơ bản
 python3 main.py embed
-
+ 
 # Tùy chỉnh + lưu lên Google Drive (Colab)
 python3 main.py embed \
   --mcc-input output/mcc-visa.json \
   --vsic-input output/vsic-vn.json \
   --output output/embed-artifact.npz \
   --gdrive-output-dir /content/drive/MyDrive/projects/mcc-lens \
-  --embedding-model bge-m3
+  --embedding-model Qwen/Qwen3-Embedding \
+  --reranker-model Qwen/Qwen3-Reranker \
+  --cosine-top-k 100 \
+  --rerank-top-n 20
 ```
-
+ 
 **Tham số:**
-
+ 
 - `--mcc-input`: File JSON MCC input (mặc định: `output/mcc-visa.json`)
 - `--vsic-input`: File JSON VSIC input (mặc định: `output/vsic-vn.json`)
 - `--output, -o`: File artifact `.npz` output (mặc định: `output/embed-artifact.npz`)
 - `--gdrive-output-dir`: Thư mục Google Drive để ghi `embed-artifact.npz` (Colab)
-- `--ollama-host`: URL Ollama server (mặc định: `http://localhost:11434`)
-- `--embedding-model`: Model embedding qua Ollama (mặc định: `bge-m3`)
-
-**Yêu cầu:** Ollama đang chạy và đã pull `bge-m3` (`ollama pull bge-m3`).
-
+- `--embedding-model`: Tên HuggingFace model embedding (mặc định: `Qwen/Qwen3-Embedding`)
+- `--reranker-model`: Tên HuggingFace model reranker (mặc định: `Qwen/Qwen3-Reranker`)
+- `--cosine-top-k`: Số lượng candidate lọc thô bằng cosine similarity để đưa vào reranker (mặc định: `100`)
+- `--rerank-top-n`: Số lượng candidate sau khi rerank được lưu vào artifact (mặc định: `20`)
+ 
+**Yêu cầu:** Chạy trên môi trường có GPU (ví dụ Google Colab) với đầy đủ thư viện `sentence-transformers`, `torch`, và `transformers`.
+ 
 > **Lưu ý:** Entry bị lỗi NaN → `embed` vẫn ghi artifact với vector 0 cho entry đó và ghi `zero_vector_codes` vào meta (entry xếp hạng thấp). Sau khi tạo xong, tải `embed-artifact.npz` về thư mục `output/` local để chạy `map-vsic-mcc`.
 
 ### Map VSIC to MCC
-
-Sử dụng lệnh `map-vsic-mcc` để map mã VSIC sang MCC. Lệnh này là **consumer-only**: đọc artifact `.npz` từ bước `embed`, KHÔNG tự nhúng embedding (Stage 1 cosine top-K trên vectors artifact, Stage 2 LLM re-rank). Hỗ trợ hai LLM provider: **Ollama** (local) và **WokuShop API**.
-
-LLM provider được chọn qua biến môi trường `LLM_PROVIDER` trong file `.env`. Artifact thiếu/hỏng/sai dimension → hard-fail với exit code ≠ 0.
-
+ 
+Sử dụng lệnh `map-vsic-mcc` để map mã VSIC sang MCC. Lệnh này hoạt động ở chế độ **consumer-only** và chạy local: đọc artifact `.npz` phiên bản 2 từ bước `embed`, **KHÔNG cần GPU và KHÔNG tính toán cosine similarity hay reranking** tại máy local. Nó đọc trực tiếp danh sách các mã MCC đã được rerank từ artifact để gửi candidates cho LLM. Hỗ trợ hai LLM provider: **Ollama** (local) và **WokuShop API**.
+ 
+LLM provider được chọn qua biến môi trường `LLM_PROVIDER` trong file `.env`. Artifact thiếu/hỏng/sai phiên bản → hard-fail với exit code ≠ 0.
+ 
 #### Provider: Ollama (mặc định)
-
+ 
 ```bash
 # .env
 LLM_PROVIDER=ollama
 ```
-
+ 
 ```bash
 # Cơ bản - sử dụng file mặc định
 python3 main.py map-vsic-mcc
-
+ 
 # Tùy chỉnh artifact/output và model
 python3 main.py map-vsic-mcc \
   --embeddings output/embed-artifact.npz \
   --output output/vsic-mcc-mapping.xlsx \
   --output-detail output/vsic-mcc-mapping-detail.xlsx \
   --llm-model qwen3.5:9b
-
+ 
 # Chạy với Google Drive
 python3 main.py map-vsic-mcc \
   --gdrive-output-dir /content/drive/MyDrive/projects/mcc-lens \
   --llm-model qwen3.5:9b \
   --resume
 ```
-
+ 
 **Yêu cầu:** Đã có `embed-artifact.npz` (từ lệnh `embed`) và Ollama đang chạy với LLM model (embedding KHÔNG cần nữa):
-
+ 
 ```bash
 ollama pull qwen3.5:9b
 ```
-
+ 
 #### Provider: WokuShop API
-
+ 
 ```bash
 # .env
 LLM_PROVIDER=wokushop
@@ -220,11 +225,11 @@ WOKUSHOP_API_KEY=sk-your-api-key-here
 WOKUSHOP_BASE_URL=https://llm.wokushop.com/v1
 WOKUSHOP_MODEL=gpt-4o
 ```
-
+ 
 ```bash
 # Cơ bản - WokuShop làm LLM, embedding lấy từ artifact (không cần Ollama)
 python3 main.py map-vsic-mcc
-
+ 
 # Tùy chỉnh artifact/output
 python3 main.py map-vsic-mcc \
   --embeddings output/embed-artifact.npz \
@@ -232,18 +237,18 @@ python3 main.py map-vsic-mcc \
   --output-detail output/vsic-mcc-mapping-detail.xlsx \
   --resume
 ```
-
-**Yêu cầu:** Chỉ cần `embed-artifact.npz` và `WOKUSHOP_API_KEY`. **Không cần Ollama** khi dùng WokuShop (embedding đã nằm sẵn trong artifact).
-
+ 
+**Yêu cầu:** Chỉ cần `embed-artifact.npz` và `WOKUSHOP_API_KEY`. **Không cần Ollama** khi dùng WokuShop (dữ liệu rerank đã nằm sẵn trong artifact).
+ 
 > **Lưu ý:** Khi dùng WokuShop, `--llm-model` bị bỏ qua. Model LLM được lấy từ `WOKUSHOP_MODEL` trong `.env`.
-
+ 
 **Tham số CLI:**
-
+ 
 - `--embeddings`: File artifact `.npz` từ lệnh `embed` (mặc định: `output/embed-artifact.npz`)
 - `--output, -o`: File Excel simple output (mặc định: `output/vsic-mcc-mapping.xlsx`)
 - `--output-detail`: File Excel detailed output (mặc định: `output/vsic-mcc-mapping-detail.xlsx`)
 - `--gdrive-output-dir`: Thư mục gốc trên Google Drive để lưu output, checkpoint, và đọc artifact (Colab)
-- `--top-k`: Số lượng MCC candidates gửi đến LLM (mặc định: 60)
+- `--top-k`: Số lượng MCC candidates gửi đến LLM từ danh sách rerank trong artifact (mặc định: `10`, tự động clamp tối đa là `rerank_top_n` trong artifact)
 - `--ollama-host`: URL Ollama server khi dùng Ollama LLM provider (mặc định: `http://localhost:11434`)
 - `--llm-model`: Tên model LLM khi dùng Ollama provider (mặc định: `qwen3.5:9b`)
 - `--template`: File Excel template cho detailed output
@@ -251,25 +256,23 @@ python3 main.py map-vsic-mcc \
 - `--limit`: Giới hạn số lượng bản ghi VSIC cần xử lý
 
 ### Running on Google Colab
-
-Pipeline được tách thành 2 notebook chạy lần lượt trên Google Colab với GPU:
-
-**Bước 1 — Embed (`colab/embed_vsic_mcc_colab.ipynb`):**
-- Mount Drive, clone code, cài deps tối thiểu (`colab/requirements-mapping.txt`).
-- Cài Ollama, pull **chỉ `bge-m3`**.
-- Chạy `embed` → ghi `embed-artifact.npz` lên Drive.
-
-**Bước 2 — Map (`colab/mapping_vsic_mcc_colab.ipynb`):**
-- Pull **chỉ `qwen3.5:9b`** (không cần `bge-m3` nữa).
-- Đọc `embed-artifact.npz` từ Drive → chạy `map-vsic-mcc` → ghi Excel + checkpoint lên Drive.
-
-> Hoặc tải `embed-artifact.npz` về máy local và chạy `map-vsic-mcc` local (với WokuShop thì không cần Ollama).
-
-**Yêu cầu:**
-
-- Ollama đang chạy: `ollama serve`
-- Bước 1 (embed) cần `ollama pull bge-m3`; bước 2 (map) cần `ollama pull qwen3.5:9b`
-- RAM ≥ 16GB khuyến nghị cho LLM model lớn ở bước 2
+ 
+Pipeline được chia thành 2 phần chạy tối ưu:
+ 
+**Bước 1 — Embed (chạy trên Google Colab GPU — `colab/embed_vsic_mcc_colab.ipynb`):**
+- Mount Drive, clone code, cài đặt các thư viện nặng (`colab/requirements-embed.txt`).
+- **KHÔNG cần cài Ollama**. Quá trình sinh embedding và rerank chạy in-process trực tiếp bằng GPU qua thư viện `sentence-transformers`.
+- Chạy lệnh: `python3 -m app.embed --embedding-model Qwen/Qwen3-Embedding --reranker-model Qwen/Qwen3-Reranker --cosine-top-k 100 --rerank-top-n 20 ...`
+- Kết quả lưu thành `embed-artifact.npz` lên Google Drive.
+ 
+**Bước 2 — Map (chạy local trên CPU hoặc Colab — `colab/mapping_vsic_mcc_colab.ipynb`):**
+- Tải file `embed-artifact.npz` về máy local để chạy nhằm tiết kiệm GPU quota.
+- Chạy `map-vsic-mcc` tiêu thụ kết quả reranker trực tiếp từ artifact, sử dụng Ollama local (model `qwen3.5:9b`) hoặc qua WokuShop API.
+ 
+**Yêu cầu phần cứng:**
+ 
+- Bước 1 (embed) bắt buộc cần GPU (chạy tốt trên GPU T4 miễn phí của Colab).
+- Bước 2 (map) có thể chạy trên CPU thông thường (nếu dùng WokuShop API) hoặc máy local có cấu hình RAM ≥ 16GB (nếu chạy Ollama model lớn local).
 
 **Output:**
 

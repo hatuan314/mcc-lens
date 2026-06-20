@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from app.services.ollama_health_check import check_ollama_models
+from app.services.ollama_health_check import check_ollama_models, check_ollama_embedding
 
 
 class _FakeClient:
@@ -62,3 +62,34 @@ def test_check_ollama_models_raises_when_missing():
     response = SimpleNamespace(models=[SimpleNamespace(model="gemma4:e4b")])
     with pytest.raises(RuntimeError, match="Missing Ollama models"):
         _run_with_response(response)
+
+
+def test_check_ollama_embedding_passes():
+    """check_ollama_embedding should pass when embedding model is available."""
+    response = SimpleNamespace(
+        models=[
+            SimpleNamespace(model="bge-m3:latest"),
+        ]
+    )
+    fake = _FakeClient(response)
+    with patch("app.services.ollama_health_check.Client", return_value=fake):
+        check_ollama_embedding(
+            host="http://localhost:11434",
+            embedding_model="bge-m3",
+        )
+
+
+def test_check_ollama_embedding_missing():
+    """check_ollama_embedding should raise RuntimeError when embedding model is missing."""
+    response = SimpleNamespace(
+        models=[
+            SimpleNamespace(model="qwen2.5:14b"),
+        ]
+    )
+    fake = _FakeClient(response)
+    with patch("app.services.ollama_health_check.Client", return_value=fake):
+        with pytest.raises(RuntimeError, match="Missing Ollama embedding model"):
+            check_ollama_embedding(
+                host="http://localhost:11434",
+                embedding_model="bge-m3",
+            )
