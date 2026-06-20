@@ -7,4 +7,3 @@ tqdm
 loguru
 python-dotenv
 pydantic
-ollama
