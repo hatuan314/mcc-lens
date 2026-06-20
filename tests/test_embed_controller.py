@@ -8,9 +8,11 @@ import numpy as np
 
 from app.controllers.embed_controller import EmbedController
 from app.repositories.embedding_artifact_repository import (
-    EXPECTED_DIM,
     EmbeddingArtifactRepository,
 )
+
+# Test fixture embedding dimension (dim is read dynamically from meta at runtime).
+EXPECTED_DIM = 1024
 
 
 def _write_mcc_json(path: Path, n: int = 2) -> None:

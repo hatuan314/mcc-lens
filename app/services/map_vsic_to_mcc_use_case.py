@@ -1,14 +1,14 @@
-"""Use case for mapping VSIC codes to MCC codes using 2-stage retrieval.
+"""Use case for mapping VSIC codes to MCC codes from a pre-reranked artifact.
 
-Consumer-only: embeddings are read from a pre-built artifact (produced by the
-`embed` command); this use case never embeds anything. Stage 1 is a cosine
-top-K pre-filter over the artifact's MCC matrix; Stage 2 is LLM re-ranking.
+Consumer-only: embeddings and rerank order are read from a pre-built artifact
+(produced by the `embed` command); this use case never embeds or reranks. It
+reads the artifact's top-N reranked MCC candidates per VSIC and sends them to
+the LLM for final selection + Vietnamese commentary.
 """
 
 import json
 from typing import Generator, Optional
 
-import numpy as np
 from loguru import logger
 
 from app.models.embedding_artifact import EmbeddingArtifact
@@ -21,9 +21,8 @@ from app.services.protocols import LLMClient, MappingCheckpointRepository
 
 class MapVsicToMccUseCase:
     """
-    Orchestrates the 2-stage mapping pipeline:
-    1. Cosine pre-filter (over artifact MCC vectors) to get top-K candidates
-    2. LLM re-ranking to select top-3 with explanations
+    Orchestrates the final mapping stage over a pre-reranked artifact:
+    read top-N reranked MCC candidates → LLM selects top-3 with explanations.
     """
 
     LOW_SCORE_THRESHOLD = 0.5
@@ -49,20 +48,23 @@ class MapVsicToMccUseCase:
         self.validator = validator
 
     def execute(
-        self, top_k: int = 15, resume: bool = False, limit: Optional[int] = None
+        self, llm_n: int = 10, resume: bool = False, limit: Optional[int] = None, top_k: Optional[int] = None
     ) -> Generator[MappingEntry, None, None]:
         """
         Execute the mapping pipeline for all VSIC entries in the artifact.
 
         Args:
-            top_k: Number of top MCC candidates to send to LLM.
+            llm_n: Number of top MCC candidates from rerank to send to LLM.
             resume: Whether to resume from checkpoint.
             limit: Process only the first ``limit`` VSIC entries (None = all).
+            top_k: Legacy alias for llm_n.
 
         Yields:
             MappingEntry for each processed VSIC.
         """
-        logger.info(f"Starting mapping pipeline with top_k={top_k}, resume={resume}")
+        if top_k is not None:
+            llm_n = top_k
+        logger.info(f"Starting mapping pipeline with llm_n={llm_n}, resume={resume}")
 
         completed = {}
         if resume:
@@ -79,25 +81,12 @@ class MapVsicToMccUseCase:
                 f"MCC {zero_codes.get('mcc', [])}, VSIC {zero_codes.get('vsic', [])}"
             )
 
-        # Precomputed normalized MCC matrix for vectorized cosine similarity.
-        self._mcc_matrix = np.asarray(self.artifact.mcc_vectors)
-        self._mcc_norms = np.linalg.norm(self._mcc_matrix, axis=1)
-        self._mcc_norms[self._mcc_norms == 0] = 1.0  # Avoid division by zero
-
-        n_mcc = len(self.artifact.mcc_codes)
-
         # Iterate over VSIC entries from the artifact; --limit slices the loop.
-        vsic_iter = list(
-            zip(
-                self.artifact.vsic_codes,
-                self.artifact.vsic_titles,
-                self.artifact.vsic_vectors,
-            )
-        )
+        vsic_iter = list(zip(self.artifact.vsic_codes, self.artifact.vsic_titles))
         if limit is not None:
             vsic_iter = vsic_iter[:limit]
 
-        for vsic_code, vsic_title, vsic_vector in vsic_iter:
+        for i, (vsic_code, vsic_title) in enumerate(vsic_iter):
             if vsic_code in completed:
                 logger.debug(f"Skipping VSIC {vsic_code} (already completed)")
                 result_data = completed[vsic_code]
@@ -109,19 +98,49 @@ class MapVsicToMccUseCase:
                 )
                 continue
 
-            # Cosine similarity with all MCC (vectorized) — no embedding call.
-            vsic_arr = np.asarray(vsic_vector)
-            vsic_norm = float(np.linalg.norm(vsic_arr))
-            if vsic_norm == 0:
-                vsic_norm = 1.0
+            # Load top candidates and scores directly from artifact rerank results
+            idxs = self.artifact.reranked_mcc_indices[i][:llm_n]
+            scores = self.artifact.rerank_scores[i][:llm_n]
 
-            sim_scores = self._mcc_matrix @ vsic_arr / (self._mcc_norms * vsic_norm)
-            similarities = [(float(sim), i) for i, sim in enumerate(sim_scores)]
-            similarities.sort(reverse=True, key=lambda x: x[0])
+            candidates = []
+            for k, idx in enumerate(idxs):
+                if idx == -1:
+                    continue  # skip padding
+                candidates.append(
+                    {
+                        "mcc": self.artifact.mcc_codes[idx],
+                        "title": strip_html(self.artifact.mcc_titles[idx]),
+                        "description": strip_html(self.artifact.mcc_descriptions[idx] or ""),
+                        "score": float(scores[k]),
+                    }
+                )
 
-            ranked_results = self._rerank_with_escalation(
-                vsic_code, vsic_title, similarities, top_k, n_mcc
-            )
+            if not candidates:
+                logger.warning(f"No candidates found for VSIC {vsic_code}")
+                ranked_results = []
+            else:
+                user_prompt = build_user_prompt(vsic_title, candidates)
+                llm_response = self.llm_client.chat(SYSTEM_PROMPT, user_prompt)
+                ranked_results = self._parse_llm_response(llm_response, candidates)
+
+            # Fallback if LLM returns empty response
+            if not ranked_results and candidates:
+                ranked_results = []
+                for k in range(min(3, len(candidates))):
+                    cand = candidates[k]
+                    ranked_results.append(
+                        RankedMcc(
+                            mcc_code=cand["mcc"],
+                            mcc_title=cand["title"],
+                            score=round(float(cand["score"]), 2),
+                            comment="",
+                        )
+                    )
+
+            if ranked_results and ranked_results[0].score < self.LOW_SCORE_THRESHOLD:
+                logger.warning(
+                    f"VSIC '{vsic_code}': top-1 score thấp ({ranked_results[0].score:.2f}) — cần review"
+                )
 
             entry = MappingEntry(
                 vsic_code=vsic_code,
@@ -136,59 +155,6 @@ class MapVsicToMccUseCase:
 
         logger.info("Mapping pipeline completed")
 
-    def _rerank_with_escalation(
-        self,
-        vsic_code: str,
-        vsic_title: str,
-        similarities: list,
-        top_k: int,
-        n_mcc: int,
-    ) -> list:
-        """LLM re-rank with adaptive top-K escalation.
-
-        Doubles top_k and retries if the LLM returns empty or a low top-1 score
-        (hard cases need more candidates).
-        """
-        current_top_k = top_k
-        ranked_results: list = []
-        while True:
-            top_k_slice = similarities[:current_top_k]
-            score_map = {idx: sim for sim, idx in top_k_slice}
-            candidate_indices = [idx for _, idx in top_k_slice]
-
-            candidates = []
-            for idx in candidate_indices:
-                candidates.append(
-                    {
-                        "mcc": self.artifact.mcc_codes[idx],
-                        "title": strip_html(self.artifact.mcc_titles[idx]),
-                        "description": strip_html(
-                            self.artifact.mcc_descriptions[idx] or ""
-                        ),
-                        "score": score_map[idx],
-                    }
-                )
-
-            user_prompt = build_user_prompt(vsic_title, candidates)
-            llm_response = self.llm_client.chat(SYSTEM_PROMPT, user_prompt)
-            ranked_results = self._parse_llm_response(llm_response, candidates)
-
-            top1_llm_score = ranked_results[0].score if ranked_results else 0.0
-            needs_escalation = (
-                not ranked_results or top1_llm_score < self.LOW_SCORE_THRESHOLD
-            )
-
-            if needs_escalation and current_top_k < n_mcc:
-                current_top_k = min(current_top_k * 2, n_mcc)
-                logger.info(
-                    f"VSIC '{vsic_code}': escalating top_k to {current_top_k} "
-                    f"(empty={not ranked_results}, score={top1_llm_score:.2f})"
-                )
-            else:
-                break
-
-        return ranked_results
-
     def _parse_llm_response(
         self, response: str, candidates: list[dict]
     ) -> list[RankedMcc]:
@@ -197,7 +163,7 @@ class MapVsicToMccUseCase:
 
         Args:
             response: LLM JSON response string.
-            candidates: Original top-K candidates with scores.
+            candidates: Original candidates with scores.
 
         Returns:
             List of RankedMcc objects (max 3).
@@ -250,7 +216,7 @@ class MapVsicToMccUseCase:
                                 logger.warning(
                                     f"Invalid LLM score '{llm_score}' for "
                                     f"MCC {mcc_code}, "
-                                    "fallback to cosine score"
+                                    "fallback to rerank score"
                                 )
 
                         ranked_results.append(

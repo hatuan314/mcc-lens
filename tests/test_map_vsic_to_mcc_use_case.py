@@ -88,7 +88,19 @@ VALID_LLM_RESPONSE = json.dumps(
 
 
 def _make_artifact(vsic_entries: list, mcc_entries: list) -> EmbeddingArtifact:
-    """Build an in-memory artifact with identical unit vectors."""
+    """Build an in-memory artifact with identical unit vectors and rerank data."""
+    n_vsic = len(vsic_entries)
+    n_mcc = len(mcc_entries)
+    rerank_top_n = min(n_mcc, 5) if n_mcc > 0 else 0
+    
+    # Generate mock rerank indices and scores
+    reranked_mcc_indices = np.zeros((n_vsic, rerank_top_n), dtype=np.int32)
+    for i in range(n_vsic):
+        for k in range(rerank_top_n):
+            reranked_mcc_indices[i, k] = k % n_mcc if n_mcc > 0 else -1
+            
+    rerank_scores = np.ones((n_vsic, rerank_top_n), dtype=np.float32) * 0.95
+
     return EmbeddingArtifact(
         mcc_vectors=_unit_vectors(len(mcc_entries)),
         mcc_codes=[m["mcc"] for m in mcc_entries],
@@ -97,7 +109,14 @@ def _make_artifact(vsic_entries: list, mcc_entries: list) -> EmbeddingArtifact:
         vsic_vectors=_unit_vectors(len(vsic_entries)),
         vsic_codes=[v["code"] for v in vsic_entries],
         vsic_titles=[v["title"] for v in vsic_entries],
-        meta={"dim": _DIM, "zero_vector_codes": {"mcc": [], "vsic": []}},
+        reranked_mcc_indices=reranked_mcc_indices,
+        rerank_scores=rerank_scores,
+        meta={
+            "dim": _DIM,
+            "zero_vector_codes": {"mcc": [], "vsic": []},
+            "artifact_version": 2,
+            "rerank_top_n": rerank_top_n,
+        },
     )
 
 
@@ -159,23 +178,28 @@ class TestHappyPath:
 
 
 class TestNoMatch:
-    def test_empty_llm_response_returns_empty_top_results(self) -> None:
+    def test_empty_llm_response_falls_back_to_rerank(self) -> None:
         use_case, _, _ = _make_use_case(llm_response="[]")
         results = list(use_case.execute(top_k=3))
         for entry in results:
-            assert entry.top_results == []
+            assert len(entry.top_results) == 3
+            assert entry.top_results[0].mcc_code == "0111"
+            assert entry.top_results[0].comment == ""
+            assert entry.top_results[0].score == 0.95
 
-    def test_invalid_json_returns_empty_top_results(self) -> None:
+    def test_invalid_json_falls_back_to_rerank(self) -> None:
         use_case, _, _ = _make_use_case(llm_response="not json")
         results = list(use_case.execute(top_k=3))
         for entry in results:
-            assert entry.top_results == []
+            assert len(entry.top_results) == 3
+            assert entry.top_results[0].mcc_code == "0111"
 
-    def test_llm_returns_non_list_gives_empty(self) -> None:
+    def test_llm_returns_non_list_falls_back_to_rerank(self) -> None:
         use_case, _, _ = _make_use_case(llm_response='{"mcc_code": "0111"}')
         results = list(use_case.execute(top_k=3))
         for entry in results:
-            assert entry.top_results == []
+            assert len(entry.top_results) == 3
+            assert entry.top_results[0].mcc_code == "0111"
 
 
 class TestHallucination:
@@ -305,3 +329,19 @@ class TestRealVSICEntries:
         use_case, _, checkpoint_repo = _make_use_case(vsic_entries=REAL_VSIC_ENTRIES)
         list(use_case.execute(top_k=3))
         assert set(checkpoint_repo.saves) == {"1110", "1120", "1130", "1140", "1150"}
+
+    def test_mcc_matrix_does_not_exist(self) -> None:
+        """Xác nhận cosine matrix không còn tồn tại trên use case."""
+        use_case, _, _ = _make_use_case()
+        list(use_case.execute())
+        assert not hasattr(use_case, "_mcc_matrix")
+        assert not hasattr(use_case, "_mcc_norms")
+
+    def test_supports_llm_n_parameter(self) -> None:
+        """Xác nhận tham số llm_n hoạt động chính xác."""
+        use_case, llm_client, _ = _make_use_case()
+        list(use_case.execute(llm_n=2))
+        for call in llm_client.calls:
+            user_prompt = call["user"]
+            mcc_count = user_prompt.count("MCC:")
+            assert mcc_count <= 2

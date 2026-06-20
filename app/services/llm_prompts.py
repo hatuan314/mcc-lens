@@ -39,7 +39,7 @@ def build_user_prompt(vsic_title: str, candidates: list[dict]) -> str:
     """
     candidate_text = ""
     for i, cand in enumerate(candidates, 1):
-        desc = (cand.get("description") or "")[:200]
+        desc = (cand.get("description") or "")[:400]
         candidate_text += (
             f"{i}. MCC: {cand['mcc']} - {cand['title']}\n   Description: {desc}\n"
         )

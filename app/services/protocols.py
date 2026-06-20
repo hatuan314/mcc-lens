@@ -324,3 +324,23 @@ class MappingCheckpointRepository(Protocol):
             result: Mapping result dict with top_results.
         """
         ...
+
+
+class RerankerClient(Protocol):
+    """
+    Protocol for reranking candidate documents given a query.
+    """
+
+    @abstractmethod
+    def rerank(self, query: str, documents: List[str]) -> List[float]:
+        """
+        Rank candidates for a query and return similarity scores.
+
+        Args:
+            query: Query string.
+            documents: List of candidate document strings.
+
+        Returns:
+            List of relevance scores, same length as documents.
+        """
+        ...

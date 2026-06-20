@@ -3,6 +3,7 @@
 from app.services.embed_text_builder import (
     build_mcc_text,
     build_vsic_text,
+    build_vsic_query,
     strip_html,
 )
 
@@ -27,10 +28,10 @@ class TestBuildMccText:
         mcc = {"title": "<b>Farms</b>", "description": "<i>Crop</i>"}
         assert build_mcc_text(mcc) == "Farms — Crop"
 
-    def test_truncates_description_to_500_chars(self) -> None:
-        mcc = {"title": "T", "description": "x" * 600}
+    def test_truncates_description_to_1000_chars(self) -> None:
+        mcc = {"title": "T", "description": "x" * 1200}
         text = build_mcc_text(mcc)
-        assert text == "T — " + "x" * 500
+        assert text == "T — " + "x" * 1000
 
     def test_missing_description(self) -> None:
         assert build_mcc_text({"title": "Farms"}) == "Farms — "
@@ -43,3 +44,11 @@ class TestBuildVsicText:
     def test_does_not_strip_html(self) -> None:
         """VSIC text is the raw title — no HTML stripping (preserves parity)."""
         assert build_vsic_text({"title": "<b>X</b>"}) == "<b>X</b>"
+
+
+class TestBuildVsicQuery:
+    def test_prefixes_instruction(self) -> None:
+        vsic = {"code": "0111", "title": "Trồng lúa"}
+        query = build_vsic_query(vsic)
+        assert query.startswith("Instruct: Given a Vietnamese industry name, retrieve the most relevant Visa MCC merchant category")
+        assert "Query: Trồng lúa" in query
