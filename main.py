@@ -8,7 +8,6 @@ from pathlib import Path
 
 from loguru import logger
 from app.config import Config
-from app.controllers.mapping_controller import DEFAULT_TOP_K
 from app.controllers.mcc_convert_controller import MCCConvertController
 
 
@@ -200,8 +199,8 @@ def main() -> int:
     mapping_parser.add_argument(
         "--top-k",
         type=int,
-        default=DEFAULT_TOP_K,
-        help=f"Number of top-K MCC candidates for LLM (default: {DEFAULT_TOP_K})",
+        default=10,
+        help="Number of top-K MCC candidates for LLM (default: 10)",
     )
     mapping_parser.add_argument(
         "--ollama-host",
