@@ -16,7 +16,6 @@ from tqdm import tqdm
 
 from app.models.embedding_artifact import EmbeddingArtifact
 from app.repositories.embedding_artifact_repository import EmbeddingArtifactRepository
-from app.repositories.ollama_embedding_client import OllamaEmbeddingClient
 from app.repositories.qwen3_embedding_client import Qwen3EmbeddingClient
 from app.repositories.qwen3_reranker_client import Qwen3RerankerClient
 from app.services.embed_text_builder import build_mcc_text, build_vsic_query
@@ -93,6 +92,7 @@ class EmbedController:
             if self.embedding_model.startswith("Qwen"):
                 client = Qwen3EmbeddingClient(self.embedding_model)
             else:
+                from app.repositories.ollama_embedding_client import OllamaEmbeddingClient
                 client = OllamaEmbeddingClient(self.ollama_host, self.embedding_model)
 
             mcc_texts = [build_mcc_text(m) for m in mcc_entries]
