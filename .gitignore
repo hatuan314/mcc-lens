@@ -213,9 +213,13 @@ assets/
 
 # Pipeline output & OCR cache
 out/
-output/*.xlsx
-output/*.npz
-output/~$*
+output/*
+!output/*-template.json
+!output/mcc-visa.json
+output_test.json
+
+# Logs
+logs/
 
 # Excel lock files
 ~$*.xlsx
