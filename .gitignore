@@ -195,8 +195,12 @@ cython_debug/
 .pypirc
 
 # AI Assistants, Code Editors & Agents
+.agents/
 .cursor/
 .claude/
+.serena/
+.windsurf/
+.ai-devkit.json
 .cursorignore
 .cursorindexingignore
 .claudeignore
@@ -206,8 +210,6 @@ cython_debug/
 aider.chat.history.md
 .aider.chat.history.md
 .aider.tags.cache*
-.serena/cache/
-.serena/project.local.yml
 .supermaven/
 .continue/
 .copilot/
